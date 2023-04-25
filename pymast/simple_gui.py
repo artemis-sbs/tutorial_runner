@@ -15,6 +15,18 @@ class Story(PyMastStory):
                        "purple", "cyan", "yellow", "#FF00FE", "gray"]
         self.fonts = ["smallest", "gui-1", "gui-2",
                       "gui-3", "gui-4", "gui-5", "gui-6"]
+        
+        self.faces = [faces.random_terran(),
+                      faces.random_terran_female(),
+                      faces.random_terran_male(),
+                      faces.random_terran_fluid()]
+
+        self.recruits = [
+            "Pat:^^Can helm a ship through the toughest of asteroid belts",
+            "Gwen:^^A real sharpshooter",
+            "Randle:^^Top notch no nonsense scientist",
+            "Steve:^^Just out of Detocs. Barely an engineer"
+        ]
 
     @label()
     def start_server(self):
@@ -26,13 +38,26 @@ class Story(PyMastStory):
         # Create the player ship so the clients see it
         # This is a simple script that has one playable ship
         #
+        self.gui_section("area:0,5,10,95;row-height:35px;")
+        self.gui_button(f"""text: Text""", self.page_gui_text)
+        self.gui_row()
+        self.gui_button(f"""text:Buttons""", self.page_gui_button)
+        self.gui_row()
+        self.gui_button(f"""text: Checkbox""", self.page_gui_checkbox)
+        self.gui_row()
+        self.gui_button(f"""text: Dropdown""", self.page_gui_drop_down)
+        self.gui_row()
+        self.gui_button(f"""text:Slider""", self.page_gui_slider)
+        self.gui_row()
+        self.gui_button(f"""text: Text input""", self.page_gui_text_input)
+        self.gui_row()
+        self.gui_button(f"""text:Clickable""", self.page_gui_clickable)
+        
 
-        self.gui_section("area:2,20,80,35;")
+        self.gui_section("area:25,20,80,85;")
         self.gui_text(f""" This is an example of creating GUI items """)
-        print("I frigin started")
-        yield self.await_gui({
-            "next": self.page_gui_text
-        })
+        
+        yield self.await_gui()
 
     @label()
     def start_client(self):
@@ -48,8 +73,7 @@ class Story(PyMastStory):
                 f"""color:{self.colors[i]};font:{self.fonts[i]};text: This is test""")
 
         yield self.await_gui({
-            "prev": self.start,
-            "next": self.page_gui_button
+            "menu": self.start
         })
 
     @label()
@@ -61,8 +85,7 @@ class Story(PyMastStory):
                 f"""color:{self.colors[i]};font:{self.fonts[i]};text: This is test""", None)
 
         yield self.await_gui({
-            "prev": self.page_gui_text,
-            "next": self.page_gui_checkbox
+            "menu": self.start
         })
 
     @label()
@@ -74,8 +97,7 @@ class Story(PyMastStory):
                 f"""color:{self.colors[i]};font:{self.fonts[i]};text: This is test""", i % 2)
 
         yield self.await_gui({
-            "prev": self.page_gui_button,
-            "next": self.page_gui_drop_down
+            "menu": self.start
         })
 
     @label()
@@ -87,8 +109,7 @@ class Story(PyMastStory):
                 f"""color:{self.colors[i]};font:{self.fonts[i]};text: Test;list:Fred,Wilma,Barney,Wilma""")
 
         yield self.await_gui({
-            "prev": self.page_gui_checkbox,
-            "next": self.page_gui_slider
+            "menu": self.start
         })
 
     @label()
@@ -101,8 +122,7 @@ class Story(PyMastStory):
                 0.5, f"""color:{self.colors[i]};font:{self.fonts[i]};low:0;high:2; show_number:no""", None, None)
 
         yield self.await_gui({
-            "prev": self.page_gui_drop_down,
-            "next": self.page_gui_text_input
+            "menu": self.start
         })
 
     @label()
@@ -115,25 +135,12 @@ class Story(PyMastStory):
                 f"""color:{self.colors[i]};font:{self.fonts[i]};text: text; desc: Description/title""", None, None)
 
         yield self.await_gui({
-            "prev": self.page_gui_drop_down,
-            "next": self.page_gui_clickable
+            "menu": self.start
         })
 
     @label()
     def page_gui_clickable(self):
-        self.faces = [faces.random_terran(),
-                      faces.random_terran_female(),
-                      faces.random_terran_male(),
-                      faces.random_terran_fluid()]
-
-        self.recruits = [
-            "Pat:^^Can helm a ship through the toughest of asteroid belts",
-            "Gwen:^^A real sharpshooter",
-            "Randle:^^Top notch no nonsense scientist",
-            "Steve:^^Just out of Detocs. Barely an engineer"
-        ]
-
-
+        
         def click(recruit):
             self.recruit = recruit
             self.jump(self.page_show_recruit)
@@ -145,8 +152,7 @@ class Story(PyMastStory):
             self.gui_text(f"""color:cyan;font:gui-3; text:{self.recruits[x]}""")
 
         yield self.await_gui({
-            "prev": self.page_gui_text_input,
-            "next": None
+            "menu": self.start
         })
 
     @label()
@@ -156,6 +162,5 @@ class Story(PyMastStory):
         self.gui_text(""" Ready for duty """)
 
         yield self.await_gui({
-            "prev": self.page_gui_clickable,
-            "next": None
+            "menu": self.start
         })
