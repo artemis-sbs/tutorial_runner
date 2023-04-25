@@ -1,2 +1,2 @@
-# tutorial_runner
-Finished and runnable copies of tutorials
+# Tutorial
+A project to run finished tutorial
