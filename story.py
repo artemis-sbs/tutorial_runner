@@ -127,9 +127,7 @@ class Story(PyMastStory):
         self.gui_button("simple gui", run_simple_gui)
 
 
-        yield self.await_gui({
-            "Start": self.start
-        })
+        yield self.await_gui()
         #print("I'm outy")
         
     

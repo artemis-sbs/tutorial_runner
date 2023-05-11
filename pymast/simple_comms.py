@@ -12,6 +12,7 @@ class Story(PyMastStory):
         super().__init__(*args, **kwargs)
 
         self.start_text = "This is a start project for mast"
+        self.route_comms(self.handle_comms)
 
     @label()
     def start_server(self):
@@ -19,8 +20,9 @@ class Story(PyMastStory):
         # Create the player ship so the clients see it
         # This is a simple script that has one playable ship
         #
+
         sbs.create_new_sim()
-        #yield self.delay(1)
+        
 
         self.artemis =  query.to_id(PlayerShip().spawn(self.sim, 0,0,0, "Artemis", "tsn", "tsn_battle_cruiser"))
         sbs.assign_client_to_ship(0,self.artemis)
@@ -45,6 +47,7 @@ class Story(PyMastStory):
             self.start_text = "You lost"
             sbs.pause_sim()
             yield self.jump(self.start_server)
+
         #
         # No more enemies
         #
@@ -57,6 +60,21 @@ class Story(PyMastStory):
             
         yield self.delay(5)
         yield self.jump(self.end_game)
+
+    @label()
+    def handle_comms(self):
+        def button_hello(story, comms):
+            print("Button")
+            comms.transmit("Hello")
+            comms.receive("Hello, back")
+
+        yield self.await_comms({
+            "Hello": button_hello
+        })
+
+        yield self.await_comms({
+            "Hola": button_hello
+        })
 
     @label()
     def start(self):
