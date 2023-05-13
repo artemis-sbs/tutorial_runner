@@ -4,7 +4,12 @@
 #
 
 # Configure the label where comms routing occurs
-route comms comms_route
+
+route comms select comms_route
+
+route grid select damcon_route
+
+route change console fred
 
 if IS_SERVER:
     start_text = "This is a start project for mast"
@@ -26,6 +31,10 @@ simulation create
 delay gui 1s
 shared artemis =  to_id(player_spawn(0,0,0, "Artemis", "tsn", "tsn_battle_cruiser"))
 do assign_client_to_ship(0,artemis)
+go1 = grid_spawn(artemis, "fred", "fred", 9,4, 3, "blue", "flint")
+go2 = grid_spawn(artemis, "barney", "barney", 8,4, 3, "green", "rubble")
+do set_face(go1.id, random_terran())
+do set_face(go2.id, random_terran())
 
 
 section style="area:2,20,80,35;"
@@ -34,7 +43,7 @@ section style="area:2,20,80,35;"
 
 await choice:
     + "Start":
-        ->> start
+        schedule start
 end_await
 ### This continues on to the next label
 
@@ -73,8 +82,10 @@ do add_role({ds1.id, ds2.id}, "Station")
 # Create an enemy
 k001 = npc_spawn(-1000,0,1000, "K001", "raider", "kralien_dreadnaught", "behav_npcship")
 
-<<-
+->END
 
+
+===== fred ====
 
 ====== client_main =======
 
@@ -121,6 +132,9 @@ await gui
 #
 # COMMS_SELECTED_ID is the id of the target
 
+if COMMS_SELECTED_ID == COMMS_ORIGIN_ID:
+    # This is the same ship
+    jump internal_comms
 if has_role(COMMS_SELECTED_ID, 'Station'):
     jump comms_station
 elif has_role(COMMS_SELECTED_ID, 'raider'):
@@ -132,6 +146,49 @@ end_if
 comms_info "static"
 
 ->END
+
+================ internal_comms ==================
+#
+# Setup faces for the departments
+#
+doctor = random_terran()
+biologist = random_terran()
+counselor = random_terran()
+major = random_terran()
+sec = "Security"
+
+================ internal_comms_loop ==================
+#
+# Shows button color, face and title overrides
+#
+await comms:
+    + "Sickbay" color "blue":
+        receive "The crew health is great!" title "sickbay" face "{doctor}" color "blue"
+    + "Security" color "red":
+        receive  "All secure" title sec face major color "red"
+    + "Exobiology" color "green":
+        receive  "Testing running, one moment" title "Exobiology" face biologist color "green"
+        # It is best to schedule delayed responses so the comms buttons are not stalled
+        schedule test_finished
+    + "counselor" color "cyan":
+        receive  "Something is disturbing the crew" title "counselor" face counselor color "cyan"
+        #
+        # but you can delay comms, There will be no buttons during this delay
+        #
+        delay sim 3s
+        receive  "Things feel like they are getting worse" title "counselor" face counselor color "cyan"
+end_await
+-> internal_comms_loop
+
+====== test_finished ======
+# This is a new task to delay the response of the test results
+# COMMS variables should migrate to this task
+
+delay sim 2s
+receive  "test results finished. Tell the captain we have a pathogen. This could be bad." title "Exobiology" face biologist color "green"
+->END
+
+
 
 ================ npc_comms ==================
 
@@ -151,6 +208,35 @@ await comms:
     + "Hail":
         transmit "Hello"
         receive "Yo"
-
 end_await
 -> comms_station
+
+
+================ damcon_route ==================
+
+# COMMS_SELECTED_ID is the id of the target
+
+if has_role(COMMS_SELECTED_ID, 'flint'):
+    jump comms_flintstone
+elif has_role(COMMS_SELECTED_ID, 'rubble'):
+     jump comms_rubble
+end_if
+->END
+
+================ comms_flintstone ==================
+
+await comms:
+    + "Hail":
+        have COMMS_ORIGIN_ID broadcast "Yabba Daba Dooo"
+
+end_await
+-> comms_flintstone
+
+================ comms_rubble ==================
+
+await comms:
+    + "Hail":
+        have COMMS_ORIGIN_ID broadcast "Who ya doing fred?"
+
+end_await
+-> comms_rubble
