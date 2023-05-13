@@ -30,6 +30,7 @@ end_if
 simulation create
 delay gui 1s
 shared artemis =  to_id(player_spawn(0,0,0, "Artemis", "tsn", "tsn_battle_cruiser"))
+do set_face(artemis, random_terran())
 do assign_client_to_ship(0,artemis)
 go1 = grid_spawn(artemis, "fred", "fred", 9,4, 3, "blue", "flint")
 go2 = grid_spawn(artemis, "barney", "barney", 8,4, 3, "green", "rubble")
@@ -78,9 +79,12 @@ simulation resume
 ds1 = npc_spawn(1000,0,1000, "DS1", "tsn", "starbase_command", "behav_station")
 ds2 = npc_spawn(1000,0,-1000, "DS2", "tsn", "starbase_command", "behav_station")
 do add_role({ds1.id, ds2.id}, "Station")
+do set_face(ds1.id, random_terran())
+do set_face(ds2.id, random_terran())
 
 # Create an enemy
 k001 = npc_spawn(-1000,0,1000, "K001", "raider", "kralien_dreadnaught", "behav_npcship")
+do set_face(k001.id, random_kralien())
 
 ->END
 
@@ -135,7 +139,7 @@ await gui
 if COMMS_SELECTED_ID == COMMS_ORIGIN_ID:
     # This is the same ship
     jump internal_comms
-if has_role(COMMS_SELECTED_ID, 'Station'):
+elif has_role(COMMS_SELECTED_ID, 'Station'):
     jump comms_station
 elif has_role(COMMS_SELECTED_ID, 'raider'):
      jump npc_comms
@@ -227,7 +231,7 @@ end_if
 
 await comms:
     + "Hail":
-        have COMMS_ORIGIN_ID broadcast "Yabba Daba Dooo"
+        have client_id broadcast "Yabba Daba Dooo"
 
 end_await
 -> comms_flintstone
@@ -236,7 +240,7 @@ end_await
 
 await comms:
     + "Hail":
-        have COMMS_ORIGIN_ID broadcast "Who ya doing fred?"
+        have client_id broadcast "Who ya doing fred?"
 
 end_await
 -> comms_rubble
