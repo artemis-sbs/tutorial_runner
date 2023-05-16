@@ -116,7 +116,7 @@ class Story(PyMastStory):
             comms.receive("Testing running, one moment", face=story.task.biologist, color="green", title="exobiology")
         def button_counselor(story, comms):
             comms.receive("Something is disturbing the crew", face=story.task.counselor, color="cyan", title="counselor")
-            yield story.delay(seconds=2, use_sim=True)
+            yield story.task.delay(seconds=2, use_sim=True)
             comms.receive("Things feel like they are getting worse", face=story.task.counselor, color="cyan", title="counselor")
         
         yield self.await_comms({
@@ -128,19 +128,6 @@ class Story(PyMastStory):
         # loop
         yield self.jump(self.internal_comms_loop)
 
-        # #
-        #     + "Exobiology" color "green":
-        #         receive  "Testing running, one moment" title "Exobiology" face biologist color "green"
-        #         # It is best to schedule delayed responses so the comms buttons are not stalled
-        #         schedule test_finished
-        #     + "counselor" color "cyan":
-        #         receive  "Something is disturbing the crew" title "counselor" face counselor color "cyan"
-        #         #
-        #         # but you can delay comms, There will be no buttons during this delay
-        #         #
-        #         delay sim 3s
-        #         receive  "Things feel like they are getting worse" title "counselor" face counselor color "cyan"
-        # end_await
         # -> internal_comms_loop
 
     @label()

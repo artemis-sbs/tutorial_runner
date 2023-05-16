@@ -12,6 +12,8 @@ class Story(PyMastStory):
         super().__init__(*args, **kwargs)
 
         self.start_text = "This is a start project for mast"
+        self.route_spawn(self.route_ai)
+
 
     @label()
     def start_server(self):
@@ -70,7 +72,6 @@ class Story(PyMastStory):
         # Create an enemy
         k001 = Npc().spawn(self.sim, -1000,0,1000, "K001", "raider", "kralien_dreadnaught", "behav_npcship")
 
-        self.schedule_task(self.task_npc_targeting)
 
         sbs.resume_sim()
         yield self.jump(self.end_game)
@@ -116,20 +117,27 @@ class Story(PyMastStory):
         self.gui_console(self.task.console_select)
         self.await_gui()
 
-    @label()    
-    def task_npc_targeting(self):
-        raiders = query.role('raider')
-        if len(raiders)==0:
-            return
 
-        for raider in raiders:
-            the_target = query.closest(raider, query.role("__PLAYER__"), 2000)
-            if the_target is None:
-                the_target = query.closest(raider, query.role("Station"))
-            if the_target is not None:
-                query.target(self.sim, raider, the_target, True)
+    @label()    
+    def route_ai(self):
+        #
+        # SPAWNED_ID is a special value of the ID of the thing spawned
+        #
+        if query.has_role(self.task.SPAWNED_ID, "raider"):
+            yield self.jump(self.npc_targeting_ai)
+        #
+        # Added others
+        #
+        # Otherwise, task ends
+
+
+    @label()    
+    def npc_targeting_ai(self):
+        the_target = query.closest(self.task.SPAWNED_ID, query.role("__PLAYER__"), 2000)
+        if the_target is None:
+            the_target = query.closest(self.task.SPAWNED_ID, query.role("Station"))
+        if the_target is not None:
+            query.target(self.sim, self.task.SPAWNED_ID, the_target, True)
 
         yield self.delay(5)
-        yield self.jump(self.task_npc_targeting)
-
-        
+        yield self.jump(self.npc_targeting_ai)

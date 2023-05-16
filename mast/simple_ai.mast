@@ -8,7 +8,7 @@
 # A good place to setup AI is in the Spawn task
 # A spawn task is run soon after the object is spawned
 #
-route spawn route_targeting
+route spawn route_ai
 #
 # Show that multiple routes can be made
 route spawn route_station
@@ -116,18 +116,18 @@ do assign_client_to_ship(client_id,artemis)
 console console_select
 await gui
 
-========== route_targeting =========
+========== route_ai =========
 #
 # SPAWNED_ID is a special value of the ID of the thing spawned
 #
 if has_role(SPAWNED_ID, "raider"):
-    jump npc_targeting
+    jump npc_targeting_ai
 end_if
 #if not a raider end the task
 ->END
 
 
-=====  npc_targeting   =========
+=====  npc_targeting_ai   =========
 
 the_target = closest(SPAWNED_ID, role("__PLAYER__"), 2000)
 if the_target is None:
@@ -138,7 +138,7 @@ if the_target is not None:
 end_if
 
 delay sim 5s
-jump npc_targeting
+jump npc_targeting_ai
 
 
 ========== route_station =========
