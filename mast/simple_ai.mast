@@ -23,6 +23,7 @@ end_if
 
 ======= server_main =====
 
+
 #
 # Create the player ship so the clients see it
 # This is a simple script that has one playable ship
@@ -38,9 +39,33 @@ section style="area:2,20,80,35;"
 
 await choice:
     + "Start":
-        schedule start
+        -> start
+    end_await
+-> server_main
+
+
+======= win_server_main =====
+
+section style="area:2,20,80,35;"
+
+""" WINNER """
+
+await choice:
+    + "restart":
+        -> server_main
 end_await
-### This continues on to the next label
+
+======= lose_server_main =====
+
+section style="area:2,20,80,35;"
+
+""" LOSER """
+
+await choice:
+    + "restart":
+        ->server_main
+end_await
+
 
 ===== end_game =======
 # 
@@ -51,7 +76,9 @@ players = role("__PLAYER__")
 if len(players) == 0:
     start_text = "You lost"
     simulation pause
-    -> server_main
+    reroute server lose_server_main
+    reroute clients select_console
+    ->END
 end_if
 #
 # No more enemies
@@ -60,13 +87,15 @@ raiders = role("raider")
 if len(raiders) == 0:
     start_text = "You won"
     simulation pause
-    -> server_main
+    reroute server win_server_main
+    reroute clients select_console
+    ->END
 end_if
 delay sim 5s
 -> end_game
 
 ======== start ======
-simulation resume
+
 # Create the world here
 
 # Create a space station
@@ -76,8 +105,9 @@ do add_role({ds1.id, ds2.id}, "Station")
 
 # Create an enemy
 k001 = npc_spawn(-1000,0,1000, "K001", "raider", "kralien_dreadnaught", "behav_npcship")
-
-->END
+simulation resume
+schedule end_game
+delay gui 99m
 
 
 ====== client_main =======

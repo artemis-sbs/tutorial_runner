@@ -119,7 +119,7 @@ class Story(PyMastStory):
             self.gui_row()
             # """,
             self.gui_slider(
-                0.5, f"""color:{self.colors[i]};font:{self.fonts[i]};low:0;high:2; show_number:no""", None, None)
+                0.5, f"""color:{self.colors[i]};font:{self.fonts[i]};low:0;high:2; show_number:False""", None, None)
 
         yield self.await_gui({
             "menu": self.start

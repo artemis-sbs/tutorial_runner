@@ -68,6 +68,8 @@ do add_role({ds1.id, ds2.id}, "Station")
 
 # Create an enemy
 k001 = npc_spawn(-1000,0,1000, "K001", "raider", "kralien_dreadnaught", "behav_npcship")
+k001 = npc_spawn(-1500,0,1000, "K002", "raider", "kralien_dreadnaught", "behav_npcship")
+k001 = npc_spawn(-2000,0,1000, "K003", "raider", "kralien_dreadnaught", "behav_npcship")
 ->END
 
 ====== client_main =======
@@ -118,12 +120,6 @@ end_if
 
 ========= station_science =======
 
-await scan:
-    + "scan":
-        scan results "This is a friendly station"
-end_await
-
-======= station_science_detailed =======
 
 await scan:
     + "scan":
@@ -133,16 +129,11 @@ await scan:
     + "intl":
         scan results "The people seem smart enough"
 end_await
-jump station_science_detailed
+do print ("Station scan done")
+->END
 
 ====== raider_science  ===========
 
-await scan:
-    + "scan":
-        scan results "Looks like some bad dudes"
-end_await
-
-====== raider_science_detailed  ===========
 
 await scan:
     + "scan":
@@ -152,4 +143,5 @@ await scan:
     + "intl":
         scan results "The have spaceships, but seem quite dumb"
 end_await
-jump station_science_detailed
+do print ("Raider scan done")
+->END
