@@ -12,10 +12,7 @@ route spawn route_ai
 #
 # Show that multiple routes can be made
 route spawn route_station
-#
-# This handles the change client button to return to the select_console
-#
-route console change select_console
+route change console select_console
 
 if IS_SERVER:
     start_text = "This is a start project for mast"
@@ -109,8 +106,11 @@ do add_role({ds1.id, ds2.id}, "Station")
 
 # Create an enemy
 k001 = npc_spawn(-1000,0,1000, "K001", "raider", "kralien_dreadnaught", "behav_npcship")
+shared camera_id = to_id(k001)
+
 simulation resume
-schedule end_game
+reroute clients opening_scene
+#schedule end_game
 delay gui 99m
 
 
@@ -120,6 +120,8 @@ delay gui 99m
 # Default the console to helm
 #
 console_select = "helm"
+console_accepted = False
+credits_ran = False
 
 ====== select_console ======
 
@@ -132,47 +134,62 @@ vradio console_select "helm,weapons, comms,science,engineering,mainscreen"
 blank
 row
 
-button "accept":
-    ->console_selected
-end_button
+if credits_ran:
+    button "accept":
+        jump run_console
+    end_button
+else:
+    checkbox console_accepted "accept"
+end_if
 
 await gui
 ->END
 
-====== console_selected ====
-do assign_client_to_ship(client_id,artemis)
+====== opening_scene ====
 
-if console_select == "mainscreen":
-    credits = "3dview"
+do sbs.assign_client_to_ship(client_id, camera_id)
 
-    k001 = npc_spawn(-1000,0,1000, "K001", "raider", "kralien_dreadnaught", "behav_npcship")
-    do sbs.assign_client_to_ship(client_id, k001.id)
-    
-    
-    console credits
-    section style="area: 0, 10, 100, 55;;row-height:80px"
-    """font:gui-6; justify:center; text: From the mind of^Mike Substelny"""
-    await gui timeout 5s
+#
+# Credits one
+#
+activate console credits
+section style="area: 0, 30px, 100, 100;"
+layout widget "3dview"
+section style="area: 0, 10, 100, 65;"
+"""font:gui-6; justify:center; text: From the mind of^Mike Substelny"""
+await gui timeout 5s
 
-    console credits
-    section style="area: 0, 35, 100, 60;;row-height:40px"
-    """font:gui-6; justify:center; text: comes an amazing adventure"""
-    await gui timeout 5s
+#
+# Credits two
+#
+activate console credits
+section style="area: 0, 30px, 100, 100;"
+layout widget "3dview"
+section style="area: 0, 35, 100, 60;"
+"""font:gui-6; justify:center; text: comes an amazing adventure"""
+await gui timeout 5s
+#
+# Credits three
+#
+activate console credits
+section style="area: 0, 30px, 100, 100;"
+layout widget "3dview"
+section style="area: 65, 90, 100, 100;row-height:35px;"
+"""color: green; font:gui-5; justify:center; text: Lelinio"""
+row
+"""color: yellow; font:gui-4; justify:center; text: Karlian Territory"""
+await gui timeout 5s
 
-    console credits
-
-    section style="area: 65, 90, 100, 100;row-height:35px"
-    """color: blue; font:gui-5; justify:center; text: Lelinio"""
-    row
-    """color: yellow; font:gui-4; justify:center; text: Karlian Territory"""
-    await gui timeout 5s
-
-    console console_select
-    await gui
-else:
-    console console_select
+credits_ran = True
+if not console_accepted:
+    jump select_console
 end_if
-await gui
+
+
+========== run_console ========
+do sbs.assign_client_to_ship(client_id, artemis)
+console console_select
+    await gui
 
 ========== route_ai =========
 #

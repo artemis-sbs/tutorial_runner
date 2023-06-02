@@ -94,12 +94,6 @@ do set_face(k001.id, random_kralien())
 ====== client_main =======
 
 #
-# This handles the change client button to return to the select_console
-#
-event change_console:
-    ->select_console
-end_event
-#
 # Default the console to helm
 #
 console_select = "helm"

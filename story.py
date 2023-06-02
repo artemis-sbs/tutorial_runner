@@ -99,7 +99,14 @@ class Story(PyMastStory):
             page = SimplePage()
             Gui.push(None, self.task.page.client_id, page)
        
+        def run_cut_scene_mast():
+            class SimplePage(StoryPage):
+                story_file = "mast/simple_cut_scene.mast"
 
+            Gui.client_start_page_class(SimplePage)
+            page = SimplePage()
+            Gui.push(None, self.task.page.client_id, page)
+       
 
 
 
@@ -113,6 +120,8 @@ class Story(PyMastStory):
         self.gui_button("simple comms", run_simple_comms_mast)
         self.gui_row()
         self.gui_button("simple gui", run_simple_gui_mast)
+        self.gui_row()
+        self.gui_button("simple cut scene", run_cut_scene_mast)
 
 
         self.gui_section("area:50,30,85,95;row-height: 35px")
