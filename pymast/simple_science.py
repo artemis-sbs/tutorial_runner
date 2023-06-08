@@ -12,6 +12,7 @@ class Story(PyMastStory):
         super().__init__(*args, **kwargs)
 
         self.start_text = "This is a start project for mast"
+        self.route_science_select(self.handle_science)
 
     @label()
     def start_server(self):
@@ -70,8 +71,6 @@ class Story(PyMastStory):
         # Create an enemy
         k001 = Npc().spawn(self.sim, -1000,0,1000, "K001", "raider", "kralien_dreadnaught", "behav_npcship")
 
-        self.schedule_task(self.task_npc_targeting)
-
         sbs.resume_sim()
         yield self.jump(self.end_game)
 
@@ -116,20 +115,55 @@ class Story(PyMastStory):
         self.gui_console(self.task.console_select)
         self.await_gui()
 
-    @label()    
-    def task_npc_targeting(self):
-        raiders = query.role('raider')
-        if len(raiders)==0:
-            return
+    @label()
+    def handle_science(self):
+        #
+        # This label is called for a player ship (COMMS_ORIGIN_ID)
+        # and the SCIENCE_SELECTED_ID ship has not been communicated with
+        # this is used to resolve where to START the conversation with the TO ship
+        #
+        # SCIENCE_SELECTED_ID is the id of the target
 
-        for raider in raiders:
-            the_target = query.closest(raider, query.role("__PLAYER__"), 2000)
-            if the_target is None:
-                the_target = query.closest(raider, query.role("Station"))
-            if the_target is not None:
-                query.target(self.sim, raider, the_target, True)
+        if query.has_roles(self.task.SCIENCE_SELECTED_ID, 'tsn, Station'):
+            yield self.jump(self.station_science)
+        elif query.has_role(self.task.SCIENCE_SELECTED_ID, 'raider'):
+            yield self.jump(self.npc_science)
 
-        yield self.delay(5)
-        yield self.jump(self.task_npc_targeting)
+    @label()
+    def station_science(self):
+        def button_scan(story, science):
+            return "This is a friendly station"
+        
+        def button_bio(story, science):
+            return "Just a bunch of people"
+        
+        def button_intel(story, science):
+            return "The people seem smart enough"
 
+        yield self.await_science({
+            "scan": button_scan,
+            "bio": button_bio,
+            "itl": button_intel,
+        })
+        
+    
+
+    @label()
+    def npc_science(self):
+        def button_scan(story, science):
+            return "Looks like some bad dudes"
+        
+        def button_bio(story, science):
+            return "Whew can smell travel through space?"
+        
+        def button_intel(story, science):
+            return "The have spaceships, but seem quite dumb"
+
+        yield self.await_science({
+            "scan": button_scan,
+            "bio": button_bio,
+            "itl": button_intel,
+        })
+        
+    
         

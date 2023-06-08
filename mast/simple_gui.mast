@@ -7,7 +7,7 @@
 =========start=======
 shared colors =["yellow", "red", "green", "blue", "purple", "cyan", "black", "#FF00FE", "gray"]
 shared fonts = ["smallest", "gui-1", "gui-2", "gui-3", "gui-4", "gui-5", "gui-6"]
-shared faces = [random_terran(), random_terran_female(),random_terran_male(),random_terran_fluid() ]
+shared face_list = [random_terran(), random_terran_female(),random_terran_male(),random_terran_fluid() ]
 
 shared recruits = ~~[
     "Pat:^^Can helm a ship through the toughest of asteroid belts",
@@ -165,7 +165,7 @@ section style="area:10+x*20,20,25+x*20,65;" clickable "color:white; text:Recruit
     -> show_recruit
 end_clickable
 
-face faces[x]
+face face_list[x]
 row
 """color:cyan;font:gui-3; text:{recruits[x]}"""
 next x
@@ -179,7 +179,7 @@ end_await
 ========= show_recruit =======
 
 section style="area:2,20,80,95;"
-face faces[the_pick]
+face face_list[the_pick]
 """ Ready for duty """
 
 await choice:

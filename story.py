@@ -21,92 +21,89 @@ class Story(PyMastStory):
         self.start_text = "This runs example from tutorials"
 
     @label()
-    def start_server(self):
-        #
-        # Create the player ship so the clients see it
-        # This is a simple script that has one playable ship
-        #
-        sbs.create_new_sim()
-        
-        #yield self.delay(1)
+    def start_client(self):
+        self.gui_section("area:2,20,80,35;")
+        self.gui_text(f"""Waiting for the server to select example mission.""")
+        yield self.await_gui()
 
-        self.artemis =  query.to_id(PlayerShip().spawn(self.sim, 0,0,0, "Artemis", "tsn", "tsn_battle_cruiser"))
-        sbs.assign_client_to_ship(0,self.artemis)
-        
+    @label()
+    def start_server(self):
         self.gui_section("area:2,20,80,35;")
         self.gui_text(f""" {self.start_text}""")
+
+        def redirect_gui(page_class):
+            # Redirect server
+            Gui.push(None, 0,page_class())
+            # Future client connects
+            Gui.client_start_page_class(page_class)
+            # Redirect existing client
+            for id, client in Gui.clients.items():
+                if id != 0 and client is not None:
+                    client_page = client.page_stack[-1]
+                    if client_page:
+                        client.page_stack.pop()
+                    Gui.push(None, id,page_class())
+            
 
         def run_simple_ai():
             class SimplePage(PyMastStoryPage):
                 story = simple_ai.Story()
-
-            Gui.client_start_page_class(SimplePage)
-            Gui.push(None, self.task.page.client_id,SimplePage())
+            redirect_gui(SimplePage)
             
             
         def run_simple_ai_mast():
             class SimplePage(StoryPage):
                 story_file = "mast/simple_ai.mast"
 
-            Gui.client_start_page_class(SimplePage)
-            Gui.push(None, self.task.page.client_id, SimplePage())
-       
+            redirect_gui(SimplePage)
+
 
         def run_simple_science():
             class SimplePage(PyMastStoryPage):
                 story = simple_science.Story()
 
-            Gui.client_start_page_class(SimplePage)
-            Gui.push(None, self.task.page.client_id,SimplePage())
+            redirect_gui(SimplePage)
 
             
         def run_simple_science_mast():
             class SimplePage(StoryPage):
                 story_file = "mast/simple_science.mast"
 
-            Gui.client_start_page_class(SimplePage)
-            Gui.push(None, self.task.page.client_id, SimplePage())
-       
+            redirect_gui(SimplePage)
+
         def run_simple_comms():
             class SimplePage(PyMastStoryPage):
                 story = simple_comms.Story()
 
-            Gui.client_start_page_class(SimplePage)
-            Gui.push(None, self.task.page.client_id,SimplePage())
+            redirect_gui(SimplePage)
 
         def run_simple_comms_mast():
             class SimplePage(StoryPage):
                 story_file = "mast/simple_comms.mast"
 
-            Gui.client_start_page_class(SimplePage)
-            Gui.push(None, self.task.page.client_id, SimplePage())
-       
+            redirect_gui(SimplePage)
+
         def run_simple_gui():
             class SimplePage(PyMastStoryPage):
                 story = simple_gui.Story()
 
-            Gui.client_start_page_class(SimplePage)
-            
-            page = SimplePage()
-            Gui.push(None, self.task.page.client_id, page)
+            redirect_gui(SimplePage)
             
 
         def run_simple_gui_mast():
             class SimplePage(StoryPage):
                 story_file = "mast/simple_gui.mast"
 
-            Gui.client_start_page_class(SimplePage)
-            page = SimplePage()
-            Gui.push(None, self.task.page.client_id, page)
-       
+            redirect_gui(SimplePage)
+
         def run_cut_scene_mast():
             class SimplePage(StoryPage):
-                story_file = "mast/simple_cut_scene.mast"
+                story_file = "mast/pirate_cut_scene.mast"
+                #story_file = "mast/simple_cut_scene.mast"
 
-            Gui.client_start_page_class(SimplePage)
-            page = SimplePage()
-            Gui.push(None, self.task.page.client_id, page)
-       
+            redirect_gui(SimplePage)
+        
+
 
 
 
@@ -137,6 +134,5 @@ class Story(PyMastStory):
 
 
         yield self.await_gui()
-        #print("I'm outy")
-        
+            
     

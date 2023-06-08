@@ -9,7 +9,7 @@ route comms select comms_route
 
 route grid select damcon_route
 
-route change console fred
+route change console select_console
 
 if IS_SERVER:
     start_text = "This is a start project for mast"
@@ -89,7 +89,6 @@ do set_face(k001.id, random_kralien())
 ->END
 
 
-===== fred ====
 
 ====== client_main =======
 

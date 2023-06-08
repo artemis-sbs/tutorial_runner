@@ -12,9 +12,6 @@ route spawn route_ai
 #
 # Show that multiple routes can be made
 route spawn route_station
-#
-# This handles the change client button to return to the select_console
-#
 route change console select_console
 
 if IS_SERVER:
@@ -32,8 +29,10 @@ end_if
 # Create the player ship so the clients see it
 # This is a simple script that has one playable ship
 #
+do sbs.set_sky_box_all("sky-delight")
 simulation create
-#delay gui 1s
+
+
 shared artemis =  to_id(player_spawn(0,0,0, "Artemis", "tsn", "tsn_battle_cruiser"))
 do assign_client_to_ship(0,artemis)
 
@@ -107,10 +106,10 @@ ds1 = npc_spawn(1000,0,1000, "DS1", "tsn", "starbase_command", "behav_station")
 ds2 = npc_spawn(1000,0,-1000, "DS2", "tsn", "starbase_command", "behav_station")
 do add_role({ds1.id, ds2.id}, "Station")
 
-# Create an enemy
-k001 = npc_spawn(-1000,0,1000, "K001", "raider", "kralien_dreadnaught", "behav_npcship")
+
 simulation resume
-schedule end_game
+reroute clients opening_scene
+#schedule end_game
 delay gui 99m
 
 
@@ -120,6 +119,9 @@ delay gui 99m
 # Default the console to helm
 #
 console_select = "helm"
+console_accepted = False
+credits_ran = False
+do sbs.set_sky_box(client_id, "sky-delight")
 
 ====== select_console ======
 
@@ -132,47 +134,80 @@ vradio console_select "helm,weapons, comms,science,engineering,mainscreen"
 blank
 row
 
-button "accept":
-    ->console_selected
-end_button
+if credits_ran:
+    button "accept":
+        jump run_console
+    end_button
+else:
+    checkbox console_accepted "accept"
+end_if
 
 await gui
 ->END
 
-====== console_selected ====
-do assign_client_to_ship(client_id,artemis)
+====== opening_scene ====
 
-if console_select == "mainscreen":
-    credits = "3dview"
+# Create an chase camera
+cambot = npc_spawn(-1000,100,1200, "cam", "camera", "invisible", "behav_npcship")
+camera_id = to_id(cambot)
 
-    k001 = npc_spawn(-1000,0,1000, "K001", "raider", "kralien_dreadnaught", "behav_npcship")
-    do sbs.assign_client_to_ship(client_id, k001.id)
-    
-    
-    console credits
-    section style="area: 0, 10, 100, 55;;row-height:80px"
-    """font:gui-6; justify:center; text: From the mind of^Mike Substelny"""
-    await gui timeout 5s
+do sbs.set_main_view_modes(client_id, "3dview", "front", "tracking")
+do sbs.assign_client_to_ship(client_id, camera_id)
 
-    console credits
-    section style="area: 0, 35, 100, 60;;row-height:40px"
-    """font:gui-6; justify:center; text: comes an amazing adventure"""
-    await gui timeout 5s
 
-    console credits
+pirate = npc_spawn(-1000,0,900, "Wolf", "raider", "pirate_strongbow", "behav_npcship")
+pirate_eo = pirate.engine_object
+pirate = pirate.id
+do cambot.blob.set("camera_target_UID", pirate)
 
-    section style="area: 65, 90, 100, 100;row-height:35px"
-    """color: blue; font:gui-5; justify:center; text: Lelinio"""
-    row
-    """color: yellow; font:gui-4; justify:center; text: Karlian Territory"""
-    await gui timeout 5s
+do sbs.add_particle_emittor(pirate_eo, -1, "align:True; smoke:True; shape:hull; color:black; lifespan:60; image_cell:4; size:12; speed: 0; count:50")
+emittorID = sbs.add_particle_emittor(pirate_eo, -1, "align:True; shape:hull; color:purple,pink; lifespan:5; image_cell:0,3; size:20; speed: 0; count:50")
+do sbs.assign_client_to_ship(client_id, camera_id)
 
-    console console_select
-    await gui
-else:
-    console console_select
+#
+# Credits one
+#
+activate console credits
+section style="area: 0, 0, 100, 100;"
+layout widget "3dview"
+
+section style="area: 0, 65, 100, 100;"
+"""font:gui-3; justify:center; text: The following was created using the Artemis Cosmos Engine^using the user extensible scripting capabilities.^Including this text"""
+row
+"""font:gui-2; justify:center; text: Artemis Cosmos is Early Game Development. All is subject to change. """
+await gui timeout 12s
+
+
+#
+# Credits two
+#
+activate console credits
+section style="area: 0, 0, 100, 100;"
+layout widget "3dview"
+
+do target_pos(sim, camera_id, -1000,300,100) 
+#do sim.reposition_space_object(cambot.engine_object, -1000,300,100) 
+do cambot.blob.set("camera_target_UID", pirate)
+
+
+
+await gui timeout 5s
+
+activate console credits
+section style="area: 0, 0, 100, 100;"
+layout widget "3dview"
+await gui timeout 50s
+
+credits_ran = True
+if not console_accepted:
+    jump select_console
 end_if
-await gui
+
+
+========== run_console ========
+do sbs.assign_client_to_ship(client_id, artemis)
+console console_select
+    await gui
 
 ========== route_ai =========
 #
