@@ -5,7 +5,15 @@
 
 # Configure the label where comms routing occurs
 
+#
+# Routing occurs in reverser order (latest is tried first)
+# If the route results in a task that is still running
+# Then no other routes should override it
+#
+
 route comms select comms_route
+route comms select super_comms_route
+
 
 route grid select damcon_route
 
@@ -76,9 +84,8 @@ simulation resume
 # Create the world here
 
 # Create a space station
-ds1 = npc_spawn(1000,0,1000, "DS1", "tsn", "starbase_command", "behav_station")
-ds2 = npc_spawn(1000,0,-1000, "DS2", "tsn", "starbase_command", "behav_station")
-do add_role({ds1.id, ds2.id}, "Station")
+ds1 = npc_spawn(1000,0,1000, "DS1", "tsn, Station", "starbase_command", "behav_station")
+ds2 = npc_spawn(1000,0,-1000, "DS2", "tsn, Station, Casino", "starbase_command", "behav_station")
 do set_face(ds1.id, random_terran())
 do set_face(ds2.id, random_terran())
 
@@ -119,6 +126,14 @@ await gui
 do assign_client_to_ship(client_id,artemis)
 console console_select
 await gui
+
+
+
+================ super_comms_route ==================
+if has_roles(COMMS_SELECTED_ID, "Station, casino"):
+    jump comms_casino
+end_if
+->END
 
 
 ================ comms_route ==================
@@ -196,6 +211,30 @@ await comms:
         receive  """OK we give up"""
 end_await
 -> npc_comms
+
+
+
+================ comms_casino ==================
+money = 100
+================ comms_casino_loop ==================
+flip = random.randint(0,1)
+await comms:
+    + "Heads":
+        guess = 0
+    + "Tails":
+        guess = 1
+end_await
+if flip == guess:
+    money += 10
+    receive "Winner - bank {money}"
+else:
+    money -= 10
+    receive "Loser - bank {money}"
+end_if
+
+jump comms_casino_loop if money > 0
+receive "You went bust"
+->END
 
 
 ======== comms_station ====== 

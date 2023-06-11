@@ -4,14 +4,6 @@
 # uncomment to see log messages
 #logger
 
-#
-# A good place to setup AI is in the Spawn task
-# A spawn task is run soon after the object is spawned
-#
-route spawn route_ai
-#
-# Show that multiple routes can be made
-route spawn route_station
 route change console select_console
 
 if IS_SERVER:
@@ -23,7 +15,6 @@ end_if
 
 
 ======= server_main =====
-
 
 #
 # Create the player ship so the clients see it
@@ -45,55 +36,7 @@ await choice:
 -> server_main
 
 
-======= win_server_main =====
 
-section style="area:2,20,80,35;"
-
-""" WINNER """
-
-await choice:
-    + "restart":
-        -> server_main
-end_await
-
-======= lose_server_main =====
-
-section style="area:2,20,80,35;"
-
-""" LOSER """
-
-await choice:
-    + "restart":
-        ->server_main
-end_await
-
-
-===== end_game =======
-# 
-# Check for end game
-#
-# no more players
-players = role("__PLAYER__")
-if len(players) == 0:
-    start_text = "You lost"
-    simulation pause
-    reroute server lose_server_main
-    reroute clients select_console
-    ->END
-end_if
-#
-# No more enemies
-#
-raiders = role("raider")
-if len(raiders) == 0:
-    start_text = "You won"
-    simulation pause
-    reroute server win_server_main
-    reroute clients select_console
-    ->END
-end_if
-delay sim 5s
--> end_game
 
 ======== start ======
 
@@ -110,7 +53,6 @@ shared camera_id = to_id(k001)
 
 simulation resume
 reroute clients opening_scene
-#schedule end_game
 delay gui 99m
 
 
@@ -148,37 +90,194 @@ await gui
 ====== opening_scene ====
 
 do sbs.assign_client_to_ship(client_id, camera_id)
+captain_face = random_terran()
+operator_face = random_terran()
+mechanic_face = random_terran()
+cats_face = random_torgoth()
 
 #
 # Credits one
+# Show a nebula
 #
 activate console credits
 section style="area: 0, 30px, 100, 100;"
 layout widget "3dview"
 section style="area: 0, 10, 100, 65;"
-"""font:gui-6; justify:center; text: From the mind of^Mike Substelny"""
+"""font:gui-5; justify:center; text: in a.d. 2101"""
 await gui timeout 5s
 
 #
 # Credits two
+# Show explosion
 #
 activate console credits
 section style="area: 0, 30px, 100, 100;"
 layout widget "3dview"
 section style="area: 0, 35, 100, 60;"
-"""font:gui-6; justify:center; text: comes an amazing adventure"""
+"""font:gui-6; justify:center; text: war was beginning"""
 await gui timeout 5s
+
 #
-# Credits three
+# Credits two
+# Show bridge (or captains face)
 #
 activate console credits
 section style="area: 0, 30px, 100, 100;"
 layout widget "3dview"
-section style="area: 65, 90, 100, 100;row-height:35px;"
-"""color: green; font:gui-5; justify:center; text: Lelinio"""
-row
-"""color: yellow; font:gui-4; justify:center; text: Karlian Territory"""
+
+section style="area: 25, 5, 74, 35;"
+face captain_face
+section style="area: 0, 35, 100, 60;"
+"""font:gui-6; justify:center; text: captain: what happen?"""
 await gui timeout 5s
+
+
+#
+# Show bridge (or mechanic face)
+#
+activate console credits
+section style="area: 0, 30px, 100, 100;"
+layout widget "3dview"
+
+section style="area: 25, 5, 74, 35;"
+face mechanic_face
+section style="area: 0, 35, 100, 60;"
+"""font:gui-6; justify:center; text: mechanic: somebody set up us the bomb"""
+await gui timeout 5s
+
+
+#
+# Show captains face
+#
+activate console credits
+section style="area: 0, 30px, 100, 100;"
+layout widget "3dview"
+section style="area: 25, 5, 74, 35;"
+face operator_face
+section style="area: 0, 35, 100, 60;"
+"""font:gui-6; justify:center; text: Operator: we get signal."""
+await gui timeout 5s
+
+#
+# Show captains face
+#
+activate console credits
+section style="area: 0, 30px, 100, 100;"
+layout widget "3dview"
+section style="area: 25, 5, 74, 35;"
+face captain_face
+section style="area: 0, 35, 100, 60;"
+
+"""font:gui-6; justify:center; text: Operator: we get signal."""
+row
+"""font:gui-6; justify:center; text: Captain: What !"""
+await gui timeout 5s
+
+
+#
+# Show captains face
+#
+activate console credits
+section style="area: 0, 30px, 100, 100;"
+layout widget "3dview"
+section style="area: 25, 5, 74, 35;"
+face operator_face
+section style="area: 0, 35, 100, 60;"
+
+"""font:gui-6; justify:center; text: Operator: Main screen turn on."""
+await gui timeout 5s
+
+#
+# Show captains face
+#
+activate console credits
+section style="area: 0, 30px, 100, 100;"
+layout widget "3dview"
+section style="area: 25, 5, 74, 35;"
+face captain_face
+
+section style="area: 0, 35, 100, 60;"
+"""font:gui-6; justify:center; text: Captain: it's you !!"""
+await gui timeout 5s
+
+#
+# Show CATS face
+#
+activate console credits
+section style="area: 0, 30px, 100, 100;"
+layout widget "3dview"
+section style="area: 25, 5, 74, 35;"
+face cats_face
+
+section style="area: 0, 35, 100, 60;"
+"""font:gui-6; justify:center; text: cats: how are you gentleman !!"""
+await gui timeout 5s
+
+#
+# Show CATS face
+#
+activate console credits
+section style="area: 0, 30px, 100, 100;"
+layout widget "3dview"
+section style="area: 25, 5, 74, 35;"
+face cats_face
+
+section style="area: 0, 35, 100, 60;"
+"""font:gui-6; justify:center; text: cats: all your base are belong to us."""
+await gui timeout 5s
+
+#
+# Show CATS face
+#
+activate console credits
+section style="area: 0, 30px, 100, 100;"
+layout widget "3dview"
+section style="area: 25, 5, 74, 35;"
+face cats_face
+
+section style="area: 0, 35, 100, 60;"
+"""font:gui-6; justify:center; text: cats: you are on the way to destruction."""
+await gui timeout 5s
+
+#
+# Show Captain face
+#
+activate console credits
+section style="area: 0, 30px, 100, 100;"
+layout widget "3dview"
+section style="area: 25, 5, 74, 35;"
+face captain_face
+
+section style="area: 0, 35, 100, 60;"
+"""font:gui-6; justify:center; text: captain: what you say !!"""
+await gui timeout 5s
+
+#
+# Show CATS face
+#
+activate console credits
+section style="area: 0, 30px, 100, 100;"
+layout widget "3dview"
+section style="area: 25, 5, 74, 35;"
+face cats_face
+
+section style="area: 0, 35, 100, 60;"
+"""font:gui-6; justify:center; text: cats: you have no chance to survive make your time."""
+await gui timeout 5s
+
+#
+# Show CATS face
+#
+activate console credits
+section style="area: 0, 30px, 100, 100;"
+layout widget "3dview"
+section style="area: 25, 5, 74, 35;"
+face cats_face
+
+section style="area: 0, 35, 100, 60;"
+"""font:gui-6; justify:center; text: cats: HA HA HA HA....."""
+await gui timeout 5s
+
 
 credits_ran = True
 if not console_accepted:
@@ -191,36 +290,3 @@ do sbs.assign_client_to_ship(client_id, artemis)
 console console_select
     await gui
 
-========== route_ai =========
-#
-# SPAWNED_ID is a special value of the ID of the thing spawned
-#
-if has_role(SPAWNED_ID, "raider"):
-    jump npc_targeting_ai
-end_if
-#if not a raider end the task
-->END
-
-
-=====  npc_targeting_ai   =========
-
-the_target = closest(SPAWNED_ID, role("__PLAYER__"), 2000)
-if the_target is None:
-    the_target = closest(SPAWNED_ID, role("Station"))
-end_if
-if the_target is not None:
-    do target(sim, SPAWNED_ID, the_target, True)
-end_if
-
-delay sim 5s
-jump npc_targeting_ai
-
-
-========== route_station =========
-
-# Just an example to show multiple spawn routes
-
-if has_role(SPAWNED_ID, "station"):
-    log "Station"
-end_if
-->END

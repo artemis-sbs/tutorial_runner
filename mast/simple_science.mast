@@ -4,6 +4,7 @@
 #
 
 route science select handle_science
+route spawn route_ai
 
 if IS_SERVER:
     start_text = "This is a start project for mast"
@@ -73,13 +74,6 @@ k001 = npc_spawn(-2000,0,1000, "K003", "raider", "kralien_dreadnaught", "behav_n
 ->END
 
 ====== client_main =======
-
-#
-# This handles the change client button to return to the select_console
-#
-event change_console:
-    ->select_console
-end_event
 #
 # Default the console to helm
 #
@@ -111,6 +105,12 @@ await gui
 
 
 ====== handle_science =====
+# 
+# Avoid scheduling this multiple times
+#
+->END if has_link_to(SCIENCE_SELECTED_ID, "science", SCIENCE_ORIGIN_ID)
+do link(SCIENCE_SELECTED_ID, "science", SCIENCE_ORIGIN_ID)
+
 if has_role(SCIENCE_SELECTED_ID, "Station"):
     jump station_science
 elif has_role(SCIENCE_SELECTED_ID, "raider"):
@@ -145,3 +145,39 @@ await scan:
 end_await
 do print ("Raider scan done")
 ->END
+
+========== route_ai =========
+#
+# SPAWNED_ID is a special value of the ID of the thing spawned
+#
+if has_role(SPAWNED_ID, "raider"):
+    jump npc_targeting_ai
+end_if
+#if not a raider end the task
+->END
+
+
+=====  npc_targeting_ai   =========
+
+the_target = closest(SPAWNED_ID, role("__PLAYER__"), 2000)
+if the_target is None:
+    the_target = closest(SPAWNED_ID, role("Station"))
+else:
+    #
+    # This is a 'sonar scan' that schedules science 
+    # Since this is close enough the player gets a free scan
+    #
+    follow route science select the_target SPAWNED_ID
+end_if
+
+if the_target is not None:
+    #
+    # This skips having them shoot, but they still chase
+    #
+    do target(sim, SPAWNED_ID, the_target, False)
+end_if
+
+#do print(f"Task count  {len(mast_scheduler.tasks)}")
+
+delay sim 5s
+jump npc_targeting_ai

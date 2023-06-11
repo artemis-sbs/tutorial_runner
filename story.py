@@ -102,7 +102,12 @@ class Story(PyMastStory):
                 #story_file = "mast/simple_cut_scene.mast"
 
             redirect_gui(SimplePage)
-        
+
+        def run_all_your_base():
+            class SimplePage(StoryPage):
+                story_file = "mast/simple_cut_scene.mast"
+
+            redirect_gui(SimplePage)
 
 
 
@@ -119,6 +124,8 @@ class Story(PyMastStory):
         self.gui_button("simple gui", run_simple_gui_mast)
         self.gui_row()
         self.gui_button("simple cut scene", run_cut_scene_mast)
+        self.gui_row()
+        self.gui_button("All your base", run_all_your_base)
 
 
         self.gui_section("area:50,30,85,95;row-height: 35px")
