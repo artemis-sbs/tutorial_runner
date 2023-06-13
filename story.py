@@ -5,6 +5,7 @@ from sbs_utils.pymast.pymaststory import PyMastStory
 from sbs_utils.mast.maststoryscheduler import StoryPage
 from sbs_utils.pymast.pymaststorypage import PyMastStoryPage
 from sbs_utils.pymast.pymasttask import label
+from sbs_utils.pymast.pollresults import PollResults
 from sbs_utils import query
 from sbs_utils.objects import PlayerShip, Npc
 from sbs_utils.gui import Gui
@@ -49,6 +50,7 @@ class Story(PyMastStory):
             class SimplePage(PyMastStoryPage):
                 story = simple_ai.Story()
             redirect_gui(SimplePage)
+            yield PollResults.OK_JUMP
             
             
         def run_simple_ai_mast():
@@ -56,6 +58,7 @@ class Story(PyMastStory):
                 story_file = "mast/simple_ai.mast"
 
             redirect_gui(SimplePage)
+            yield PollResults.OK_JUMP
 
 
         def run_simple_science():
@@ -88,6 +91,7 @@ class Story(PyMastStory):
                 story = simple_gui.Story()
 
             redirect_gui(SimplePage)
+            yield PollResults.OK_JUMP
             
 
         def run_simple_gui_mast():

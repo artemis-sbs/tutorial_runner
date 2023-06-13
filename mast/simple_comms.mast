@@ -12,7 +12,7 @@
 #
 
 route comms select comms_route
-route comms select super_comms_route
+route comms select casino_comms_route
 
 
 route grid select damcon_route
@@ -129,7 +129,7 @@ await gui
 
 
 
-================ super_comms_route ==================
+================ casino_comms_route ==================
 if has_roles(COMMS_SELECTED_ID, "Station, casino"):
     jump comms_casino
 end_if

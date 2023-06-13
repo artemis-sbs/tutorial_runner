@@ -52,6 +52,8 @@ class Story(PyMastStory):
         self.gui_button(f"""text: Text input""", self.page_gui_text_input)
         self.gui_row()
         self.gui_button(f"""text:Clickable""", self.page_gui_clickable)
+        self.gui_row()
+        self.gui_button(f"""text:Reroute""", self.page_reroute)
         
 
         self.gui_section("area:25,20,80,85;")
@@ -160,6 +162,28 @@ class Story(PyMastStory):
         self.gui_section("area:2,20,80,95;")
         self.gui_face(self.faces[self.recruit])
         self.gui_text(""" Ready for duty """)
+
+        yield self.await_gui({
+            "menu": self.start
+        })
+
+    @label()
+    def page_reroute(self):
+        def do_reroute():
+            yield self.reroute_gui_all(self.page_show_reroute)
+
+        self.gui_section("area:2,20,80,55;")
+        self.gui_text(""" Reroute """)
+        self.gui_row("row-height: 55px;");
+        self.gui_button("do reroute", do_reroute)
+        
+
+        yield self.await_gui()
+
+    @label()
+    def page_show_reroute(self):
+        self.gui_section("area:2,20,80,95;")
+        self.gui_text(""" rerouted """)
 
         yield self.await_gui({
             "menu": self.start
