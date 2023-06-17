@@ -86,6 +86,12 @@ class Story(PyMastStory):
 
             redirect_gui(SimplePage)
 
+        def run_simple_comms_modal_mast():
+            class SimplePage(StoryPage):
+                story_file = "mast/simple_comms_modal.mast"
+
+            redirect_gui(SimplePage)
+
         def run_simple_gui():
             class SimplePage(PyMastStoryPage):
                 story = simple_gui.Story()
@@ -124,6 +130,8 @@ class Story(PyMastStory):
         self.gui_button("simple science", run_simple_science_mast)
         self.gui_row()
         self.gui_button("simple comms", run_simple_comms_mast)
+        self.gui_row()
+        self.gui_button("Modal comms", run_simple_comms_modal_mast)
         self.gui_row()
         self.gui_button("simple gui", run_simple_gui_mast)
         self.gui_row()
