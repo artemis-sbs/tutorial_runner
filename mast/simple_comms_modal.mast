@@ -10,6 +10,8 @@
 # Simulating a modal dialog
 #
 route comms select comms_route
+
+route weapons select weapons_select_route
 #
 route change console select_console
 
@@ -22,8 +24,6 @@ end_if
 
 
 ======= server_main =====
-
-
 #
 # Create the player ship so the clients see it
 # This is a simple script that has one playable ship
@@ -54,7 +54,7 @@ shared ds2 = npc_spawn(1000,0,-1000, "DS2", "tsn, Station", "starbase_command", 
 do set_face(ds1.id, random_terran())
 do set_face(ds2.id, random_terran())
 
-T001 = npc_spawn(-1000,0,-1000, "T001", "tsn", "tsn_battle_cruiser", "behav_npcship")
+T001 = npc_spawn(-1000,0,-1000, "T001", "tsn, friendly", "tsn_battle_cruiser", "behav_npcship")
 do set_face(T001.id, random_terran())
 
 # Create an enemy
@@ -254,22 +254,76 @@ if player:
 else:
     player_name = "Terran"
 end_if
-
-
+#
+# Switch to the friendly ship
+#
+do assign_client_to_ship(client_id,comms_selected)
+#
+# Make a limit weapons console
+#
+activate console weapons
+section style="area: 0, 4, 80, 80;"
+layout widget "2dview"
+        
+section style="area: 80, 4, 100, 80;"
 face station_face
+row
 """
 text: Hello {player_name} tell us what to do
 """
 
+#
+# The selection will be made in parallel
+# and set in inventory
+#
 await choice:
    + "APPLY":
-      do set_inventory_value(comms_selected, "first_choice", True)
+        target_id = get_inventory_value(comms_selected, "WEAPONS_SELECTED_ID", None)
+        target_point = get_inventory_value(comms_selected, "WEAPONS_SELECTED_POINT", None)
+        if target_id:
+            do target(sim, comms_selected, target_id, True)
+        else:
+            do target_pos(sim, comms_selected, target_point.x, target_point.y, target_point.z )
+        end_if
    + "CANCEL":
         jump console_selected
 end_await
+
+#
+# Get back on the right ship
+#
+do assign_client_to_ship(client_id,ship)
 jump console_selected
 
 
 
 ====== npc_comms =========
 -> END
+
+
+========== weapons_select_route ========
+#
+# Handles the 2dView selection for friendlies
+#
+->END if not has_role(WEAPONS_ORIGIN_ID, "friendly")
+
+nav = get_inventory_value(WEAPONS_ORIGIN_ID, "WEAPONS_SELECTED_NAV", None)
+if nav:
+    do sim.delete_navpoint_by_reference(nav)
+    do set_inventory_value(WEAPONS_ORIGIN_ID, "WEAPONS_SELECTED_NAV", None)
+end_if
+# Handle initial clicks
+if EVENT.selected_id != 0:
+    do set_inventory_value(WEAPONS_ORIGIN_ID, "WEAPONS_SELECTED_POINT", None)
+    do set_inventory_value(WEAPONS_ORIGIN_ID, "WEAPONS_SELECTED_ID", EVENT.selected_id)
+else:
+    do set_inventory_value(WEAPONS_ORIGIN_ID, "WEAPONS_SELECTED_POINT", EVENT.source_point)
+    do set_inventory_value(WEAPONS_ORIGIN_ID, "WEAPONS_SELECTED_ID", None)
+    
+    nav = sim.add_navpoint(EVENT.source_point.x,EVENT.source_point.y, EVENT.source_point.z, "goto", "white")
+    do nav.visibleToShip =WEAPONS_ORIGIN_ID
+    do set_inventory_value(WEAPONS_ORIGIN_ID, "WEAPONS_SELECTED_NAV", nav)
+end_if
+#Done no point running more
+->END
+

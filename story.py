@@ -6,6 +6,7 @@ from sbs_utils.mast.maststoryscheduler import StoryPage
 from sbs_utils.pymast.pymaststorypage import PyMastStoryPage
 from sbs_utils.pymast.pymasttask import label
 from sbs_utils.pymast.pollresults import PollResults
+from sbs_utils.mast.mast import Mast
 from sbs_utils import query
 from sbs_utils.objects import PlayerShip, Npc
 from sbs_utils.gui import Gui
@@ -87,6 +88,7 @@ class Story(PyMastStory):
             redirect_gui(SimplePage)
 
         def run_simple_comms_modal_mast():
+            Mast.include_code = True
             class SimplePage(StoryPage):
                 story_file = "mast/simple_comms_modal.mast"
 
