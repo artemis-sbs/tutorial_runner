@@ -34,17 +34,14 @@ class Story(PyMastStory):
         self.gui_text(f""" {self.start_text}""")
 
         def redirect_gui(page_class):
-            # Redirect server
-            Gui.push(None, 0,page_class())
+            
             # Future client connects
             Gui.client_start_page_class(page_class)
             # Redirect existing client
             for id, client in Gui.clients.items():
-                if id != 0 and client is not None:
-                    client_page = client.page_stack[-1]
-                    if client_page:
-                        client.page_stack.pop()
-                    Gui.push(None, id,page_class())
+                if client is not None:
+                    client.pop(self.task.ctx)
+                    Gui.push(self.task.ctx, id,page_class())
             
 
         def run_simple_ai():
@@ -121,6 +118,12 @@ class Story(PyMastStory):
 
             redirect_gui(SimplePage)
 
+        def run_extend_console_mast():
+            class SimplePage(StoryPage):
+                story_file = "mast/simple_extend_console.mast"
+
+            redirect_gui(SimplePage)
+
 
 
 
@@ -140,6 +143,8 @@ class Story(PyMastStory):
         self.gui_button("simple cut scene", run_cut_scene_mast)
         self.gui_row()
         self.gui_button("All your base", run_all_your_base)
+        self.gui_row()
+        self.gui_button("Extend Console", run_extend_console_mast)
 
 
         self.gui_section("area:50,30,85,95;row-height: 35px")

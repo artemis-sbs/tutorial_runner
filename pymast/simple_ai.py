@@ -34,6 +34,7 @@ class Story(PyMastStory):
         yield self.await_gui({
             "Start": self.start
         })
+
         
     @label()
     def end_game(self):
@@ -82,12 +83,10 @@ class Story(PyMastStory):
         #
         # This handles the change client button to return to the select_console
         #
-        # event change_console:
-        #     ->select_console
-        # end_event
         #
         # Default the console to helm
         #
+        print("Client Start Basic AI")
         self.task.console_select = "helm"
         yield self.jump(self.select_console)
 
@@ -109,13 +108,13 @@ class Story(PyMastStory):
                 self.task.console_select = console_radio.value
                 return True
 
-        self.await_gui(on_message=on_message)
+        yield self.await_gui(on_message=on_message)
         
     @label()
     def console_selected(self):
         sbs.assign_client_to_ship(self.task.page.client_id,self.artemis)
         self.gui_console(self.task.console_select)
-        self.await_gui()
+        yield self.await_gui()
 
 
     @label()    

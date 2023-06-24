@@ -1,0 +1,18 @@
+import bar.mast
+import simple_common.mast
+
+
+start_text = "This is a start project for mast"
+
+#
+# This replaces the label defined in 
+# simple common to add buttons
+#
+
+==== replace: console_bottom_choices ====
+await choice:
+    + "Head to the bar":
+        push EnterBar
+end_await
+# Need this when return from pushed
+jump console_selected

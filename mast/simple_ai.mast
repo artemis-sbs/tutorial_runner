@@ -1,8 +1,4 @@
-#
-# Show the proper GUI for server vs Client Consoles
-#
-# uncomment to see log messages
-#logger
+import simple_common.mast
 
 #
 # A good place to setup AI is in the Spawn task
@@ -12,167 +8,9 @@ route spawn route_ai
 #
 # Show that multiple routes can be made
 route spawn route_station
-#
-# This handles the change client button to return to the select_console
-#
-route change console select_console
 
-if IS_SERVER:
-    start_text = "This is a start project for mast"
-    ->server_main
-else:
-    -> client_main
-end_if
+start_text = "This is a start project for mast"
 
-
-======= server_main =====
-
-
-#
-# Create the player ship so the clients see it
-# This is a simple script that has one playable ship
-#
-simulation create
-#delay gui 1s
-shared artemis =  to_id(player_spawn(0,0,0, "Artemis", "tsn", "tsn_battle_cruiser"))
-do assign_client_to_ship(0,artemis)
-
-section style="area:2,20,80,35;"
-
-""" {start_text}"""
-
-await choice:
-    + "Start":
-        -> start
-    end_await
--> server_main
-
-
-======= win_server_main =====
-
-section style="area:2,20,80,35;"
-
-""" WINNER """
-
-await choice:
-    + "restart":
-        -> server_main
-end_await
-
-======= lose_server_main =====
-
-section style="area:2,20,80,35;"
-
-""" LOSER """
-
-await choice:
-    + "restart":
-        ->server_main
-end_await
-
-
-===== end_game =======
-# 
-# Check for end game
-#
-# no more players
-players = role("__PLAYER__")
-if len(players) == 0:
-    start_text = "You lost"
-    simulation pause
-    reroute server lose_server_main
-    reroute clients select_console
-    ->END
-end_if
-#
-# No more enemies
-#
-raiders = role("raider")
-if len(raiders) == 0:
-    start_text = "You won"
-    simulation pause
-    reroute server win_server_main
-    reroute clients select_console
-    ->END
-end_if
-delay sim 5s
--> end_game
-
-======== start ======
-
-# Create the world here
-
-# Create a space station
-ds1 = npc_spawn(1000,0,1000, "DS1", "tsn", "starbase_command", "behav_station")
-ds2 = npc_spawn(1000,0,-1000, "DS2", "tsn", "starbase_command", "behav_station")
-do add_role({ds1.id, ds2.id}, "Station")
-
-# Create an enemy
-k001 = npc_spawn(-1000,0,1000, "K001", "raider", "kralien_dreadnaught", "behav_npcship")
-simulation resume
-schedule end_game
-delay gui 99m
-
-
-====== client_main =======
-
-#
-# Default the console to helm
-#
-console_select = "helm"
-
-====== select_console ======
-
-section style="area:2,20,80,35;"
-
-"""Select your console"""
-
-section style="area: 85,50, 99,90;"
-vradio console_select "helm,weapons, comms,science,engineering,mainscreen"
-blank
-row
-
-button "accept":
-    ->console_selected
-end_button
-
-await gui
-->END
-
-====== console_selected ====
-do assign_client_to_ship(client_id,artemis)
-
-if console_select == "mainscreen":
-    credits = "3dview"
-
-    k001 = npc_spawn(-1000,0,1000, "K001", "raider", "kralien_dreadnaught", "behav_npcship")
-    do sbs.assign_client_to_ship(client_id, k001.id)
-    
-    
-    console credits
-    section style="area: 0, 10, 100, 55;;row-height:80px"
-    """font:gui-6; justify:center; text: From the mind of^Mike Substelny"""
-    await gui timeout 5s
-
-    console credits
-    section style="area: 0, 35, 100, 60;;row-height:40px"
-    """font:gui-6; justify:center; text: comes an amazing adventure"""
-    await gui timeout 5s
-
-    console credits
-
-    section style="area: 65, 90, 100, 100;row-height:35px"
-    """color: blue; font:gui-5; justify:center; text: Lelinio"""
-    row
-    """color: yellow; font:gui-4; justify:center; text: Karlian Territory"""
-    await gui timeout 5s
-
-    console console_select
-    await gui
-else:
-    console console_select
-end_if
-await gui
 
 ========== route_ai =========
 #
@@ -183,7 +21,6 @@ if has_role(SPAWNED_ID, "raider"):
 end_if
 #if not a raider end the task
 ->END
-
 
 =====  npc_targeting_ai   =========
 
