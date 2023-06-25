@@ -97,11 +97,14 @@ delay sim 5s
 # Create a space station
 ds1 = npc_spawn(1000,0,1000, "DS1", "tsn, Station", "starbase_command", "behav_station")
 ds2 = npc_spawn(1000,0,-1000, "DS2", "tsn, Station", "starbase_command", "behav_station")
+do set_face(ds1.id, random_terran())
+do set_face(ds2.id, random_terran())
 
 
 # Create an enemy
 for x in range(enemy_count):
     k001 = npc_spawn(-1000+x*250,0,1000, f"K00{x}", "raider", "kralien_dreadnaught", "behav_npcship")
+    do set_face(k001.id, random_face("kralien_dreadnaught"))
 next x
 
 simulation resume

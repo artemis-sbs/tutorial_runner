@@ -170,4 +170,4 @@ end_await
 #
 # Just enough science so the unknown is cleared
 #
-do set_engine
+do set_engine_data(sim, SPAWNED_ID, "tsnscan", "Scan data")

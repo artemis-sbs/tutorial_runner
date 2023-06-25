@@ -4,18 +4,13 @@
 # uncomment to see log messages
 #logger
 
+start_text = "This is a start project for mast"
 route change console select_console
-
-if IS_SERVER:
-    start_text = "This is a start project for mast"
-    ->server_main
-else:
-    -> client_main
-end_if
+reroute server server_main
+reroute clients client_main
 
 
 ======= server_main =====
-
 #
 # Create the player ship so the clients see it
 # This is a simple script that has one playable ship
@@ -41,11 +36,10 @@ await choice:
 ======== start ======
 
 # Create the world here
-
+delay 1s
 # Create a space station
-ds1 = npc_spawn(1000,0,1000, "DS1", "tsn", "starbase_command", "behav_station")
-ds2 = npc_spawn(1000,0,-1000, "DS2", "tsn", "starbase_command", "behav_station")
-do add_role({ds1.id, ds2.id}, "Station")
+ds1 = npc_spawn(1000,0,1000, "DS1", "tsn, station", "starbase_command", "behav_station")
+ds2 = npc_spawn(1000,0,-1000, "DS2", "tsn, station", "starbase_command", "behav_station")
 
 # Create an enemy
 k001 = npc_spawn(-1000,0,1000, "K001", "raider", "kralien_dreadnaught", "behav_npcship")
@@ -53,7 +47,8 @@ shared camera_id = to_id(k001)
 
 simulation resume
 reroute clients opening_scene
-delay gui 99m
+
+await gui
 
 
 ====== client_main =======

@@ -29,7 +29,6 @@ end_if
 # Create the player ship so the clients see it
 # This is a simple script that has one playable ship
 #
-do sbs.set_sky_box_all("sky-delight")
 simulation create
 
 
@@ -121,7 +120,6 @@ delay gui 99m
 console_select = "helm"
 console_accepted = False
 credits_ran = False
-do sbs.set_sky_box(client_id, "sky-delight")
 
 ====== select_console ======
 
