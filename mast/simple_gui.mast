@@ -49,6 +49,11 @@ button "Clickable":
     jump show_clickable
 end_button
 row
+button "Custom":
+    simulation create
+    jump show_custom
+end_button
+row
 section style="area:25,20,80,95;"
 """"""" Example Gui """""""""""
 await gui
@@ -150,11 +155,56 @@ await choice:
 end_await
 
 
+========= show_custom =======
+
+ship_name = ""
+ship_cur = None
+section style="area: 0, 0, 100,10;"
+""" 
+This is an example that shows custom gui controls.
+Custom controls can be created in python.
+"""
+
+section style="area: 1, 10, 45,100;"
+
+row style="row-height: 40px;"
+hole
+input ship_name "desc: Ship Name;text: "
+row style="row-height: 50px;"
+button "Add Ship":
+    if len(ship_name) >0:
+        do player_spawn(0,0,0, ship_name, "tsn", ship_type.value )
+
+        ship_name = ""
+        -> show_custom
+    end_if
+end_button
+row style="row-height: 300px;"
+#pick ship ship_type
+
+gui control ship_type ship_picker_control("Your Ship", ship_cur)
+
+section style="area: 50, 10, 100,100;"
+row style="row-height: 20px;"
+
+"""Player Ships:"""
+
+ships = to_object_list(role("__PLAYER__"))
+row style="row-height: 50;"
+gui control ship_list list_box_control(ships, text=lambda ship: ship.comms_id, ship=lambda ship: ship.art_id)
+
+await choice:
+    + "menu":
+        simulation create
+        for ship in ships:
+            do ship.destroyed()
+        next ship
+        -> menu
+end_await
+
+
 ========= show_clickable =======
 check = "text"
-
-
-
 
 for x in range(len(recruits)):
 

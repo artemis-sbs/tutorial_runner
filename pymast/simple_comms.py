@@ -92,15 +92,26 @@ class Story(CommonStory):
         # loop
         yield self.jump(self.npc_comms)
 
+    def button_hail(story, comms):
+        comms.transmit(f"Hello method")
+        comms.receive("Yo")
+    
     @label()
     def comms_station(self):
 
         def button_hail(story, comms):
-            comms.transmit("Hello")
+            comms.transmit(f"Hello function")
             comms.receive("Yo")
 
+        def button_hail_data(story, comms, d):
+            comms.transmit(f"Hello {d}")
+            comms.receive("Yo")
+
+
         yield self.await_comms({
-            "Hail": button_hail
+            "Hail-function": button_hail,
+            "Hail-method": self.button_hail,
+            "Pass Data": lambda s,c: button_hail_data(s,c, "Artemis")
         })
         # loop
         yield self.jump(self.comms_station)
