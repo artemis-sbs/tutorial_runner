@@ -103,8 +103,8 @@ do set_face(ds2.id, random_terran())
 
 # Create an enemy
 for x in range(enemy_count):
-    k001 = npc_spawn(-1000+x*250,0,1000, f"K00{x}", "raider", "kralien_dreadnaught", "behav_npcship")
-    do set_face(k001.id, random_face("kralien_dreadnaught"))
+    k001 = npc_spawn(-1000+x*250,0,1000, f"K00{x}", "raider", "kralien_battleship", "behav_npcship")
+    do set_face(k001.id, random_face("kralien_battleship"))
 next x
 
 simulation resume

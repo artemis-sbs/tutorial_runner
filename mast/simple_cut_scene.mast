@@ -42,7 +42,7 @@ ds1 = npc_spawn(1000,0,1000, "DS1", "tsn, station", "starbase_command", "behav_s
 ds2 = npc_spawn(1000,0,-1000, "DS2", "tsn, station", "starbase_command", "behav_station")
 
 # Create an enemy
-k001 = npc_spawn(-1000,0,1000, "K001", "raider", "kralien_dreadnaught", "behav_npcship")
+k001 = npc_spawn(-1000,0,1000, "K001", "raider", "kralien_battleship", "behav_npcship")
 shared camera_id = to_id(k001)
 
 simulation resume

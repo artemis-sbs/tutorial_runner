@@ -74,7 +74,7 @@ class CommonStory(PyMastStory):
 
         # Create an enemy
         for i in range(self.enemy_count):
-            k001 = Npc().spawn(self.sim, -1000+300*i,0,1000, f"K00{i}", "raider", "kralien_dreadnaught", "behav_npcship")
+            k001 = Npc().spawn(self.sim, -1000+300*i,0,1000, f"K00{i}", "raider", "kralien_battleship", "behav_npcship")
             faces.set_face(k001.id, faces.random_kralien())
 
         sbs.resume_sim()
