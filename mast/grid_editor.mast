@@ -1,0 +1,256 @@
+reroute server server_start
+reroute clients client_start_once
+route grid point add_grid_object
+route grid select grid_comms
+
+
+shared grid_data = load_json_data(get_mission_dir_filename("mast/grid_data.json"))
+# Save Backup
+do save_json_data(get_mission_dir_filename("mast/grid_data.json.bak"), grid_data)
+#
+shared internal_items = grid_data["tsn_light_cruiser"]["grid_objects"]
+
+shared item_name = ""
+shared item_icon = ""
+shared item_roles = ""
+shared item_color = ""
+shared item_scale = 1.0
+shared items = {}
+shared ship_type = "tsn_light_cruiser"
+shared last_ship_type = "tsn_light_cruiser"
+shared colors =  ["black", "white", "gray", "silver", "maroon", "red", "purple", "fushsia", "green", "lime", "olive", "yellow", "navy", "blue", "teal",  "aqua"]
+
+=========== server_start =======
+#
+# Create the player ship so the clients see it
+# This is a simple script that has one playable ship
+#
+simulation create
+shared artemis =  to_id(player_spawn(0,0,0, "Artemis", "tsn", "tsn_light_cruiser"))
+do set_face(artemis, random_terran())
+do assign_client_to_ship(0,artemis)
+
+push rebuild_grid_items
+
+await choice:
+    + "start":
+        simulation resume
+end_await
+
+""" Editor"""
+await gui
+
+=========== client_start_once =======
+schedule watch_sel
+
+=========== client_start =======
+
+if grid_data.get(ship_type) is None:
+    grid_data[ship_type] = {"grid_objects":[]}
+end_if
+shared internal_items = grid_data[ship_type]["grid_objects"]
+if last_ship_type != ship_type:
+    push clear_grid_items
+    push rebuild_grid_items
+    #
+    # Set the art for the ship and hull map
+    #
+    so =  sim.get_space_object(artemis)
+    so.data_tag = ship_type
+    hm = sim.get_hull_map(artemis)
+    hm.art_file_root =ship_type
+  
+    last_ship_type = ship_type
+end_if
+
+activate console engineer
+section style="area: 60, 10, 90, 90;"
+layout widget "ship_internal_view"
+section style="area: 42, 10, 60, 90;"
+layout widget "grid_object_list"
+row
+layout widget "grid_control"
+do assign_client_to_ship(client_id,artemis)
+
+icons = [*range(84)]
+#icons = [0,1,2,3]
+icon = 0
+
+
+picker = ~~list_box_control(icons, 
+                               text=lambda item: f"{item}",
+                               icon = lambda item: f"color:white;icon_index:{item};",
+                               select=True,
+                               item_height=5)~~
+
+
+
+color_picker = ~~list_box_control(colors, 
+                               text=lambda item: f"color:{item};text:{item}",
+                               select=True,
+                               item_height=5)~~
+# Set the selection
+if item_color != "":
+    color_picker.selected = item_color.content.selected
+    color_picker.cur = next(iter(color_picker.selected))
+ end_if
+if item_icon != "":
+    picker.selected = item_icon.content.selected
+    picker.cur = next(iter(picker.selected))
+end_if
+
+section style="area: 0, 5, 40, 100;row-height:30;"
+
+gui control ship_select ship_picker_control("Select Ship", ship_type)
+row style="row-height: 30px;padding:0,10px,0,0;"
+"""text: New Grid Item """ 
+row style="row-height: 60px;padding:0,10px,0,0;"
+input item_name "desc: Name;" 
+row style="row-height: 60px;"
+input item_roles "desc: Roles;"
+row style="row-height: 40;padding:4px,0,4px,0;"
+gui control item_color color_picker 
+
+gui control item_icon picker
+
+on change ship_select.value:
+    ship_type = ship_select.value
+    jump client_start
+end_on
+await gui
+
+===== add_grid_object ========
+
+#do print (f"{item_name} {item_roles} '{item_color.value}' '{item_icon.value}'")
+#do print(f"{EVENT.source_point.x} {EVENT.source_point.y}")
+->END if item_name is None or item_name == ""
+->END if item_roles is None or item_roles == ""
+
+icon = int(item_icon.value[0])
+color = item_color.value[0]
+g = ~~ {
+    "x": EVENT.source_point.x, 
+    "y":EVENT.source_point.y, 
+    "icon": icon, 
+    "name":item_name, 
+    "color": color, 
+    "roles": item_roles
+}~~
+i = len(internal_items)
+go =  grid_spawn(artemis,  g["name"], f"gol:{i}", g["x"], g["y"], g["icon"], g["color"], g["roles"])
+items[go.id] = {"index": i, "go": go, "item": g}
+do internal_items.append(g) 
+refresh client_start
+
+push save_data
+
+->END
+
+====== rebuild_grid_items =====
+
+# add back the grid items as they are now
+i = 0
+shared items = {}
+for g in internal_items:
+    go =  grid_spawn(artemis,  g["name"], f"gol:{i}", g["x"], g["y"], g["icon"], g["color"], g["roles"])
+    items[go.id] = {"index": i, "go": go, "item": g}
+    i+=1
+next g
+<<-
+
+
+====== clear_grid_items =====
+
+# Delete all grid objects
+for k in items:
+    #go = items[k]
+    # delete by id
+    do sbs.delete_grid_object(artemis, k)
+next k
+<<-
+
+
+====== grid_comms =====
+
+
+await comms:
+ + "update":
+        item = items[COMMS_SELECTED_ID]["item"]
+        index = items[COMMS_SELECTED_ID]["index"]
+        go = to_object(COMMS_SELECTED_ID)
+        #
+        # Take the current values and make that this item
+        #
+        if item_name is not None and item_name != "" and  item_roles is not None and item_roles != "":
+            icon = int(item_icon.value[0])
+            color = item_color.value[0]
+            blob = get_engine_data_set(sim, COMMS_SELECTED_ID)
+            do blob.set("icon_index", icon, 0)
+            do blob.set("icon_scale", item_scale, 0)
+            do blob.set("icon_color", color , 0)
+
+            do item["name"] = item_name
+            do item["icon"] = icon
+            do item["roles"] = item_roles
+            do item["color"] = color
+
+            #
+            # Set the tag to the first role
+            #
+            roles = item_roles.split(",")
+            got = roles[0].strip()
+            do go.set_go_type(sim, got)
+            do go.set_name(sim, item_name)
+
+        end_if
+  + "delete": 
+        # delete the item
+        do sbs.delete_grid_object(artemis, COMMS_SELECTED_ID)
+        go = items.pop(COMMS_SELECTED_ID, None)
+        
+        if go is not None:
+            # do print (f"{go}")
+            do internal_items.remove(go["item"])
+        end_if
+       ->END
+end_await
+push save_data
+
+jump grid_comms
+
+
+
+===== watch_sel =====
+
+#
+# This watches for anytime the selection changes 
+# in parallel with the await comms
+#
+await select grid
+jump watch_sel if GRID_SELECTED_ID is None
+
+item = items[GRID_SELECTED_ID]["item"]
+index = items[GRID_SELECTED_ID]["index"]
+go = to_object(GRID_SELECTED_ID)
+#
+# Change the GUI form to these values
+#
+item_name = item["name"]
+item_roles = item["roles"]
+
+# Set the selection of the icons
+do item_icon.content.selected = set()
+do item_icon.content.selected.add(item["icon"])
+
+# set selection for color
+color = colors.index(item["color"])
+do item_color.content.selected = set()
+do item_color.content.selected.add(color)
+
+reroute clients client_start
+
+jump watch_sel
+
+===== save_data =====
+do save_json_data(get_mission_dir_filename("mast/grid_data.json"), grid_data)
+<<-

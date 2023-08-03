@@ -1,0 +1,15 @@
+{"tsn_light_cruiser":
+ {"grid_objects": [
+   {"x": 6.0,"y": 14.0,"icon": 59,"name": "WARP-1","color": "lime","scale": 1.0,"roles": "ENGINE"},
+   {"x": 11.0,"y": 14.0,"icon": 59,"name": "WARP-2","color": "lime","scale": 1.0,"roles": "ENGINE"},
+   {"x": 8.0,"y": 16.0,"icon": 59,"name": "WARP-3","color": "lime","scale": 1.0,"roles": "ENGINE"},
+   {"x": 9.0,"y": 16.0,"icon": 59,"name": "WARP-4","color": "lime","scale": 1.0,"roles": "ENGINE"},
+   {"x": 6.0,"y": 10.0,"icon": 59,"name": "impl-1","color": "lime","scale": 1.0,"roles": "ENGINE"},
+   {"x": 11.0,"y": 10.0,"icon": 59,"name": "impl-2","color": "lime","scale": 1.0,"roles": "ENGINE"}
+  ]},
+"tsn_battle_cruiser":
+ {"grid_objects": [
+   {"x": 6.0,"y": 14.0,"icon": 59,"name": "WARP-1","color": "lime","scale": 1.0,"roles": "ENGINE"},
+   {"x": 11.0,"y": 14.0,"icon": 59,"name": "WARP-2","color": "lime","scale": 1.0,"roles": "ENGINE"}
+  ]}
+}

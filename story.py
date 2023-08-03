@@ -21,6 +21,7 @@ class Story(PyMastStory):
         super().__init__(*args, **kwargs)
 
         self.start_text = "This runs example from tutorials"
+        Mast.include_code = True
 
     @label()
     def start_client(self):
@@ -124,6 +125,12 @@ class Story(PyMastStory):
 
             redirect_gui(SimplePage)
 
+        def run_grid_editor_mast():
+            class SimplePage(StoryPage):
+                story_file = "mast/grid_editor.mast"
+
+            redirect_gui(SimplePage)
+
 
 
 
@@ -145,6 +152,8 @@ class Story(PyMastStory):
         self.gui_button("All your base", run_all_your_base)
         self.gui_row()
         self.gui_button("Extend Console", run_extend_console_mast)
+        self.gui_row()
+        self.gui_button("Grid Object Editor", run_grid_editor_mast)
 
 
         self.gui_section("area:50,30,85,95;row-height: 35px")
