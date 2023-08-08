@@ -19,6 +19,7 @@ shared items = {}
 shared ship_type = "tsn_light_cruiser"
 shared last_ship_type = "tsn_light_cruiser"
 shared colors =  ["black", "white", "gray", "silver", "maroon", "red", "purple", "fushsia", "green", "lime", "olive", "yellow", "navy", "blue", "teal",  "aqua"]
+shared started = False
 
 =========== server_start =======
 #
@@ -35,6 +36,7 @@ push rebuild_grid_items
 await choice:
     + "start":
         simulation resume
+        started=True
 end_await
 
 """ Editor"""
@@ -42,6 +44,16 @@ await gui
 
 =========== client_start_once =======
 schedule watch_sel
+do assign_client_to_ship(client_id,artemis)
+
+==== wait_for_start ====
+jump client_start if started==True
+section style="area: 10,40,90,50;"
+""" justify:center; text: Waiting for Start """"
+
+await gui timeout 1s
+jump wait_for_start
+
 
 =========== client_start =======
 
@@ -50,27 +62,39 @@ if grid_data.get(ship_type) is None:
 end_if
 shared internal_items = grid_data[ship_type]["grid_objects"]
 if last_ship_type != ship_type:
-    push clear_grid_items
+    #
+    # For now create a new ship
+    #
+    #push clear_grid_items
+    old_ship = artemis
+    do sbs.delete_object(artemis)
+    artemis =  to_id(player_spawn(1000,0,0, ship_type, "tsn", ship_type))
+    
     push rebuild_grid_items
     #
+    # This doesn't work in 0.79
     # Set the art for the ship and hull map
     #
-    so =  sim.get_space_object(artemis)
-    so.data_tag = ship_type
-    hm = sim.get_hull_map(artemis)
-    hm.art_file_root =ship_type
-  
+    #so =  sim.get_space_object(artemis)
+    #so.data_tag = ship_type
+    #hm = sim.get_hull_map(artemis)
+    #hm.art_file_root =ship_type
+    do assign_client_to_ship(0,artemis)    
+    do assign_client_to_ship(client_id,artemis)
+
     last_ship_type = ship_type
 end_if
+
 
 activate console engineer
 section style="area: 60, 10, 90, 90;"
 layout widget "ship_internal_view"
 section style="area: 42, 10, 60, 90;"
-layout widget "grid_object_list"
-row
+row style="row-height:60"
+layout widget "grid_object_list" 
+row style="row-height:20"
 layout widget "grid_control"
-do assign_client_to_ship(client_id,artemis)
+
 
 icons = [*range(84)]
 #icons = [0,1,2,3]
@@ -90,11 +114,11 @@ color_picker = ~~list_box_control(colors,
                                select=True,
                                item_height=5)~~
 # Set the selection
-if item_color != "":
+if item_color != "" and len(item_color.content.selected)>0:
     color_picker.selected = item_color.content.selected
     color_picker.cur = next(iter(color_picker.selected))
  end_if
-if item_icon != "":
+if item_icon != ""and len(item_icon.content.selected)>0:
     picker.selected = item_icon.content.selected
     picker.cur = next(iter(picker.selected))
 end_if
@@ -103,15 +127,19 @@ section style="area: 0, 5, 40, 100;row-height:30;"
 
 gui control ship_select ship_picker_control("Select Ship", ship_type)
 row style="row-height: 30px;padding:0,10px,0,0;"
-"""text: New Grid Item """ 
+"""justify: center;text: Grid Item Properties""" 
 row style="row-height: 60px;padding:0,10px,0,0;"
 input item_name "desc: Name;" 
 row style="row-height: 60px;"
 input item_roles "desc: Roles;"
+
 row style="row-height: 40;padding:4px,0,4px,0;"
 gui control item_color color_picker 
-
 gui control item_icon picker
+
+row style="row-height: 45px;"
+"""scale""" hole hole hole
+slider item_scale "low: 0.1;high:5.0;" 
 
 on change ship_select.value:
     ship_type = ship_select.value
@@ -134,10 +162,12 @@ g = ~~ {
     "icon": icon, 
     "name":item_name, 
     "color": color, 
+    "scale": item_scale,
     "roles": item_roles
 }~~
 i = len(internal_items)
 go =  grid_spawn(artemis,  g["name"], f"gol:{i}", g["x"], g["y"], g["icon"], g["color"], g["roles"])
+do go.blob.set("icon_scale", item_scale, 0)
 items[go.id] = {"index": i, "go": go, "item": g}
 do internal_items.append(g) 
 refresh client_start
@@ -153,6 +183,7 @@ i = 0
 shared items = {}
 for g in internal_items:
     go =  grid_spawn(artemis,  g["name"], f"gol:{i}", g["x"], g["y"], g["icon"], g["color"], g["roles"])
+    do go.blob.set("icon_scale", g["scale"], 0)
     items[go.id] = {"index": i, "go": go, "item": g}
     i+=1
 next g
@@ -193,6 +224,7 @@ await comms:
             do item["icon"] = icon
             do item["roles"] = item_roles
             do item["color"] = color
+            do item["scale"] = item_scale
 
             #
             # Set the tag to the first role
@@ -237,7 +269,7 @@ go = to_object(GRID_SELECTED_ID)
 #
 item_name = item["name"]
 item_roles = item["roles"]
-
+item_scale = item["scale"]
 # Set the selection of the icons
 do item_icon.content.selected = set()
 do item_icon.content.selected.add(item["icon"])

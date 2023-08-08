@@ -5,11 +5,42 @@
    {"x": 8.0,"y": 16.0,"icon": 59,"name": "WARP-3","color": "lime","scale": 1.0,"roles": "ENGINE"},
    {"x": 9.0,"y": 16.0,"icon": 59,"name": "WARP-4","color": "lime","scale": 1.0,"roles": "ENGINE"},
    {"x": 6.0,"y": 10.0,"icon": 59,"name": "impl-1","color": "lime","scale": 1.0,"roles": "ENGINE"},
-   {"x": 11.0,"y": 10.0,"icon": 59,"name": "impl-2","color": "lime","scale": 1.0,"roles": "ENGINE"}
+   {"x": 11.0,"y": 10.0,"icon": 59,"name": "impl-2","color": "lime","scale": 0.9662500023841858,"roles": "ENGINE"},
+   {"x": 10.0,"y": 5.0,"icon": 3,"name": "sdsd","color": "purple","scale": 1.2543658018112183,"roles": "sdsd"},
+   {"x": 9.0,"y": 12.0,"icon": 1,"name": "fdfadf","color": "maroon","scale": 1.0,"roles": "afafsa"},
+   {"x": 12.0,"y": 4.0,"icon": 5,"name": "afsf","color": "purple","scale": 1.0,"roles": "afsfa"}
   ]},
 "tsn_battle_cruiser":
  {"grid_objects": [
    {"x": 6.0,"y": 14.0,"icon": 59,"name": "WARP-1","color": "lime","scale": 1.0,"roles": "ENGINE"},
    {"x": 11.0,"y": 14.0,"icon": 59,"name": "WARP-2","color": "lime","scale": 1.0,"roles": "ENGINE"}
-  ]}
+  ]},
+"tsn_destroyer":
+ {"grid_objects": []},
+"tsn_dreadnought":
+ {"grid_objects": []},
+"tsn_escort":
+ {"grid_objects": []},
+"tsn_heavy_cruiser":
+ {"grid_objects": []},
+"tsn_scout":
+ {"grid_objects": []},
+"torgoth_destroyer":
+ {"grid_objects": []},
+"torgoth_goliath":
+ {"grid_objects": []},
+"torgoth_leviathan":
+ {"grid_objects": []},
+"torgoth_behemoth":
+ {"grid_objects": []},
+"arvonian_fighter":
+ {"grid_objects": []},
+"arvonian_destroyer":
+ {"grid_objects": []},
+"arvonian_light_carrier":
+ {"grid_objects": []},
+"arvonian_carrier":
+ {"grid_objects": []},
+"transport_ship":
+ {"grid_objects": []}
 }
