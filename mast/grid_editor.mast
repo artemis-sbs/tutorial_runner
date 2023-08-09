@@ -165,6 +165,9 @@ input item_roles "desc: Roles;"
 row style="row-height: 40;padding:4px,0,4px,0;"
 gui control item_color color_picker 
 gui control item_icon picker
+row style="row-height: 45px;"
+"""scale""" hole hole hole
+slider item_scale "low: 0.1;high:5.0;" 
 
 section style="area: 20, 5, 40, 100;row-height:30;"
 
