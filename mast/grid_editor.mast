@@ -20,6 +20,7 @@ shared ship_type = "tsn_light_cruiser"
 shared last_ship_type = "tsn_light_cruiser"
 shared colors =  ["black", "white", "gray", "silver", "maroon", "red", "purple", "fushsia", "green", "lime", "olive", "yellow", "navy", "blue", "teal",  "aqua"]
 shared started = False
+shared selection_go = None
 
 =========== server_start =======
 #
@@ -67,8 +68,9 @@ if last_ship_type != ship_type:
     #
     #push clear_grid_items
     old_ship = artemis
-    do sbs.delete_object(artemis)
-    artemis =  to_id(player_spawn(1000,0,0, ship_type, "tsn", ship_type))
+    schedule recycle_ship
+    artemis =  to_id(player_spawn(0,0,0, ship_type, "tsn", ship_type))
+    shared selection_go=None
     
     push rebuild_grid_items
     #
@@ -153,7 +155,7 @@ await gui
 #do print(f"{EVENT.source_point.x} {EVENT.source_point.y}")
 ->END if item_name is None or item_name == ""
 ->END if item_roles is None or item_roles == ""
-
+do print("Update1")
 icon = int(item_icon.value[0])
 color = item_color.value[0]
 g = ~~ {
@@ -170,9 +172,9 @@ go =  grid_spawn(artemis,  g["name"], f"gol:{i}", g["x"], g["y"], g["icon"], g["
 do go.blob.set("icon_scale", item_scale, 0)
 items[go.id] = {"index": i, "go": go, "item": g}
 do internal_items.append(g) 
+push save_data
 refresh client_start
 
-push save_data
 
 ->END
 
@@ -203,6 +205,27 @@ next k
 
 ====== grid_comms =====
 
+
+if selection_go is not None:
+# set pos
+
+
+blob = get_engine_data_set(sim, COMMS_SELECTED_ID)
+x = blob.get("curx", 0)
+y = blob.get("cury", 0)
+do selection_go.blob.set("curx", x)
+do selection_go.blob.set("cury", y)
+
+else:
+#create it
+blob = get_engine_data_set(sim, COMMS_SELECTED_ID)
+x = blob.get("curx", 0)
+y = blob.get("cury", 0)
+    shared selection_go =  grid_spawn(artemis,  "selection", "sel1", x, y, 56, "black", "")
+    do print (selection_go)
+    do selection_go.blob.set("icon_scale",  2.0)
+
+end_if
 
 await comms:
  + "update":
@@ -260,8 +283,11 @@ jump grid_comms
 #
 await select grid
 jump watch_sel if GRID_SELECTED_ID is None
+item = items.get(GRID_SELECTED_ID)
+jump watch_sel if item is None
 
-item = items[GRID_SELECTED_ID]["item"]
+item = item["item"]
+
 index = items[GRID_SELECTED_ID]["index"]
 go = to_object(GRID_SELECTED_ID)
 #
@@ -286,3 +312,8 @@ jump watch_sel
 ===== save_data =====
 do save_json_data(get_mission_dir_filename("mast/grid_data.json"), grid_data)
 <<-
+
+==== recycle_ship =====
+delay sim 5s
+do sbs.delete_object(old_ship)
+->END

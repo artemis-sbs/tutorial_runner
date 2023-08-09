@@ -42,5 +42,37 @@
 "arvonian_carrier":
  {"grid_objects": []},
 "transport_ship":
- {"grid_objects": []}
+ {"grid_objects": []},
+"luxury_liner":
+ {"grid_objects": []},
+"cargo_ship":
+ {"grid_objects": []},
+"science_ship":
+ {"grid_objects": []},
+"skaraan_defiler":
+ {"grid_objects": []},
+"skaraan_executer":
+ {"grid_objects": []},
+"skaraan_enforcer":
+ {"grid_objects": []},
+"kralien_cruiser":
+ {"grid_objects": []},
+"kralien_battleship":
+ {"grid_objects": []},
+"kralien_dreadnought":
+ {"grid_objects": []},
+"pirate_fighter":
+ {"grid_objects": []},
+"xim_avenger":
+ {"grid_objects": []},
+"xim_battleship":
+ {"grid_objects": []},
+"xim_corsair":
+ {"grid_objects": []},
+"xim_destroyer":
+ {"grid_objects": []},
+"xim_dreadnought":
+ {"grid_objects": [
+   {"x": 6.0,"y": 2.0,"icon": 5,"name": "computer","color": "green","scale": 1.0,"roles": "computer"}
+  ]}
 }
