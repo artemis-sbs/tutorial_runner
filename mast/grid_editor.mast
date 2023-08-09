@@ -3,12 +3,14 @@ reroute clients client_start_once
 route grid point add_grid_object
 route grid select grid_comms
 
-
+shared started = False
 shared grid_data = load_json_data(get_mission_dir_filename("mast/grid_data.json"))
 # Save Backup
 do save_json_data(get_mission_dir_filename("mast/grid_data.json.bak"), grid_data)
 #
 shared internal_items = grid_data["tsn_light_cruiser"]["grid_objects"]
+# Make a 'set' of templates, using key as the unique value
+shared templates = {}
 
 shared item_name = ""
 shared item_icon = ""
@@ -19,8 +21,9 @@ shared items = {}
 shared ship_type = "tsn_light_cruiser"
 shared last_ship_type = "tsn_light_cruiser"
 shared colors =  ["black", "white", "gray", "silver", "maroon", "red", "purple", "fushsia", "green", "lime", "olive", "yellow", "navy", "blue", "teal",  "aqua"]
-shared started = False
 shared selection_go = None
+
+
 
 =========== server_start =======
 #
@@ -44,6 +47,18 @@ end_await
 await gui
 
 =========== client_start_once =======
+#
+# Hmmm why does this need to be last, 
+# Clients get run before the main is finished???
+#
+for ship in grid_data.values():
+    gos = ship['grid_objects']
+    for item in gos:
+        do templates[item['name']] = item
+    next item
+next ship
+
+
 schedule watch_sel
 do assign_client_to_ship(client_id,artemis)
 
@@ -107,14 +122,26 @@ picker = ~~list_box_control(icons,
                                text=lambda item: f"{item}",
                                icon = lambda item: f"color:white;icon_index:{item};",
                                select=True,
-                               item_height=5)~~
+                               item_height=3)~~
 
 
 
 color_picker = ~~list_box_control(colors, 
                                text=lambda item: f"color:{item};text:{item}",
                                select=True,
-                               item_height=5)~~
+                               item_height=3)~~
+#t = list(templates.values())
+t = []
+for key in sorted(templates.keys(), key=lambda x: x.lower()):
+    do t.append(templates[key])
+next key
+
+template_picker = ~~list_box_control(t, 
+                               icon = lambda value: f"color:{value['color']};icon_index:{value['icon']};",
+                               text=lambda value: f"color:{value['color']};text:{value['name']}",
+                               select=True,
+                               item_height=3)~~
+
 # Set the selection
 if item_color != "" and len(item_color.content.selected)>0:
     color_picker.selected = item_color.content.selected
@@ -125,7 +152,7 @@ if item_icon != ""and len(item_icon.content.selected)>0:
     picker.cur = next(iter(picker.selected))
 end_if
 
-section style="area: 0, 5, 40, 100;row-height:30;"
+section style="area: 0, 5, 20, 100;row-height:30;"
 
 gui control ship_select ship_picker_control("Select Ship", ship_type)
 row style="row-height: 30px;padding:0,10px,0,0;"
@@ -139,12 +166,33 @@ row style="row-height: 40;padding:4px,0,4px,0;"
 gui control item_color color_picker 
 gui control item_icon picker
 
-row style="row-height: 45px;"
-"""scale""" hole hole hole
-slider item_scale "low: 0.1;high:5.0;" 
+section style="area: 20, 5, 40, 100;row-height:30;"
+
+row style="row-height: 30px;padding:0,10px,0,0;"
+"""justify: center;text: History """ 
+row style="row-height: 90-30px;padding:4px,0,4px,0;"
+gui control item_template template_picker
+
 
 on change ship_select.value:
     ship_type = ship_select.value
+    jump client_start
+end_on
+on change item_template.value:
+    item = item_template.value[0]
+    item_name = item['name']
+    item_roles = item['roles']
+    item_scale = item['scale']
+
+    do item_icon.content.selected = set()
+    do item_icon.content.selected.add(item["icon"])
+
+    # set selection for color
+    color = colors.index(item["color"])
+    do item_color.content.selected = set()
+    do item_color.content.selected.add(color)
+
+
     jump client_start
 end_on
 await gui
@@ -169,10 +217,17 @@ g = ~~ {
 }~~
 i = len(internal_items)
 go =  grid_spawn(artemis,  g["name"], f"gol:{i}", g["x"], g["y"], g["icon"], g["color"], g["roles"])
+
 do go.blob.set("icon_scale", item_scale, 0)
+blob = to_blob(sim, artemis)
+do blob.set("grid_selected_UID", go.id, 0)
+
 items[go.id] = {"index": i, "go": go, "item": g}
+do templates[g['name']] = g
 do internal_items.append(g) 
 push save_data
+COMMS_SELECTED_ID = to_id(go)
+push update_selection
 refresh client_start
 
 
@@ -183,12 +238,15 @@ refresh client_start
 # add back the grid items as they are now
 i = 0
 shared items = {}
+
 for g in internal_items:
     go =  grid_spawn(artemis,  g["name"], f"gol:{i}", g["x"], g["y"], g["icon"], g["color"], g["roles"])
     do go.blob.set("icon_scale", g["scale"], 0)
     items[go.id] = {"index": i, "go": go, "item": g}
     i+=1
 next g
+
+
 <<-
 
 
@@ -202,6 +260,30 @@ for k in items:
 next k
 <<-
 
+
+=== update_selection ====
+
+if selection_go is not None:
+# set pos
+
+
+blob = get_engine_data_set(sim, COMMS_SELECTED_ID)
+x = blob.get("curx", 0)
+y = blob.get("cury", 0)
+do selection_go.blob.set("curx", x)
+do selection_go.blob.set("cury", y)
+
+else:
+#create it
+blob = get_engine_data_set(sim, COMMS_SELECTED_ID)
+x = blob.get("curx", 0)
+y = blob.get("cury", 0)
+    shared selection_go =  grid_spawn(artemis,  "selection", "sel1", x, y, 56, "black", "")
+    do print (selection_go)
+    do selection_go.blob.set("icon_scale",  2.0)
+
+end_if
+<<-
 
 ====== grid_comms =====
 
@@ -226,6 +308,7 @@ y = blob.get("cury", 0)
     do selection_go.blob.set("icon_scale",  2.0)
 
 end_if
+
 
 await comms:
  + "update":
