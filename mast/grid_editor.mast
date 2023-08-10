@@ -82,22 +82,24 @@ if last_ship_type != ship_type:
     # For now create a new ship
     #
     #push clear_grid_items
-    old_ship = artemis
-    schedule recycle_ship
-    artemis =  to_id(player_spawn(0,0,0, ship_type, "tsn", ship_type))
-    shared selection_go=None
+    #old_ship = artemis
+    #schedule recycle_ship
+    #artemis =  to_id(player_spawn(0,0,0, ship_type, "tsn", ship_type))
+    #shared selection_go=None
     
-    push rebuild_grid_items
     #
     # This doesn't work in 0.79
     # Set the art for the ship and hull map
     #
-    #so =  sim.get_space_object(artemis)
-    #so.data_tag = ship_type
-    #hm = sim.get_hull_map(artemis)
+    so =  sim.get_space_object(artemis)
+    so.data_tag = ship_type
+    hm = sbs.get_hull_map(artemis, True)
     #hm.art_file_root =ship_type
-    do assign_client_to_ship(0,artemis)    
-    do assign_client_to_ship(client_id,artemis)
+
+    push rebuild_grid_items
+
+    #do assign_client_to_ship(0,artemis)    
+    #do assign_client_to_ship(client_id,artemis)
 
     last_ship_type = ship_type
 end_if

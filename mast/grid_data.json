@@ -52,7 +52,8 @@
    {"x": 12.0,"y": 10.0,"icon": 59,"name": "impl-4","color": "lime","scale": 1.0,"roles": "ENGINE"},
    {"x": 5.0,"y": 13.0,"icon": 27,"name": "aft-shield-1","color": "fushsia","scale": 1.0,"roles": "tactical,shield"},
    {"x": 12.0,"y": 13.0,"icon": 27,"name": "aft-shield-2","color": "fushsia","scale": 1.0,"roles": "tactical,shield"},
-   {"x": 8.0,"y": 6.0,"icon": 4,"name": "brig-1","color": "silver","scale": 1.0,"roles": "Tactical, brig"}
+   {"x": 8.0,"y": 6.0,"icon": 4,"name": "brig-1","color": "silver","scale": 1.0,"roles": "Tactical, brig"},
+   {"x": 7.0,"y": 3.0,"icon": 5,"name": "computer","color": "green","scale": 1.0,"roles": "computer"}
   ]},
 "tsn_battle_cruiser":
  {"grid_objects": [
@@ -129,5 +130,7 @@
    {"x": 6.0,"y": 2.0,"icon": 5,"name": "computer","color": "green","scale": 1.0,"roles": "computer"},
    {"x": 11.0,"y": 2.0,"icon": 5,"name": "computer","color": "lime","scale": 1.0407346487045288,"roles": "IT, mainframe"},
    {"x": 9.0,"y": 6.0,"icon": 5,"name": "computer","color": "green","scale": 1.0,"roles": "computer"}
-  ]}
+  ]},
+"xim_scout":
+ {"grid_objects": []}
 }
