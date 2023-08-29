@@ -149,9 +149,8 @@ await gui
 cambot = npc_spawn(-1000,100,1200, "cam", "camera", "invisible", "behav_npcship")
 camera_id = to_id(cambot)
 
+#do sbs.assign_client_to_ship(client_id, camera_id)
 do sbs.set_main_view_modes(client_id, "3dview", "front", "tracking")
-do sbs.assign_client_to_ship(client_id, camera_id)
-
 
 pirate = npc_spawn(-1000,0,900, "Wolf", "raider", "pirate_strongbow", "behav_npcship")
 pirate_eo = pirate.engine_object
@@ -162,12 +161,18 @@ do sbs.add_particle_emittor(pirate_eo, -1, "align:True; smoke:True; shape:hull; 
 emittorID = sbs.add_particle_emittor(pirate_eo, -1, "align:True; shape:hull; color:purple,pink; lifespan:5; image_cell:0,3; size:20; speed: 0; count:50")
 do sbs.assign_client_to_ship(client_id, camera_id)
 
+
+##############
+## Avoiding bug, 3d view will crash without delay
+#delay sim 1s
+
 #
 # Credits one
 #
 activate console credits
 section style="area: 0, 0, 100, 100;"
 layout widget "3dview"
+do sbs.assign_client_to_ship(client_id, camera_id)
 
 section style="area: 0, 65, 100, 100;"
 """font:gui-3; justify:center; text: The following was created using the Artemis Cosmos Engine^using the user extensible scripting capabilities.^Including this text"""

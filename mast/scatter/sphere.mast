@@ -1,0 +1,74 @@
+
+===== edit_scatter_sphere ===== 
+
+push client_common
+
+
+section style=form_style
+
+row style=slider_row
+"""count"""
+slider count "low: 1; high:100.0;"
+row style=separator
+blank
+row style=input_row
+s_x = "{x}"
+input  s_x "desc: x"
+
+s_y = "{y}"
+input  s_y "desc: y"
+s_z = "{z}"
+input  s_z "desc: z"
+##############
+##
+row style=separator
+blank
+row style=input_row
+s_out = "{outer_r}"
+input  s_out "desc: Radius radius"
+
+s_in = "{inner_r}"
+input  s_in "desc: outer radius"
+#########################
+###
+row style=separator
+blank
+row style=slider_row
+"""x rotation"""
+slider ax "low: 0; high:360.0;"
+row style=slider_row
+"""y rotation"""
+slider ay "low: 0; high:360.0;"
+row style=slider_row
+"""z rotation"""
+slider az "low: 0; high:360.0;"
+
+row style=slider_row
+checkbox ring_only "text: ring;state: {ring_only}"
+row style=slider_row
+checkbox top_only "text: top only;state: {top_only}"
+
+
+
+await choice:
+    * "Apply":
+        x = int(s_x)
+        y = int(s_y)
+        z = int(s_z)
+       
+        outer_r = int(s_out)
+        inner_r = int(s_in)
+
+        jump apply_sphere
+end_await
+jump edit_scatter_sphere
+
+==== apply_sphere ====
+push clear_objects
+#sphere(count, x,y,z, r, outer=0, top_only=False, ring=False)
+for v in scatter_sphere(int(count), x,y,z,outer_r, inner_r, top_only, ring_only):
+    o = terrain_spawn(v.x, v.y, v.z, None, None, "plain_asteroid_6", "behav_asteroid")
+    do objects.append(to_id(o))
+next v
+jump edit_scatter_sphere
+

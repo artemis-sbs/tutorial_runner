@@ -1,0 +1,126 @@
+shared avatar_widgets = ~~{
+"arvonian": [
+    {"label": "Eyes", "min": 0, "max":4}, 
+    {"label": "Mouth", "min": 0, "max":4}, 
+    {"label": "Crown", "min": 0, "max":4, "optional": True}, 
+    {"label": "Jewels", "min": 0, "max":4, "optional": True}], 
+"kralien": [
+    {"label": "Eyes", "min": 0, "max":4}, 
+    {"label": "Mouth", "min": 0, "max":4}, 
+    {"label": "Scalp", "min": 0, "max":4, "optional": True}, 
+    {"label": "Extra", "min": 0, "max":4, "optional": True}
+    ], 
+
+"skaraan": [
+    {"label": "Eyes", "min": 0, "max":4}, 
+    {"label": "Mouth", "min": 0, "max":4}, 
+    {"label": "Horn", "min": 0, "max":4, "optional": True}, 
+    {"label": "Hat", "min": 0, "max":4, "optional": True}
+    ], 
+
+"torgoth": [
+    {"label": "Eyes", "min": 0, "max":4}, 
+    {"label": "Mouth", "min": 0, "max":4}, 
+    {"label": "Hair", "min": 0, "max":4, "optional": True}, 
+    {"label": "Extra", "min": 0, "max":3, "optional": True},
+    {"label": "Hat", "min": 0, "max":0, "optional": True}
+    ], 
+
+
+"ximni": [
+    {"label": "Eyes", "min": 0, "max":4}, 
+    {"label": "Mouth", "min": 0, "max":4}, 
+    {"label": "Horns", "min": 0, "max":4, "optional": True}, 
+    {"label": "Mask", "min": 0, "max":2, "optional": True},
+    {"label": "Tattoo", "min": 0, "max":1, "optional": True}
+    ], 
+
+"terran": [
+    {"label": "Body", "min": 0, "max":1}, 
+    {"label": "Eyes", "min": 0, "max":9}, 
+    {"label": "Mouth", "min": 0, "max":9}, 
+    {"label": "Hair", "min": 0, "max":4, "optional": True}, 
+    {"label": "Long Hair", "min": 0, "max": 7, "optional": True},
+    {"label": "Facial Hair", "min": 0, "max":4, "optional": True},
+    {"label": "Extra", "min": 0, "max":4, "optional": True},
+    {"label": "Uniform", "min": 0, "max":9, "optional": True},
+    {"label": "Skin Tone", "min": 0, "max": len(faces.skin_tones)-1},
+    {"label": "Hair Tone", "min": 0, "max":len(faces.hair_tones)-1}
+    ]
+}~~
+
+shared gui_state = 'arv'
+shared race = "terran"
+shared avatar_face = faces.Characters.URSULA
+shared avatar_cur = [0,0,0,0,0,0, 0,0,0,0,0,0]
+sl1 = 1.0
+sl2 = 1.0
+
+===== character_editor_client_start ====
+
+section style="area: 35, 5, 65, 10;"
+"""Avatar Editor""""
+section style="area: 35, 10, 65, 45;"
+face avatar_face
+
+section style="area: 25, 46, 75, 55;"
+
+button "text: Arvonian":
+    race = "arvonian"
+    jump character_editor_client_start
+end_button
+
+button "text: Kralien":
+    race = "kralien"
+    jump character_editor_client_start
+end_button
+button "text: Skaraan":
+    race = "skaraan"
+    jump character_editor_client_start
+end_button
+row
+button "text: Terran":
+    race = "terran"
+    jump character_editor_client_start
+end_button
+button "text: Torgoth":
+    race = "torgoth"
+    jump character_editor_client_start
+end_button
+
+button "text: Ximni":
+    race = "ximni"
+    jump character_editor_client_start
+end_button
+
+row
+
+section style="area: 15, 56, 85, 95;row-height:35px;"
+
+widgets = avatar_widgets.get(race)
+i = 0
+if widgets is not None:
+    for widget in widgets:
+        if i%3 == 2:
+            row style="padding: 1px;"
+        end_if
+        i += 1
+        label = widget["label"]
+        if "optional" in widget:
+            #enable = 1 if widget["optional"] == True else 0
+            enable = True
+            # checkbox widget["optional"]  "op:{v}", f"text: {label};state: {'on' if enable else 'off'}"
+            checkbox check  "text: {label};"
+            if enable and widget["max"]>0:
+                slider sl1 "low: {widget['min']}; high: {widget['max']};"
+            end_if
+        else:
+            """"text:{label}""""
+            slider sl2 "low: {widget['min']}; high: {widget['max']}; show_number: no"
+        end_if
+    next widget
+end_if
+            
+push add_menu
+
+await gui 

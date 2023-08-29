@@ -1,0 +1,96 @@
+
+===== edit_scatter_ring_density ===== 
+
+push client_common
+
+
+section style=form_style
+
+row style=input_row
+s_count = ~~" ".join(map(str,counts))~~
+input  s_count "desc: counts;"
+
+
+##################
+row style=separator
+blank
+row style=input_row
+s_x = "{x}"
+input  s_x "desc: x"
+
+s_y = "{y}"
+input  s_y "desc: y"
+s_z = "{z}"
+input  s_z "desc: z"
+##############
+##
+row style=separator
+blank
+row style=input_row
+s_out = "{outer_r}"
+input  s_out "desc: Outer radius"
+
+s_in = "{inner_r}"
+input  s_in "desc: Inner radius"
+
+###########
+##
+row style=separator
+blank
+row style=slider_row
+"""start angle"""
+slider a_start "low: 0; high:360.0;"
+row style=slider_row
+"""y end angle"""
+slider a_end "low: 0; high:360.0;"
+##############
+##
+#############
+row style=separator
+blank
+row style=slider_row
+"""x rotation"""
+slider ax "low: 0; high:360.0;"
+row style=slider_row
+"""y rotation"""
+slider ay "low: 0; high:360.0;"
+row style=slider_row
+"""z rotation"""
+slider az "low: 0; high:360.0;"
+##############
+##
+#############
+row style=separator
+blank
+row style=slider_row
+checkbox rand "text: random;state: {rand}"
+
+
+await choice:
+    * "Apply":
+        count_strs = s_count.split(" ")
+        counts = []
+        for s in count_strs:
+            do counts.append(int(s.strip()))
+        next s
+
+        outer_r = int(s_out)
+        inner_r = int(s_in)
+
+        x = int(s_x)
+        y = int(s_y)
+        z = int(s_z)
+      
+        jump apply_ring_density
+end_await
+jump edit_scatter_ring_density
+
+==== apply_ring_density ====
+push clear_objects
+
+for v in scatter_ring_density(counts, x,y,z, outer_r, inner_r, a_start, a_end, rand):
+    o = terrain_spawn(v.x, v.y, v.z, None, None, "plain_asteroid_6", "behav_asteroid")
+    do objects.append(to_id(o))
+next v
+jump edit_scatter_ring_density
+

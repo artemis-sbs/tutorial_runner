@@ -1,0 +1,30 @@
+import simple_common.mast
+route collision object handle_collision
+
+
+start_text = "This is a start project for mast to show how to handle passive collisions"
+
+
+==== replace: additional_start ====
+
+# Spawn an anomaly 
+anom = terrain_spawn(0,0,1000, None, "anomaly, magic_beans", "container_1a", "behav_pickup")
+# Upgrade has values
+do set_inventory_value(to_id(anom), "magic_beans", 3)
+
+anom = terrain_spawn(400,0,1000, None, "anomaly, super_warp", "container_1b", "behav_pickup")
+
+
+
+await gui
+
+==== handle_collision ===
+if has_roles(COLLISION_ORIGIN_ID, "anomaly, magic_beans"):
+    beans = get_inventory_value(COLLISION_ORIGIN_ID, "magic_beans")
+    do print("I got {beans} beans")
+    do sbs.delete_object(COLLISION_ORIGIN_ID)
+elif has_roles(COLLISION_ORIGIN_ID, "anomaly, super_warp"):
+    do print("super_warp")
+    do sbs.delete_object(COLLISION_ORIGIN_ID)
+end_if
+->END

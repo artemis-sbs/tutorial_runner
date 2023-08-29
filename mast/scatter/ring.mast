@@ -1,0 +1,94 @@
+
+===== edit_scatter_ring ===== 
+
+push client_common
+
+
+section style=form_style
+
+row style=input_row
+s_ca = "{ca}"
+input  s_ca "desc: count per arc"
+
+s_cr = "{cr}"
+input  s_cr "desc: ring count"
+##################
+row style=separator
+blank
+row style=input_row
+s_x = "{x}"
+input  s_x "desc: x"
+
+s_y = "{y}"
+input  s_y "desc: y"
+s_z = "{z}"
+input  s_z "desc: z"
+##############
+##
+row style=separator
+blank
+row style=input_row
+s_out = "{outer_r}"
+input  s_out "desc: Outer radius"
+
+s_in = "{inner_r}"
+input  s_in "desc: Inner radius"
+
+###########
+##
+row style=separator
+blank
+row style=slider_row
+"""start angle"""
+slider a_start "low: 0; high:360.0;"
+row style=slider_row
+"""y end angle"""
+slider a_end "low: 0; high:360.0;"
+##############
+##
+#############
+row style=separator
+blank
+row style=slider_row
+"""x rotation"""
+slider ax "low: 0; high:360.0;"
+row style=slider_row
+"""y rotation"""
+slider ay "low: 0; high:360.0;"
+row style=slider_row
+"""z rotation"""
+slider az "low: 0; high:360.0;"
+##############
+##
+#############
+row style=separator
+blank
+row style=slider_row
+checkbox rand "text: random;state: {rand}"
+
+
+await choice:
+    * "Apply":
+        ca = int(s_ca)
+        cr = int(s_cr)
+
+        outer_r = int(s_out)
+        inner_r = int(s_in)
+
+        x = int(s_x)
+        y = int(s_y)
+        z = int(s_z)
+      
+        jump apply_ring
+end_await
+jump edit_scatter_ring
+
+==== apply_ring ====
+push clear_objects
+
+for v in scatter_ring(ca, cr, x,y,z, outer_r, inner_r, a_start, a_end, rand):
+    o = terrain_spawn(v.x, v.y, v.z, None, None, "plain_asteroid_6", "behav_asteroid")
+    do objects.append(to_id(o))
+next v
+jump edit_scatter_ring
+

@@ -67,7 +67,14 @@
    {"x": 9.0,"y": 2.0,"icon": 71,"name": "crew-mess-3","color": "silver","scale": 1.0,"roles": "cabin"},
    {"x": 10.0,"y": 2.0,"icon": 71,"name": "crew-mess-4","color": "silver","scale": 1.0,"roles": "cabin"},
    {"x": 8.0,"y": 3.0,"icon": 37,"name": "crew-quarters-1","color": "silver","scale": 1.0,"roles": "cabin"},
-   {"x": 10.0,"y": 3.0,"icon": 37,"name": "crew-quarters-1","color": "silver","scale": 1.0,"roles": "cabin"}
+   {"x": 10.0,"y": 3.0,"icon": 37,"name": "crew-quarters-1","color": "silver","scale": 1.0,"roles": "cabin"},
+   {"x": 5.0,"y": 11.0,"icon": 30,"name": "cargo-1","color": "white","scale": 0.9960461854934692,"roles": "bay,cargo"},
+   {"x": 6.0,"y": 11.0,"icon": 30,"name": "cargo-4","color": "white","scale": 0.9960461854934692,"roles": "bay,cargo"},
+   {"x": 7.0,"y": 11.0,"icon": 30,"name": "cargo-4","color": "white","scale": 0.9960461854934692,"roles": "bay,cargo"},
+   {"x": 9.0,"y": 11.0,"icon": 5,"name": "computer","color": "green","scale": 1.0,"roles": "computer"},
+   {"x": 13.0,"y": 11.0,"icon": 30,"name": "cargo-4","color": "white","scale": 0.9960461854934692,"roles": "bay,cargo"},
+   {"x": 15.0,"y": 10.0,"icon": 39,"name": "beam-starboard","color": "green","scale": 1.0,"roles": "tactical,beam"},
+   {"x": 10.0,"y": 7.0,"icon": 71,"name": "crew-mess-4","color": "silver","scale": 1.0,"roles": "cabin"}
   ]},
 "tsn_destroyer":
  {"grid_objects": []},
@@ -132,5 +139,8 @@
    {"x": 9.0,"y": 6.0,"icon": 5,"name": "computer","color": "green","scale": 1.0,"roles": "computer"}
   ]},
 "xim_scout":
- {"grid_objects": []}
+ {"grid_objects": [
+   {"x": 6.0,"y": 5.0,"icon": 71,"name": "crew-mess-3","color": "silver","scale": 1.0,"roles": "cabin"},
+   {"x": 10.0,"y": 5.0,"icon": 71,"name": "crew-mess-3","color": "silver","scale": 1.0,"roles": "cabin"}
+  ]}
 }

@@ -4,3 +4,4 @@
 /sphinx/_build/
 *.sbslib
 /typings/
+sbs_native.cp311-win_amd64.pyd
