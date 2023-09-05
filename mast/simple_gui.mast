@@ -51,6 +51,7 @@ shared skills = ~~{
         }
 }~~
 tab = "sensors"
+shared skills_built = False
 
 =========start=======
 shared colors =["yellow", "red", "green", "blue", "purple", "cyan", "black", "#FF00FE", "gray"]
@@ -292,7 +293,7 @@ end_await
 
 
 ========= show_skills =======
-
+push build_skills
 
 section style="area:0,0,100,30px;"
 ########### TABS
@@ -313,12 +314,17 @@ on click:
             tab = click_value
             jump show_skills
         end_if
+    elif click_type == "skill":
+        view_category = tab
+        view_tier = int(click_value)
+        view_skill = int(clicked[2].strip())
+        jump show_skill_details
     end_if
 end_on
 
-deez_category = skills.get("sensors")
+deez_category = skills.get(tab)
 deez_tier = deez_category.get("tier")
-deez_skills = deez_tier[0].get("skills")
+# deez_skills = deez_tier[0].get("skills")
 
 section style="area:10,10,90,90;"
 tier_colors = ["#9993", "#0FF3", "#FF03", "#f0f3", ]
@@ -326,13 +332,16 @@ tier_colors = ["#9993", "#0FF3", "#FF03", "#f0f3", ]
 row style="background: #0f03;row-height:45px;padding: 0,0,0,3px;"
 """" justify: center; text:{tab} """"
 tier = 0
-for t in range(4):
+for t in deez_tier:
     c = {tier_colors[tier]}
     row style="background: {tier_colors[tier]};row-height:15;padding: 0,0,0,3px;"
-    for ii in range(4):
+    deez_skills = t.get("skills")
+    skill = 0
+    for sk in deez_skills:
         blank
-        i_i = random.randrange(120)
-        icon "icon_index: {i_i}; color: white;" style="click_font: gui-5;click_color: blue;click_text: SKILL;click_tag: skill_{t}_{ii};"
+        i_i = sk.get("icon",0)
+        icon "icon_index: {i_i}; color: white;" style="click_font: gui-5;click_color: blue;click_text: SKILL;click_tag: skill_{tier}_{skill};"
+        skill += 1
     next ii
     blank
     tier += 1
@@ -343,3 +352,159 @@ await choice:
     + "menu":
         -> menu
 end_await
+
+
+
+========= show_skill_details =======
+
+
+deez_category = skills.get(view_category)
+deez_tier = deez_category.get("tier")
+deez_skills = deez_tier[view_tier].get("skills")
+deez_skill = deez_skills[view_skill]
+
+
+section style="area:10,10,90,10+45px;"
+row style="background: #0f03;row-height:45px;padding: 0,0,0,3px;"
+"""" justify: center; text:{deez_skill["name"]} """"
+row style="background: #fff3;row-height:45px;padding: 0,0,0,3px;"
+"""" justify: left; text:{deez_skill["description"]} """"
+
+section style="area:10,10+100px,50-3px,90;"
+row style="background: #0003; padding: 0,0,0,3px; "
+icon  """icon_index: {deez_skill["icon"]}; color: white;""" 
+row style="background: #0003; padding: 0,0,0,3px; "
+""" justify: left;text: challenge progress;"""
+#
+# This should be the goal of the 'next' rank
+# 
+""" justify: right;text: [0/5];"""
+
+section style="area:50+3px,10+100px,90,90;"
+rank = 0
+for t in deez_skill.get("rank", []):
+    if rank == 0:
+        row style="background: #0ff3; row-height:15;padding: 0,0,0,3px;"
+    else:
+        row style="background: #0003; row-height:15;padding: 0,0,0,3px;"
+    end_if
+    """ RANK {rank+1}
+
+  {t.get("text", "")}
+  {t.get("description", "")}
+"""
+    rank += 1
+next t
+
+#
+# styleized Back button
+#
+row style="row-height:45px;padding: 0,0,0,3px;"
+"""justify:center; color:black;text:back;""" style="background: #fff8;padding: 3px,3px,3px,3px;click_text:back;click_tag:back;"
+
+on click:
+    if __CLICKED__ == "back":
+        jump show_skills
+    end_if
+end_on
+
+
+await choice:
+    + "menu":
+        -> menu
+end_await
+
+
+====== build_skills ====== 
+
+# Do this just once
+pop if skills_built
+skills_built = True
+
+rnd_icons = random.sample(range(140), k=4*(16))
+
+skill = ~~{
+    "icon": 10,
+    "name": "Something",
+    "description": "This is some sensor skill",
+    "rank": [
+        {
+            "text": "Do this 5 times",
+            "description": "You did somethings that get you to a rank 1",
+            "goal": 5
+        },
+        {
+            "text": "Do another thing 50 times",
+            "description": "You did somethings that get you to a rank 2",
+            "goal": 50
+        }, 
+        {
+            "text": "Do another thing 10 times",
+            "description": "You did somethings that get you to a rank 3",
+            "goal": 10
+        
+        },
+        {
+            "text": "Do another thing 1 time",
+            "description": "You did somethings that get you to a rank 4",
+            "goal": 1
+        }
+    ]
+}
+~~
+icon_index = 0
+for k in skills:
+    deez_category=skills.get(k)
+    do deez_category["tier"] = []
+    deez_tier = deez_category["tier"]
+    
+    for t in range(4):
+        deez_skills = []
+        #
+        # 5,3,5,3
+        #
+        skill_count = 5 - (t%2)*2
+        for sk in range(skill_count):
+            do skill["icon"] = rnd_icons[icon_index]
+            do deez_skills.append(skill)
+            icon_index += 1
+
+                        skill = ~~{
+                            "icon": 10,
+                            "name": "Something",
+                            "description": "This is some sensor skill",
+                            "rank": [
+                                {
+                                    "text": "Do this 5 times",
+                                    "description": "You did somethings that get you to a rank 1",
+                                    "goal": 5
+                                },
+                                {
+                                    "text": "Do another thing 50 times",
+                                    "description": "You did somethings that get you to a rank 2",
+                                    "goal": 50
+                                }, 
+                                {
+                                    "text": "Do another thing 10 times",
+                                    "description": "You did somethings that get you to a rank 3",
+                                    "goal": 10
+                                
+                                },
+                                {
+                                    "text": "Do another thing 1 time",
+                                    "description": "You did somethings that get you to a rank 4",
+                                    "goal": 1
+                                }
+                            ]
+                        }
+                        ~~
+
+        next sk
+        tier = {"skills": deez_skills}
+        do deez_tier.append(tier)    
+    next t
+
+next k
+
+
+pop
