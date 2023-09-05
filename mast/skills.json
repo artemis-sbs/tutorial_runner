@@ -1,0 +1,48 @@
+{
+    "sensors": {
+        "description": "This is the stuff that ",
+        "tier": [ {
+            "skills": [
+                {
+                    "icon": 10,
+                    "name": "Something",
+                    "description": "This is some sensor skill",
+                    "rank": [
+                        {
+                            "text": "Do this 5 times",
+                            "description": "You did somethings that get you to a rank 1",
+                            "goal": 5
+                        },
+                        {
+                            "text": "Do another thing 50 times",
+                            "description": "You did somethings that get you to a rank 2",
+                            "goal": 50
+                        }, 
+                        {
+                            "text": "Do another thing 10 times",
+                            "description": "You did somethings that get you to a rank 3",
+                            "goal": 10
+                        
+                        },
+                        {
+                            "text": "Do another thing 1 time",
+                            "description": "You did somethings that get you to a rank 4",
+                            "goal": 1
+                        }
+                    ]
+                }
+            ]
+
+        }]
+        
+    },
+    "weapons": {
+        "icons": [2]
+    },
+    "engines": {
+        "icons": [3]
+    },
+   "shields": {
+        "icons": [3]
+    }
+}

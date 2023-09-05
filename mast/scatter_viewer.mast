@@ -10,6 +10,10 @@ import scatter/sphere.mast
 shared objects = []
 
 style slider_row="row-height: 46px;padding: 6px,0,2px, 6px;"
+style x_slider_row="row-height: 46px;padding: 6px,0,2px, 6px;background:red;"
+style y_slider_row="row-height: 46px;padding: 6px,0,2px, 6px;background:green;"
+style z_slider_row="row-height: 46px;padding: 6px,0,2px, 6px;background:blue;"
+
 style input_row="row-height: 45px;padding: 6px,0,2px, 6px;"
 style separator="row-height: 40px;"
 style form_style="area: 0, 7, 50, 90;"

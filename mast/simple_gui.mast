@@ -2,7 +2,55 @@
 #
 # Show the proper GUI for server vs Client Consoles
 #
+shared skills = ~~{
+        "sensors": {
+            "description": "This is the stuff that ",
+            "tier": [ {
+                "skills": [
+                    {
+                        "icon": 10,
+                        "name": "Something",
+                        "description": "This is some sensor skill",
+                        "rank": [
+                            {
+                                "text": "Do this 5 times",
+                                "description": "You did somethings that get you to a rank 1",
+                                "goal": 5
+                            },
+                            {
+                                "text": "Do another thing 50 times",
+                                "description": "You did somethings that get you to a rank 2",
+                                "goal": 50
+                            }, 
+                            {
+                                "text": "Do another thing 10 times",
+                                "description": "You did somethings that get you to a rank 3",
+                                "goal": 10
+                            
+                            },
+                            {
+                                "text": "Do another thing 1 time",
+                                "description": "You did somethings that get you to a rank 4",
+                                "goal": 1
+                            }
+                        ]
+                    }
+                ]
 
+            }]
+            
+        },
+        "weapons": {
+            "icons": [2]
+        },
+        "engines": {
+            "icons": [3]
+        },
+       "shields": {
+            "icons": [3]
+        }
+}~~
+tab = "sensors"
 
 =========start=======
 shared colors =["yellow", "red", "green", "blue", "purple", "cyan", "black", "#FF00FE", "gray"]
@@ -52,6 +100,11 @@ row
 button "Custom":
     simulation create
     jump show_custom
+end_button
+row
+button "Table-ish":
+    simulation create
+    jump show_skills
 end_button
 row
 section style="area:25,20,80,95;"
@@ -208,7 +261,7 @@ check = "text"
 
 for x in range(len(recruits)):
 
-section style="area:10+x*20,20,25+x*20,65;" clickable "color:white; text:Recruit!; font:gui-5" data=~~{"pick":x}~~:
+section style="area:10+x*20,20,25+x*20,65;" clickable "color:  blue; text:Recruit!; font:gui-5" data=~~{"pick":x}~~:
     ~~ print(f"Click {pick}") ~~
     # Pick is temp, this promotes it high, this is kinda ugly
     the_pick = pick
@@ -231,6 +284,60 @@ end_await
 section style="area:2,20,80,95;"
 face face_list[the_pick]
 """ Ready for duty """
+
+await choice:
+    + "menu":
+        -> menu
+end_await
+
+
+========= show_skills =======
+
+
+section style="area:0,0,100,30px;"
+########### TABS
+for t in skills:
+    if t == tab:
+        """justify:center; color:black;text:{t} """ style="background: #ffF;padding: 3px,3px,3px,3px;click_text: {t};click_tag: tab_{t};"
+    else:
+        """justify:center; color:white;text:{t} """ style="background: #0008;padding: 3px,3px,3px,3px;click_text: {t};click_tag: tab_{t};"
+    end_if
+next x
+
+on click:
+    clicked = __CLICKED__.split("_")
+    click_type = clicked[0].strip().lower()
+    click_value = clicked[1].strip().lower()
+    if click_type == "tab":
+        if tab != click_value:
+            tab = click_value
+            jump show_skills
+        end_if
+    end_if
+end_on
+
+deez_category = skills.get("sensors")
+deez_tier = deez_category.get("tier")
+deez_skills = deez_tier[0].get("skills")
+
+section style="area:10,10,90,90;"
+tier_colors = ["#9993", "#0FF3", "#FF03", "#f0f3", ]
+
+row style="background: #0f03;row-height:45px;padding: 0,0,0,3px;"
+"""" justify: center; text:{tab} """"
+tier = 0
+for t in range(4):
+    c = {tier_colors[tier]}
+    row style="background: {tier_colors[tier]};row-height:15;padding: 0,0,0,3px;"
+    for ii in range(4):
+        blank
+        i_i = random.randrange(120)
+        icon "icon_index: {i_i}; color: white;" style="click_font: gui-5;click_color: blue;click_text: SKILL;click_tag: skill_{t}_{ii};"
+    next ii
+    blank
+    tier += 1
+next t
+
 
 await choice:
     + "menu":

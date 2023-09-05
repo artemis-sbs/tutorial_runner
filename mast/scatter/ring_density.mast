@@ -48,13 +48,13 @@ slider a_end "low: 0; high:360.0;"
 #############
 row style=separator
 blank
-row style=slider_row
+row style=x_slider_row
 """x rotation"""
 slider ax "low: 0; high:360.0;"
-row style=slider_row
+row style=y_slider_row
 """y rotation"""
 slider ay "low: 0; high:360.0;"
-row style=slider_row
+row style=z_slider_row
 """z rotation"""
 slider az "low: 0; high:360.0;"
 ##############
