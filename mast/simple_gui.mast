@@ -52,6 +52,7 @@ shared skills = ~~{
 }~~
 tab = "sensors"
 shared skills_built = False
+shared s_count = 0  # for update example
 
 =========start=======
 shared colors =["yellow", "red", "green", "blue", "purple", "cyan", "black", "#FF00FE", "gray"]
@@ -108,6 +109,10 @@ button "Table-ish":
     jump show_skills
 end_button
 row
+button "update":
+    jump show_update
+end_button
+row
 section style="area:25,20,80,95;"
 """"""" Example Gui """""""""""
 await gui
@@ -125,6 +130,40 @@ await choice:
     + "menu":
         -> menu
 end_await
+
+========= show_update =======
+count = 0
+section style="area:2,42,80,47;"
+
+
+"""text: {count}""" style="tag:count-text;"
+"""text: {count}""" style="tag:local-count-text;"
+"""text: {s_count}""" style="tag:sh-count-text;"
+
+button "Add":
+    count += 1
+    s_count += 1
+    update tag "count-text" "text: {count}"
+    update shared tag "local-count-text" "text: {count}"
+    update shared tag "sh-count-text" "text: {s_count}"
+end_button
+
+
+section style="area:2,2,80,35;"
+"""
+Update can but used to update control(s) without a complete repaint or new layout.
+an update marked shared will update all clients.
+With a shared update be careful to use a tag that is unique
+The tag can be used on multiple clients on presenting different user interfaces, but the control/tag is common.
+run this example on multiple clients. 
+"""
+
+
+await choice:
+    + "menu":
+        -> menu
+end_await
+
 
 ========= show_button =======
 
@@ -262,12 +301,13 @@ check = "text"
 
 for x in range(len(recruits)):
 
-section style="area:10+x*20,20,25+x*20,65;" clickable "color:  blue; text:Recruit!; font:gui-5" data=~~{"pick":x}~~:
-    ~~ print(f"Click {pick}") ~~
-    # Pick is temp, this promotes it high, this is kinda ugly
-    the_pick = pick
+section style="area:10+x*20,20,25+x*20,65;click_color: blue; click_text:Recruit!; click_font:gui-5; click_tag:pick_{x}"
+
+on click:
+    pick = __CLICKED__.split("_")
+    the_pick = int(pick[1].strip())
     -> show_recruit
-end_clickable
+end_on
 
 face face_list[x]
 row
@@ -290,6 +330,9 @@ await choice:
     + "menu":
         -> menu
 end_await
+
+
+
 
 
 ========= show_skills =======
