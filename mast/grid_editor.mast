@@ -315,7 +315,7 @@ else:
 blob = get_engine_data_set(sim, COMMS_SELECTED_ID)
 x = blob.get("curx", 0)
 y = blob.get("cury", 0)
-    shared selection_go =  grid_spawn(artemis,  "selection", "sel1", x, y, 56, "black", "")
+    shared selection_go =  grid_spawn(artemis,  "selection", "sel1", x, y, 56, "black", "#")
     #do print (selection_go)
     do selection_go.blob.set("icon_scale",  2.0)
 
@@ -341,7 +341,7 @@ else:
 blob = get_engine_data_set(sim, COMMS_SELECTED_ID)
 x = blob.get("curx", 0)
 y = blob.get("cury", 0)
-    shared selection_go =  grid_spawn(artemis,  "selection", "sel1", x, y, 56, "black", "")
+    shared selection_go =  grid_spawn(artemis,  "selection", "sel1", x, y, 56, "black", "#")
     #do print (selection_go)
     do selection_go.blob.set("icon_scale",  2.0)
 

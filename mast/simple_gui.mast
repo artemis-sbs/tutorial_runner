@@ -147,7 +147,9 @@ button "Add":
     update shared tag "local-count-text" "text: {count}"
     update shared tag "sh-count-text" "text: {s_count}"
 end_button
-
+row
+""" countdown """ style="tag:countdown_tag;"
+schedule count_down
 
 section style="area:2,2,80,35;"
 """
@@ -164,6 +166,14 @@ await choice:
         -> menu
 end_await
 
+
+===== count_down ===== 
+for x in range(300):
+    update tag "countdown_tag" "text: {300-x};"
+    delay gui 1s
+next x
+
+->END
 
 ========= show_button =======
 
