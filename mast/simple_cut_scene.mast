@@ -84,6 +84,11 @@ await gui
 
 ====== opening_scene ====
 
+#
+# Race Condition? Removing this print causes crash
+#
+do print(f"{client_id} {camera_id}")
+
 do sbs.assign_client_to_ship(client_id, camera_id)
 #do to_blob(camera_id).blob.set("reference_ring_3d_brightness", 0.0, 0)
 

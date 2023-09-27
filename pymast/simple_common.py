@@ -24,7 +24,7 @@ class CommonStory(PyMastStory):
         sbs.create_new_sim()
         #yield self.delay(1)
 
-        self.artemis =  query.to_id(PlayerShip().spawn(self.sim, 0,0,0, "Artemis", "tsn", "tsn_battle_cruiser"))
+        self.artemis =  query.to_id(PlayerShip().spawn(0,0,0, "Artemis", "tsn", "tsn_battle_cruiser"))
         faces.set_face(self.artemis, faces.random_terran())
         sbs.assign_client_to_ship(0,self.artemis)
 
@@ -67,14 +67,14 @@ class CommonStory(PyMastStory):
         # Create the world here
 
         # Create a space station
-        ds1 = Npc().spawn(self.sim, 1000,0,1000, "DS1", "tsn, Station", "starbase_command", "behav_station")
-        ds2 = Npc().spawn(self.sim, 1000,0,-1000, "DS2", "tsn, Station", "starbase_command", "behav_station")
+        ds1 = Npc().spawn(1000,0,1000, "DS1", "tsn, Station", "starbase_command", "behav_station")
+        ds2 = Npc().spawn(1000,0,-1000, "DS2", "tsn, Station", "starbase_command", "behav_station")
         faces.set_face(ds1.id, faces.random_terran())
         faces.set_face(ds2.id, faces.random_terran())
 
         # Create an enemy
         for i in range(self.enemy_count):
-            k001 = Npc().spawn(self.sim, -1000+300*i,0,1000, f"K00{i}", "raider", "kralien_battleship", "behav_npcship")
+            k001 = Npc().spawn(-1000+300*i,0,1000, f"K00{i}", "raider", "kralien_battleship", "behav_npcship")
             faces.set_face(k001.id, faces.random_kralien())
 
         sbs.resume_sim()

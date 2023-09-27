@@ -188,7 +188,7 @@ activate console credits
 section style="area: 0, 0, 100, 100;"
 layout widget "3dview"
 
-do target_pos(sim, camera_id, -1000,300,100) 
+do target_pos(camera_id, -1000,300,100) 
 #do sim.reposition_space_object(cambot.engine_object, -1000,300,100) 
 do cambot.blob.set("camera_target_UID", pirate)
 
@@ -230,7 +230,7 @@ if the_target is None:
     the_target = closest(SPAWNED_ID, role("Station"))
 end_if
 if the_target is not None:
-    do target(sim, SPAWNED_ID, the_target, True)
+    do target(SPAWNED_ID, the_target, True)
 end_if
 
 delay sim 5s

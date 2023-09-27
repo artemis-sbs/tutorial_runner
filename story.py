@@ -41,8 +41,8 @@ class Story(PyMastStory):
             # Redirect existing client
             for id, client in Gui.clients.items():
                 if client is not None:
-                    client.pop(self.task.ctx)
-                    Gui.push(self.task.ctx, id,page_class())
+                    client.pop()
+                    Gui.push(id,page_class())
             
 
         def run_simple_ai():

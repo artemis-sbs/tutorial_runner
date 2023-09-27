@@ -250,7 +250,7 @@ i = len(internal_items)
 go =  grid_spawn(artemis,  g["name"], f"gol:{i}", g["x"], g["y"], g["icon"], g["color"], g["roles"])
 
 do go.blob.set("icon_scale", item_scale, 0)
-blob = to_blob(sim, artemis)
+blob = to_blob(artemis)
 # do blob.set("grid_selected_UID", go.id, 0)
 gid = go.id
 follow route grid select artemis gid
@@ -297,13 +297,13 @@ next k
 === update_selection ====
 
 
-blob = to_blob(sim, artemis)
+blob = to_blob(artemis)
 do blob.set("grid_selected_UID", COMMS_SELECTED_ID, 0)
 follow route grid select artemis COMMS_SELECTED_ID
 
 if selection_go is not None:
 # set pos
-blob = get_engine_data_set(sim, COMMS_SELECTED_ID)
+blob = to_blob(COMMS_SELECTED_ID)
 x = blob.get("curx", 0)
 y = blob.get("cury", 0)
 do selection_go.blob.set("curx", x)
@@ -312,7 +312,7 @@ do selection_go.blob.set("cury", y)
 
 else:
 #create it
-blob = get_engine_data_set(sim, COMMS_SELECTED_ID)
+blob = to_blob(COMMS_SELECTED_ID)
 x = blob.get("curx", 0)
 y = blob.get("cury", 0)
     shared selection_go =  grid_spawn(artemis,  "selection", "sel1", x, y, 56, "black", "#")
@@ -330,7 +330,7 @@ if selection_go is not None:
 # set pos
 
 
-blob = get_engine_data_set(sim, COMMS_SELECTED_ID)
+blob = to_blob(COMMS_SELECTED_ID)
 x = blob.get("curx", 0)
 y = blob.get("cury", 0)
 do selection_go.blob.set("curx", x)
@@ -338,7 +338,7 @@ do selection_go.blob.set("cury", y)
 
 else:
 #create it
-blob = get_engine_data_set(sim, COMMS_SELECTED_ID)
+blob = to_blob(COMMS_SELECTED_ID)
 x = blob.get("curx", 0)
 y = blob.get("cury", 0)
     shared selection_go =  grid_spawn(artemis,  "selection", "sel1", x, y, 56, "black", "#")
@@ -359,7 +359,7 @@ await comms:
         if item_name is not None and item_name != "" and  item_roles is not None and item_roles != "":
             icon = int(item_icon.value[0])
             color = item_color.value[0]
-            blob = get_engine_data_set(sim, COMMS_SELECTED_ID)
+            blob = to_blob(COMMS_SELECTED_ID)
             do blob.set("icon_index", icon, 0)
             do blob.set("icon_scale", item_scale, 0)
             do blob.set("icon_color", color , 0)

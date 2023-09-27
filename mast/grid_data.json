@@ -397,7 +397,10 @@
 "xim_scout":
  {"grid_objects": []},
 "tsn_carrier":
- {"grid_objects": []},
+ {"grid_objects": [
+   {"x": 3.0,"y": 3.0,"icon": 36,"name": "WARP","color": "lime","scale": 1.0,"roles": "ENGINE,warp,room"},
+   {"x": 5.0,"y": 3.0,"icon": 36,"name": "WARP","color": "lime","scale": 1.0,"roles": "ENGINE,warp,room"}
+  ]},
 "tsn_battleship":
  {"grid_objects": [
    {"x": 2.0,"y": 11.0,"icon": 36,"name": "warp","color": "lime","scale": 1.0,"roles": "engine,warp,room"},

@@ -168,11 +168,13 @@ end_await
 
 
 ===== count_down ===== 
+# set the value 
+
 for x in range(300):
     update tag "countdown_tag" "text: {300-x};"
     delay gui 1s
 next x
-
+# turn off
 ->END
 
 ========= show_button =======
