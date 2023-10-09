@@ -7,8 +7,6 @@ from sbs_utils.pymast.pymaststorypage import PyMastStoryPage
 from sbs_utils.pymast.pymasttask import label
 from sbs_utils.pymast.pollresults import PollResults
 from sbs_utils.mast.mast import Mast
-from sbs_utils import query
-from sbs_utils.objects import PlayerShip, Npc
 from sbs_utils.gui import Gui
 import pymast.simple_ai as simple_ai
 import pymast.simple_science as simple_science

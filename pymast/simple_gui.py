@@ -4,7 +4,6 @@ from sbs_utils.handlerhooks import *
 from sbs_utils.pymast.pymaststory import PyMastStory
 from sbs_utils.pymast.pymasttask import label
 from sbs_utils import faces
-from sbs_utils.objects import PlayerShip, Npc
 import functools
 
 
