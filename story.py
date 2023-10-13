@@ -125,6 +125,12 @@ class Story(PyMastStory):
 
             redirect_gui(SimplePage)
 
+        def run_early_access_two():
+            class SimplePage(StoryPage):
+                story_file = "mast/early_access_two_highlights.mast"
+
+            redirect_gui(SimplePage)
+
         def run_extend_console_mast():
             class SimplePage(StoryPage):
                 story_file = "mast/simple_extend_console.mast"
@@ -169,6 +175,9 @@ class Story(PyMastStory):
         self.gui_button("Grid Object Editor", run_grid_editor_mast)
         self.gui_row()
         self.gui_button("Scatter Viewer", run_scatter_viewer)
+        self.gui_row()
+        self.gui_button("EA2", run_early_access_two)
+        
 
 
         self.gui_section("area:50,30,85,95;row-height: 35px")
