@@ -1,0 +1,22 @@
+import grid_editor.mast
+import char_editor.mast
+
+reroute server server_start
+reroute clients grid_editor_client_start_once
+
+
+===== add_menu =====
+
+section style="area:20, 0, 30, 35px;"
+dropdown menu "text: Editor; list:grid,character;":
+    match menu:
+     case "grid":
+            jump grid_editor_client_start
+        case "character":
+            jump character_editor_client_start
+    end_match
+end_dropdown
+
+<<-
+
+

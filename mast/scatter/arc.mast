@@ -1,0 +1,62 @@
+===== edit_scatter_arc ===== 
+
+push client_common
+
+
+section style=form_style
+
+row style=slider_row
+"""count"""
+slider count "low: 1; high:100.0;"
+row style=separator
+blank
+row style=input_row
+s_x = "{x}"
+input  s_x "desc: x"
+
+s_y = "{y}"
+input  s_y "desc: y"
+s_z = "{z}"
+input  s_z "desc: z"
+row style=input_row
+
+s_w = "{w}"
+input  s_w "desc: radius"
+###########
+##
+row style=separator
+blank
+row style=slider_row
+"""start angle"""
+slider a_start "low: 0; high:360.0;"
+row style=slider_row
+"""y end angle"""
+slider a_end "low: 0; high:360.0;"
+#############
+##
+row style=separator
+blank
+row style=slider_row
+checkbox rand "text: random;state: {rand}"
+
+await choice:
+    * "Apply":
+        x = int(s_x)
+        y = int(s_y)
+        z = int(s_z)
+        w = int(s_w)
+
+        jump apply_scatter_arc
+end_await
+jump edit_scatter_arc
+
+==== apply_scatter_arc ====
+push clear_objects
+
+for v in scatter_arc(int(count), x,y,z, w, a_start, a_end, rand):
+    o = terrain_spawn(v.x, v.y, v.z, None, None, "plain_asteroid_6", "behav_asteroid")
+    do objects.append(to_id(o))
+next v
+jump edit_scatter_arc
+
+

@@ -84,7 +84,14 @@ await gui
 
 ====== opening_scene ====
 
+#
+# Race Condition? Removing this print causes crash
+#
+do print(f"{client_id} {camera_id}")
+
 do sbs.assign_client_to_ship(client_id, camera_id)
+#do to_blob(camera_id).blob.set("reference_ring_3d_brightness", 0.0, 0)
+
 captain_face = random_terran()
 operator_face = random_terran()
 mechanic_face = random_terran()
@@ -282,6 +289,7 @@ end_if
 
 ========== run_console ========
 do sbs.assign_client_to_ship(client_id, artemis)
+
 console console_select
-    await gui
+await gui
 

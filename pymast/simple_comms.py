@@ -3,10 +3,8 @@ import sbs
 from  sbs_utils.handlerhooks import *
 from sbs_utils.pymast.pymaststory import PyMastStory
 from sbs_utils.pymast.pymasttask import label
-from sbs_utils import query
+from sbs_utils.procedural import roles
 from sbs_utils import faces
-from sbs_utils.objects import PlayerShip, Npc
-from sbs_utils.gridobject import GridObject
 from .simple_common import CommonStory
 
 class Story(CommonStory):
@@ -30,9 +28,9 @@ class Story(CommonStory):
         if self.task.COMMS_SELECTED_ID == self.task.COMMS_ORIGIN_ID:
             # This is the same ship
             yield self.jump(self.internal_comms)
-        elif query.has_role(self.task.COMMS_SELECTED_ID, 'Station'):
+        elif roles.has_role(self.task.COMMS_SELECTED_ID, 'Station'):
             yield self.jump(self.comms_station)
-        elif query.has_role(self.task.COMMS_SELECTED_ID, 'raider'):
+        elif roles.has_role(self.task.COMMS_SELECTED_ID, 'raider'):
             yield self.jump(self.npc_comms)
 
         # Anything else has no comms buttons
@@ -120,9 +118,9 @@ class Story(CommonStory):
     @label()
     def damcon_route(self):
         # COMMS_SELECTED_ID is the id of the target
-        if query.has_role(self.task.COMMS_SELECTED_ID, 'flint'):
+        if roles.has_role(self.task.COMMS_SELECTED_ID, 'flint'):
             yield self.jump(self.comms_flintstone)
-        elif query.has_role(self.task.COMMS_SELECTED_ID, 'rubble'):
+        elif roles.has_role(self.task.COMMS_SELECTED_ID, 'rubble'):
             yield self.jump(self.comms_rubble)
 
     # ================ comms_flintstone ==================

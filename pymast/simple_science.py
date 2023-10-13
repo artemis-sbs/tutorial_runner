@@ -1,10 +1,8 @@
 import sbslibs
 import sbs
 from  sbs_utils.handlerhooks import *
-from sbs_utils.pymast.pymaststory import PyMastStory
 from sbs_utils.pymast.pymasttask import label
-from sbs_utils import query
-from sbs_utils.objects import PlayerShip, Npc
+from sbs_utils.procedural import roles
 from .simple_common import CommonStory
 
 class Story(CommonStory):
@@ -25,9 +23,9 @@ class Story(CommonStory):
         #
         # SCIENCE_SELECTED_ID is the id of the target
 
-        if query.has_roles(self.task.SCIENCE_SELECTED_ID, 'tsn, Station'):
+        if roles.has_roles(self.task.SCIENCE_SELECTED_ID, 'tsn, Station'):
             yield self.jump(self.station_science)
-        elif query.has_role(self.task.SCIENCE_SELECTED_ID, 'raider'):
+        elif roles.has_role(self.task.SCIENCE_SELECTED_ID, 'raider'):
             yield self.jump(self.npc_science)
 
     @label()

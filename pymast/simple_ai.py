@@ -1,10 +1,9 @@
 import sbslibs
 import sbs
 from  sbs_utils.handlerhooks import *
-from sbs_utils.pymast.pymaststory import PyMastStory
 from sbs_utils.pymast.pymasttask import label
-from sbs_utils import query
-from sbs_utils.objects import PlayerShip, Npc
+from sbs_utils.procedural import space_objects
+from sbs_utils.procedural import roles
 from .simple_common import CommonStory
 
 
@@ -20,7 +19,7 @@ class Story(CommonStory):
         #
         # SPAWNED_ID is a special value of the ID of the thing spawned
         #
-        if query.has_role(self.task.SPAWNED_ID, "raider"):
+        if roles.has_role(self.task.SPAWNED_ID, "raider"):
             yield self.jump(self.npc_targeting_ai)
         #
         # Added others
@@ -30,11 +29,11 @@ class Story(CommonStory):
 
     @label()    
     def npc_targeting_ai(self):
-        the_target = query.closest(self.task.SPAWNED_ID, query.role("__PLAYER__"), 2000)
+        the_target = space_objects.closest(self.task.SPAWNED_ID, roles.role("__PLAYER__"), 2000)
         if the_target is None:
-            the_target = query.closest(self.task.SPAWNED_ID, query.role("Station"))
+            the_target = space_objects.closest(self.task.SPAWNED_ID, roles.role("Station"))
         if the_target is not None:
-            query.target(self.sim, self.task.SPAWNED_ID, the_target, True)
+            space_objects.target(self.sim, self.task.SPAWNED_ID, the_target, True)
 
         yield self.delay(5)
         yield self.jump(self.npc_targeting_ai)

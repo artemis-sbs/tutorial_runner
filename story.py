@@ -7,8 +7,6 @@ from sbs_utils.pymast.pymaststorypage import PyMastStoryPage
 from sbs_utils.pymast.pymasttask import label
 from sbs_utils.pymast.pollresults import PollResults
 from sbs_utils.mast.mast import Mast
-from sbs_utils import query
-from sbs_utils.objects import PlayerShip, Npc
 from sbs_utils.gui import Gui
 import pymast.simple_ai as simple_ai
 import pymast.simple_science as simple_science
@@ -41,8 +39,8 @@ class Story(PyMastStory):
             # Redirect existing client
             for id, client in Gui.clients.items():
                 if client is not None:
-                    client.pop(self.task.ctx)
-                    Gui.push(self.task.ctx, id,page_class())
+                    client.pop()
+                    Gui.push(id,page_class())
             
 
         def run_simple_ai():
@@ -70,6 +68,14 @@ class Story(PyMastStory):
         def run_simple_science_mast():
             class SimplePage(StoryPage):
                 story_file = "mast/simple_science.mast"
+
+
+            redirect_gui(SimplePage)
+
+        def run_simple_collision_mast():
+            class SimplePage(StoryPage):
+                story_file = "mast/simple_collision.mast"
+
 
             redirect_gui(SimplePage)
 
@@ -119,6 +125,12 @@ class Story(PyMastStory):
 
             redirect_gui(SimplePage)
 
+        def run_early_access_two():
+            class SimplePage(StoryPage):
+                story_file = "mast/early_access_two_highlights.mast"
+
+            redirect_gui(SimplePage)
+
         def run_extend_console_mast():
             class SimplePage(StoryPage):
                 story_file = "mast/simple_extend_console.mast"
@@ -127,10 +139,15 @@ class Story(PyMastStory):
 
         def run_grid_editor_mast():
             class SimplePage(StoryPage):
-                story_file = "mast/grid_editor.mast"
+                story_file = "mast/editor_main.mast"
 
             redirect_gui(SimplePage)
 
+        def run_scatter_viewer():
+            class SimplePage(StoryPage):
+                story_file = "mast/scatter_viewer.mast"
+
+            redirect_gui(SimplePage)
 
 
 
@@ -140,6 +157,8 @@ class Story(PyMastStory):
         self.gui_button("simple ai", run_simple_ai_mast)
         self.gui_row()
         self.gui_button("simple science", run_simple_science_mast)
+        self.gui_row()
+        self.gui_button("simple collision", run_simple_collision_mast)
         self.gui_row()
         self.gui_button("simple comms", run_simple_comms_mast)
         self.gui_row()
@@ -154,6 +173,11 @@ class Story(PyMastStory):
         self.gui_button("Extend Console", run_extend_console_mast)
         self.gui_row()
         self.gui_button("Grid Object Editor", run_grid_editor_mast)
+        self.gui_row()
+        self.gui_button("Scatter Viewer", run_scatter_viewer)
+        self.gui_row()
+        self.gui_button("EA2", run_early_access_two)
+        
 
 
         self.gui_section("area:50,30,85,95;row-height: 35px")

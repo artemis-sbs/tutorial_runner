@@ -1,0 +1,99 @@
+
+===== edit_scatter_rect_fill ===== 
+box_rect = True
+jump edit_scatter_box_rect_fill
+
+===== edit_scatter_box_fill ===== 
+box_rect = False
+jump edit_scatter_box_rect_fill
+
+===== edit_scatter_box_rect_fill ===== 
+
+push client_common
+
+
+section style=form_style
+
+row style=input_row
+
+s_cw = "{cw}"
+input  s_cw "desc: width count"
+if box_rect == False:
+    s_ch = "{ch}"
+    input  s_ch "desc: height count"
+end_if
+
+s_cd = "{cd}"
+input  s_cd "desc: depth count"
+
+row style=separator
+blank
+row style=input_row
+s_x = "{x}"
+input  s_x "desc: x"
+
+s_y = "{y}"
+input  s_y "desc: y"
+s_z = "{z}"
+input  s_z "desc: z"
+row style=input_row
+
+s_w = "{w}"
+input  s_w "desc: width"
+
+if box_rect == False:
+    s_h = "{h}"
+    input  s_h "desc: height"
+end_if
+
+s_d = "{d}"
+input  s_d "desc: depth"
+row style=separator
+blank
+row style=x_slider_row
+"""x rotation"""
+slider ax "low: 0; high:360.0;"
+row style=y_slider_row
+"""y rotation"""
+slider ay "low: 0; high:360.0;"
+row style=z_slider_row
+"""z rotation"""
+slider az "low: 0; high:360.0;"
+
+
+await choice:
+    * "Apply":
+        cw = int(s_cw)
+        if box_rect==False:
+            ch = int(s_ch)
+        end_if
+        cd = int(s_cd)
+
+        x = int(s_x)
+        y = int(s_y)
+        z = int(s_z)
+
+        w = int(s_w)
+        if box_rect==False:
+            h = int(s_h)
+        end_if
+        d = int(s_d)
+        jump apply_box_fill
+end_await
+jump edit_scatter_box_rect_fill
+
+==== apply_box_fill ====
+push clear_objects
+
+if box_rect:
+    scat = scatter_rect_fill(cw, cd, x, y, z, w, d, random=False) # ax,ay,az, True):
+else:
+    scat = scatter_box_fill(cw, ch, cd, x, y, z, w, h, d, random=False) # ax,ay,az, True):
+end_if
+
+for v in scat:
+    o = terrain_spawn(v.x, v.y, v.z, None, None, "plain_asteroid_6", "behav_asteroid")
+    do objects.append(to_id(o))
+next v
+jump edit_scatter_box_rect_fill
+

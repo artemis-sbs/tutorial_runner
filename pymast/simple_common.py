@@ -3,9 +3,8 @@ import sbs
 from  sbs_utils.handlerhooks import *
 from sbs_utils.pymast.pymaststory import PyMastStory
 from sbs_utils.pymast.pymasttask import label
-from sbs_utils import query
+from sbs_utils.procedural import query, roles, spawn
 from sbs_utils import faces
-from sbs_utils.objects import PlayerShip, Npc
 
 
 class CommonStory(PyMastStory):
@@ -24,7 +23,7 @@ class CommonStory(PyMastStory):
         sbs.create_new_sim()
         #yield self.delay(1)
 
-        self.artemis =  query.to_id(PlayerShip().spawn(self.sim, 0,0,0, "Artemis", "tsn", "tsn_battle_cruiser"))
+        self.artemis =  query.to_id(spawn.player_spawn(0,0,0, "Artemis", "tsn", "tsn_battle_cruiser"))
         faces.set_face(self.artemis, faces.random_terran())
         sbs.assign_client_to_ship(0,self.artemis)
 
@@ -44,7 +43,7 @@ class CommonStory(PyMastStory):
         #
         # no more players
         
-        players = query.role("__PLAYER__")
+        players = roles.role("__PLAYER__")
         if len(players) == 0:
             self.start_text = "You lost"
             sbs.pause_sim()
@@ -52,7 +51,7 @@ class CommonStory(PyMastStory):
         #
         # No more enemies
         #
-        raiders = query.role("raider")
+        raiders = roles.role("raider")
         if len(raiders) == 0:
             self.start_text = "You Won"
             print(f"end_game {self.start_text}")
@@ -67,14 +66,14 @@ class CommonStory(PyMastStory):
         # Create the world here
 
         # Create a space station
-        ds1 = Npc().spawn(self.sim, 1000,0,1000, "DS1", "tsn, Station", "starbase_command", "behav_station")
-        ds2 = Npc().spawn(self.sim, 1000,0,-1000, "DS2", "tsn, Station", "starbase_command", "behav_station")
+        ds1 = spawn.npc_spawn(1000,0,1000, "DS1", "tsn, Station", "starbase_command", "behav_station")
+        ds2 = spawn.npc_spawn(1000,0,-1000, "DS2", "tsn, Station", "starbase_command", "behav_station")
         faces.set_face(ds1.id, faces.random_terran())
         faces.set_face(ds2.id, faces.random_terran())
 
         # Create an enemy
         for i in range(self.enemy_count):
-            k001 = Npc().spawn(self.sim, -1000+300*i,0,1000, f"K00{i}", "raider", "kralien_battleship", "behav_npcship")
+            k001 = spawn.npc_spawn(-1000+300*i,0,1000, f"K00{i}", "raider", "kralien_battleship", "behav_npcship")
             faces.set_face(k001.id, faces.random_kralien())
 
         sbs.resume_sim()

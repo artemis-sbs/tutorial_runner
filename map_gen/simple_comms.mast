@@ -1,0 +1,271 @@
+import simple_common.mast
+
+
+sectors= 1
+shared gen = MapGenerator(0,0,0, sectors*100000, 500, sectors*100000, 1234)
+
+shared gen_enemy = 10*sectors*sectors
+shared gen_friendly = 5*sectors*sectors
+shared gen_station = 6*sectors*sectors
+shared gen_planets = 3*sectors*sectors
+shared gen_nebula = 30*sectors*sectors
+shared gen_asteroids = 200*sectors*sectors
+
+#
+# Show the proper GUI for server vs Client Consoles
+#
+
+# Configure the label where comms routing occurs
+
+#
+# Routing occurs in reverser order (latest is tried first)
+# If the route results in a task that is still running
+# Then no other routes should override it
+#
+
+route comms select comms_route
+route comms select casino_comms_route
+route spawn clear_unknown
+
+route grid select damcon_route
+
+start_text = "This is a start project for mast^to demonstrate comms console"
+
+
+==== replace: start =====
+push add_some_stuff
+
+simulation resume
+#schedule end_game
+delay gui 99m
+
+================ casino_comms_route ==================
+if has_roles(COMMS_SELECTED_ID, "Station, casino"):
+    jump comms_casino
+end_if
+->END
+
+
+================ comms_route ==================
+#
+# This label is called for a player ship (COMMS_ORIGIN_ID)
+# and the COMMS_SELECTED_ID ship has not been communicated with
+# this is used to resolve where to START the conversation with the TO ship
+#
+# COMMS_SELECTED_ID is the id of the target
+
+if COMMS_SELECTED_ID == COMMS_ORIGIN_ID:
+    # This is the same ship
+    jump internal_comms
+elif has_role(COMMS_SELECTED_ID, 'Station'):
+    jump comms_station
+elif has_role(COMMS_SELECTED_ID, 'raider'):
+     jump npc_comms
+end_if
+
+# Anything else has no comms buttons
+# and static as the id
+comms_info "static"
+
+->END
+
+================ internal_comms ==================
+#
+# Setup faces for the departments
+#
+doctor = random_terran()
+biologist = random_terran()
+counselor = random_terran()
+major = random_terran()
+sec = "Security"
+
+================ internal_comms_loop ==================
+#
+# Shows button color, face and title overrides
+#
+await comms:
+    + "Sickbay" color "blue":
+        receive "The crew health is great!" title "sickbay" face "{doctor}" color "blue"
+    + "Security" color "red":
+        receive  "All secure" title sec face major color "red"
+    + "Exobiology" color "green":
+        receive  "Testing running, one moment" title "Exobiology" face biologist color "green"
+        # It is best to schedule delayed responses so the comms buttons are not stalled
+        schedule test_finished
+    + "counselor" color "cyan":
+        receive  "Something is disturbing the crew" title "counselor" face counselor color "cyan"
+        #
+        # but you can delay comms, There will be no buttons during this delay
+        #
+        delay sim 3s
+        receive  "Things feel like they are getting worse" title "counselor" face counselor color "cyan"
+end_await
+-> internal_comms_loop
+
+
+==== add_some_stuff ====
+asteroid_types = names_plain_asteroid_keys()
+
+i = 10000
+for n in gen:
+    #do print(f"{n.x} {n.y} {n.terrain}")
+    if i <=0: 
+        break
+     end_if
+    i -= 1
+    match n.terrain:
+        case 0:
+            if gen_planets >0:
+                a = terrain_spawn(n.x, n.y, n.z,  "Celestial Body", "", "unknown", "behave_asteroid")
+                gen_planets -= 1
+            end_if
+        case 2:
+            if gen_nebula  >0:
+                a = terrain_spawn(n.x, n.y, n.z,  None, None, "nebula", "behav_nebula")
+                gen_nebula -= 1
+            end_if
+        case 1:
+            if  gen_enemy > 0:
+                a = npc_spawn(n.x, n.y, n.z,  "Enemy", "enemy", "kralien_battleship", "behav_npcship")
+                gen_enemy -= 1
+            end_if
+        case 3:
+            if gen_asteroids >0:
+                # plain asteroids
+                a_type = random.choice(asteroid_types)
+                #a_type = "asteroid_crystal_blue"
+                do terrain_spawn(n.x, n.y, n.z, None, None, a_type, "behav_asteroid")
+                gen_asteroids -= 1
+            end_if
+        case 4:
+            if gen_nebula > 0:
+                a = terrain_spawn(n.x, n.y, n.z,  None, None, "nebula", "behav_nebula")
+                gen_nebula -= 1
+            end_if
+        case 5:
+            if gen_asteroids>0:
+                # plain asteroids
+                #a_type = random.choice(asteroid_types)
+                a_type = "asteroid_crystal_blue"
+                do terrain_spawn(n.x, n.y, n.z, None, None, a_type, "behav_asteroid")
+                gen_asteroids -= 1
+            end_if
+        case 6:
+            if gen_friendly >0:
+                a = npc_spawn(n.x, n.y, n.z,  "Friend", "tsn", "tsn_battle_cruiser", "behav_npcship")
+                gen_friendly -= 1
+            end_if
+        case 7: # Maybe this is player spawn options
+            if gen_station >0:
+                a = npc_spawn(n.x,n.y,n.z, f"SS{gen_station}", "tsn, station", "starbase_command", "behav_station")
+                gen_station -= 1
+            end_if
+        case 8:
+            if gen_station > 0:
+                a = npc_spawn(n.x,n.y,n.z, f"CS{gen_station}", "tsn, station", "starbase_command", "behav_station")
+                gen_station -= 1
+            end_if
+    end_match
+next x
+<<-
+
+==== add_some_navpoint ====
+colors = ["gray", "darkblue", "red", "brown",  "blue", "orange", "cyan", "white", "green"]
+for x in range(100):
+    n = gen.next()
+    color = colors[n.terrain]
+    do sim.add_navpoint(n.x,n.y, n.z, "", color)
+
+next x
+<<-
+
+
+====== test_finished ======
+# This is a new task to delay the response of the test results
+# COMMS variables should migrate to this task
+
+delay sim 2s
+receive  "test results finished. Tell the captain we have a pathogen. This could be bad." title "Exobiology" face biologist color "green"
+->END
+
+
+================ npc_comms ==================
+
+await comms:
+    + "Hail":
+        receive "We will destroy you, disgusting Terran scum!"
+    + "Surrender now":
+        receive  """OK we give up"""
+end_await
+-> npc_comms
+
+
+
+================ comms_casino ==================
+money = 100
+================ comms_casino_loop ==================
+flip = random.randint(0,1)
+await comms:
+    + "Heads":
+        guess = 0
+    + "Tails":
+        guess = 1
+end_await
+if flip == guess:
+    money += 10
+    receive "Winner - bank {money}"
+else:
+    money -= 10
+    receive "Loser - bank {money}"
+end_if
+
+jump comms_casino_loop if money > 0
+receive "You went bust"
+->END
+
+
+======== comms_station ====== 
+comms_id = "later"
+
+await comms:
+    + "Hail":
+        transmit "Hello"
+        receive "Yo"
+end_await
+-> comms_station
+
+
+================ damcon_route ==================
+
+# COMMS_SELECTED_ID is the id of the target
+
+if has_role(COMMS_SELECTED_ID, 'flint'):
+    jump comms_flintstone
+elif has_role(COMMS_SELECTED_ID, 'rubble'):
+     jump comms_rubble
+end_if
+->END
+
+================ comms_flintstone ==================
+
+await comms:
+    + "Hail":
+        have client_id broadcast "Yabba Daba Dooo"
+
+end_await
+-> comms_flintstone
+
+================ comms_rubble ==================
+
+await comms:
+    + "Hail":
+        have client_id broadcast "Who ya doing fred?"
+
+end_await
+-> comms_rubble
+
+======= clear_unknown =====
+#
+# Just enough science so the unknown is cleared
+#
+do set_engine_data(sim, SPAWNED_ID, "tsnscan", "Scan data")

@@ -1,0 +1,64 @@
+
+===== edit_scatter_box ===== 
+
+push client_common
+
+
+section style=form_style
+
+row style=slider_row
+"""count"""
+slider count "low: 1; high:100.0;"
+row style=separator
+blank
+row style=input_row
+s_x = "{x}"
+input  s_x "desc: x"
+
+s_y = "{y}"
+input  s_y "desc: y"
+s_z = "{z}"
+input  s_z "desc: z"
+row style=input_row
+
+s_w = "{w}"
+input  s_w "desc: width"
+s_h = "{h}"
+input  s_h "desc: height"
+
+s_d = "{d}"
+input  s_d "desc: depth"
+row style=separator
+blank
+row style=x_slider_row
+"""x rotation"""
+slider ax "low: 0; high:360.0;"
+row style=y_slider_row
+"""y rotation"""
+slider ay "low: 0; high:360.0;"
+row style=z_slider_row
+"""z rotation"""
+slider az "low: 0; high:360.0;"
+
+
+await choice:
+    * "Apply":
+        x = int(s_x)
+        y = int(s_y)
+        z = int(s_z)
+
+        w = int(s_w)
+        h = int(s_h)
+        d = int(s_d)
+        jump apply_box
+end_await
+jump edit_scatter_box
+
+==== apply_box ====
+push clear_objects
+for v in scatter_box(int(count), x,y,z,w,h,d,True, ax,ay,az, True):
+    o = terrain_spawn(v.x, v.y, v.z, None, None, "plain_asteroid_6", "behav_asteroid")
+    do objects.append(to_id(o))
+next v
+jump edit_scatter_box
+

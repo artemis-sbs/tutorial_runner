@@ -109,7 +109,9 @@ next x
 
 simulation resume
 schedule end_game
-delay gui 99m
+
+==== additional_start ===
+await gui
 
 
 ====== client_main =======

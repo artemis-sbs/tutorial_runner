@@ -1,0 +1,128 @@
+import scatter/arc.mast
+import scatter/box.mast
+import scatter/line.mast
+import scatter/box_fill.mast
+import scatter/ring.mast
+import scatter/ring_density.mast
+import scatter/sphere.mast
+
+
+shared objects = []
+
+style slider_row="row-height: 46px;padding: 6px,0,2px, 6px;"
+style x_slider_row="row-height: 46px;padding: 6px,0,2px, 6px;background:red;"
+style y_slider_row="row-height: 46px;padding: 6px,0,2px, 6px;background:green;"
+style z_slider_row="row-height: 46px;padding: 6px,0,2px, 6px;background:blue;"
+
+style input_row="row-height: 45px;padding: 6px,0,2px, 6px;"
+style separator="row-height: 40px;"
+style form_style="area: 0, 7, 50, 90;"
+
+
+counts = [10,20]
+count = 50
+cw = 10
+ch = 10
+cd = 5
+ca = 10
+cr = 10
+outer_r = 1000
+inner_r = 0
+
+x = 0
+y = 0 
+z = 0
+w = 1000
+h = 1000
+d = 50
+a_start = 0
+a_end = 45
+ax = 0
+ay = 0
+az = 0
+rand = False
+top_only = False
+ring_only = False
+
+reroute server server_start
+reroute clients client_start
+
+
+
+
+==== server_start ==== 
+simulation create
+
+# Create a Invisible ship
+# and that's it for the server
+# Create an chase camera
+cambot = player_spawn(0,0,-2000, "cam", "camera", "invisible")
+shared camera = to_id(cambot)
+
+do cambot.blob.set("reference_ring_3d_brightness", 0.0, 0)
+
+do assign_client_to_ship(0,camera)
+
+
+
+simulation resume
+await gui
+
+
+==== client_start ==== 
+
+
+
+
+push client_common
+await gui
+
+==== client_common ====
+
+#   3d view
+#   2d view
+#   scatter option
+
+
+
+
+do assign_client_to_ship(client_id,camera)
+activate console engineer
+section style="area: 50, 0, 100, 100;"
+layout widget "3dview"
+row
+layout widget "2dview" 
+
+section style="area: 200px, 0, 50, 33px;"
+dropdown menu "text: Scatter; list: arc, line, rect_fill, box_fill, box, ring, ring_density, sphere":
+    match menu:
+        case "arc":
+            jump edit_scatter_arc
+        case "line":
+            jump edit_scatter_line
+        case "rect_fill":
+            jump edit_scatter_rect_fill
+        case "box_fill":
+            jump edit_scatter_box_fill
+        case "box":
+            jump edit_scatter_box
+        case "ring":
+            jump edit_scatter_ring
+        case "ring_density":
+            jump edit_scatter_ring_density
+        case "sphere":
+            jump edit_scatter_sphere
+    end_match
+end_dropdown
+
+<<-
+
+===== clear_objects ===== 
+for o in objects:
+    do sbs.delete_object(o)
+next o
+
+<<-
+
+
+
