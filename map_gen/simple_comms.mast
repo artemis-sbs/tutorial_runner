@@ -85,7 +85,7 @@ sec = "Security"
 #
 await comms:
     + "Sickbay" color "blue":
-        receive "The crew health is great!" title "sickbay" face "{doctor}" color "blue"
+        do comms_receive("DA crew health is great!", title="sickbay", face= doctor,  color="blue")
     + "Security" color "red":
         receive  "All secure" title sec face major color "red"
     + "Exobiology" color "green":
@@ -229,8 +229,8 @@ comms_id = "later"
 
 await comms:
     + "Hail":
-        transmit "Hello"
-        receive "Yo"
+        do comms_transmit("Hello")
+        do comms_receive("Yo")
 end_await
 -> comms_station
 

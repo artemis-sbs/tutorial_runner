@@ -53,11 +53,11 @@ comms_info "static"
 #
 # Setup faces for the departments
 #
-doctor = random_terran()
-biologist = random_terran()
-counselor = random_terran()
-major = random_terran()
-sec = "Security"
+do set_inventory_value(COMMS_ORIGIN_ID, "face_sickbay", random_terran())
+do set_inventory_value(COMMS_ORIGIN_ID, "face_exobiology", random_terran())
+do set_inventory_value(COMMS_ORIGIN_ID, "face_counselor", random_terran())
+do set_inventory_value(COMMS_ORIGIN_ID, "face_security",  random_terran())
+
 
 ================ internal_comms_loop ==================
 #
@@ -65,20 +65,20 @@ sec = "Security"
 #
 await comms:
     + "Sickbay" color "blue":
-        receive "The crew health is great!" title "sickbay" face "{doctor}" color "blue"
+        do comms_receive_internal("DA crew health is great!", from_name="sickbay", color="blue")
     + "Security" color "red":
-        receive  "All secure" title sec face major color "red"
+        do comms_receive_internal("All secure", from_name="security",   color="red")
     + "Exobiology" color "green":
-        receive  "Testing running, one moment" title "Exobiology" face biologist color "green"
+        do comms_receive_internal("Testing running, one moment", from_name="exobiology", color="green")
         # It is best to schedule delayed responses so the comms buttons are not stalled
         schedule test_finished
     + "counselor" color "cyan":
-        receive  "Something is disturbing the crew" title "counselor" face counselor color "cyan"
+        do comms_receive_internal("Something is disturbing the crew", from_name="counselor", color="cyan")
         #
         # but you can delay comms, There will be no buttons during this delay
         #
         delay sim 3s
-        receive  "Things feel like they are getting worse" title "counselor" face counselor color "cyan"
+        do comms_receive_internal("Things feel like they are getting worse", from_name="counselor", color="cyan")
 end_await
 -> internal_comms_loop
 
@@ -87,7 +87,7 @@ end_await
 # COMMS variables should migrate to this task
 
 delay sim 2s
-receive  "test results finished. Tell the captain we have a pathogen. This could be bad." title "Exobiology" face biologist color "green"
+do comms_receive_internal( "test results finished. Tell the captain we have a pathogen. This could be bad.", from_name="exobiology", color= "green")
 ->END
 
 
@@ -95,9 +95,9 @@ receive  "test results finished. Tell the captain we have a pathogen. This could
 
 await comms:
     + "Hail":
-        receive "We will destroy you, disgusting Terran scum!"
+        do comms_receive("We will destroy you, disgusting Terran scum!")
     + "Surrender now":
-        receive  """OK we give up"""
+        do comms_receive("""OK we give up""")
 end_await
 -> npc_comms
 
@@ -131,8 +131,8 @@ comms_id = "later"
 
 await comms:
     + "Hail":
-        transmit "Hello"
-        receive "Yo"
+        do comms_transmit("Hello")
+        do comms_receive("Yo")
 end_await
 -> comms_station
 
@@ -170,4 +170,5 @@ end_await
 #
 # Just enough science so the unknown is cleared
 #
-do set_engine_data(sim, SPAWNED_ID, "tsnscan", "Scan data")
+#do set_engine_data(SPAWNED_ID, "tsnscan", "Scan data")
+do science_set_scan_data(artemis, SPAWNED_ID,  "scan", "Scan data")
