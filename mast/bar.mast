@@ -9,7 +9,10 @@ shared messages = []
 shared message_id = 0
 message = ""
 
-my_face = faces.random_terran()
+if len(message)==0:
+    my_face = faces.random_terran()
+end_if
+
 
 
 ===== EnterBar ===
