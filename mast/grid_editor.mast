@@ -115,7 +115,7 @@ row style="row-height:20"
 layout widget "grid_control"
 
 
-icons = [*range(84)]
+icons = [*range(147)]
 #icons = [0,1,2,3]
 icon = 0
 
