@@ -375,8 +375,8 @@ await comms:
             #
             roles = item_roles.split(",")
             got = roles[0].strip()
-            do go.set_go_type(sim, got)
-            do go.set_name(sim, item_name)
+            do go.set_go_type(got)
+            do go.set_name(item_name)
 
         end_if
   + "delete": 
