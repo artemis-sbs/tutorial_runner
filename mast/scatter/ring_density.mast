@@ -4,17 +4,17 @@
 push client_common
 
 
-section style=form_style
+do gui_section(style=form_style)
 
-row style=input_row
+do gui_row(input_row)
 s_count = ~~" ".join(map(str,counts))~~
 input  s_count "desc: counts;"
 
 
 ##################
-row style=separator
-blank
-row style=input_row
+do gui_row(separator)
+do gui_blank()
+do gui_row(input_row)
 s_x = "{x}"
 input  s_x "desc: x"
 
@@ -24,9 +24,9 @@ s_z = "{z}"
 input  s_z "desc: z"
 ##############
 ##
-row style=separator
-blank
-row style=input_row
+do gui_row(separator)
+do gui_blank()
+do gui_row(input_row)
 s_out = "{outer_r}"
 input  s_out "desc: Outer radius"
 
@@ -35,34 +35,34 @@ input  s_in "desc: Inner radius"
 
 ###########
 ##
-row style=separator
-blank
-row style=slider_row
+do gui_row(separator)
+do gui_blank()
+do gui_row(slider_row)
 """start angle"""
 slider a_start "low: 0; high:360.0;"
-row style=slider_row
+do gui_row(slider_row)
 """y end angle"""
 slider a_end "low: 0; high:360.0;"
 ##############
 ##
 #############
-row style=separator
-blank
-row style=x_slider_row
+do gui_row(separator)
+do gui_blank()
+do gui_row(x_slider_row)
 """x rotation"""
 slider ax "low: 0; high:360.0;"
-row style=y_slider_row
+do gui_row(y_slider_row)
 """y rotation"""
 slider ay "low: 0; high:360.0;"
-row style=z_slider_row
+do gui_row(z_slider_row)
 """z rotation"""
 slider az "low: 0; high:360.0;"
 ##############
 ##
 #############
-row style=separator
-blank
-row style=slider_row
+do gui_row(separator)
+do gui_blank()
+do gui_row(slider_row)
 checkbox rand "text: random;state: {rand}"
 
 

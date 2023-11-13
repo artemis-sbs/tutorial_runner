@@ -1,3 +1,10 @@
+======= testr  ===============
+#do gui_section("area:25,20,80,95;")
+""""""" Example Gui """""""""""
+await gui
+
+
+"""
 #
 # Show the proper GUI for server vs Client Consoles
 #
@@ -67,6 +74,11 @@ shared recruits = ~~[
 
 
 ======= menu  ===============
+do gui_section(style="area:25,20,80,95;")
+""""""" Example Gui """""""""""
+await gui
+
+
 do gui_section( style="area:0,5,10,95;row-height:35px;")
 
 button "Text":
@@ -562,4 +574,3 @@ next k
 
 
 pop
-

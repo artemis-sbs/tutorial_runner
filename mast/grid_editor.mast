@@ -63,7 +63,7 @@ do assign_client_to_ship(client_id,artemis)
 
 ==== wait_for_start ====
 jump grid_editor_client_start if started==True
-section style="area: 10,40,90,50;"
+do gui_section(style="area: 10,40,90,50;")
 """ justify:center; text: Waiting for Start """"
 
 await gui timeout 1s
@@ -105,14 +105,14 @@ if last_ship_type != ship_type:
 end_if
 
 
-activate console engineer
-section style="area: 60, 0, 100, 100;"
-layout widget "ship_internal_view"
-section style="area: 42, 10, 60, 90;"
-row style="row-height:60"
-layout widget "grid_object_list" 
-row style="row-height:20"
-layout widget "grid_control"
+do gui_activate_console("engineer")
+do gui_section(style="area: 60, 0, 100, 100;")
+do gui_layout_widget("ship_internal_view")
+do gui_section(style="area: 42, 10, 60, 90;")
+do gui_row( style="row-height:60")
+do gui_layout_widget("grid_object_list")
+do gui_row( style="row-height:20")
+do gui_layout_widget("grid_control")
 
 
 icons = [*range(147)]
@@ -154,28 +154,31 @@ if item_icon != ""and len(item_icon.content.selected)>0:
     picker.cur = next(iter(picker.selected))
 end_if
 
-section style="area: 0, 5, 20, 100;row-height:30;"
+do gui_section(style="area: 0, 5, 20, 100;row-height:30;")
 
 gui control ship_select ship_picker_control("Select Ship", ship_type)
-row style="row-height: 30px;padding:0,10px,0,0;"
+do gui_row( style="row-height: 30px;padding:0,10px,0,0;")
 """justify: center;text: Grid Item Properties""" 
-row style="row-height: 60px;padding:0,10px,0,0;"
+do gui_row( style="row-height: 60px;padding:0,10px,0,0;")
 input item_name "desc: Name;" 
-row style="row-height: 60px;"
+do gui_row( style="row-height: 60px;")
 input item_roles "desc: Roles;"
 
-row style="row-height: 40;padding:4px,0,4px,0;"
+do gui_row( style="row-height: 40;padding:4px,0,4px,0;")
 gui control item_color color_picker 
 gui control item_icon picker
-row style="row-height: 45px;"
-"""scale""" hole hole hole
+do gui_row( style="row-height: 45px;")
+"""scale""" 
+do gui_hole()
+do gui_hole()
+do gui_hole()
 slider item_scale "low: 0.1;high:5.0;" 
 
-section style="area: 20, 5, 40, 100;row-height:30;"
+do gui_section(style="area: 20, 5, 40, 100;row-height:30;")
 
-row style="row-height: 30px;padding:0,10px,0,0;"
+do gui_row( style="row-height: 30px;padding:0,10px,0,0;")
 """justify: center;text: History """ 
-row style="row-height: 90-30px;padding:4px,0,4px,0;"
+do gui_row( style="row-height: 90-30px;padding:4px,0,4px,0;")
 gui control item_template template_picker
 
 

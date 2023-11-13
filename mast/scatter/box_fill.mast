@@ -12,9 +12,9 @@ jump edit_scatter_box_rect_fill
 push client_common
 
 
-section style=form_style
+do gui_section(style=form_style)
 
-row style=input_row
+do gui_row(input_row)
 
 s_cw = "{cw}"
 input  s_cw "desc: width count"
@@ -26,9 +26,9 @@ end_if
 s_cd = "{cd}"
 input  s_cd "desc: depth count"
 
-row style=separator
-blank
-row style=input_row
+do gui_row(separator)
+do gui_blank()
+do gui_row(input_row)
 s_x = "{x}"
 input  s_x "desc: x"
 
@@ -36,7 +36,7 @@ s_y = "{y}"
 input  s_y "desc: y"
 s_z = "{z}"
 input  s_z "desc: z"
-row style=input_row
+do gui_row(input_row)
 
 s_w = "{w}"
 input  s_w "desc: width"
@@ -48,15 +48,15 @@ end_if
 
 s_d = "{d}"
 input  s_d "desc: depth"
-row style=separator
-blank
-row style=x_slider_row
+do gui_row(separator)
+do gui_blank()
+do gui_row(x_slider_row)
 """x rotation"""
 slider ax "low: 0; high:360.0;"
-row style=y_slider_row
+do gui_row(y_slider_row)
 """y rotation"""
 slider ay "low: 0; high:360.0;"
-row style=z_slider_row
+do gui_row(z_slider_row)
 """z rotation"""
 slider az "low: 0; high:360.0;"
 
