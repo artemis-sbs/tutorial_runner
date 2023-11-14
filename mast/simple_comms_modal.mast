@@ -82,9 +82,9 @@ vradio console_select "helm,weapons, comms,science,engineering,mainscreen"
 do gui_blank()
 do gui_row()
 
-button "accept":
+on message gui_button("accept"):
     ->console_selected
-end_button
+end_on
 
 await gui
 ->END

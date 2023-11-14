@@ -72,9 +72,9 @@ do gui_blank()
 do gui_row()
 
 if credits_ran:
-    button "accept":
+    on message gui_button("accept"):
         jump run_console
-    end_button
+    end_on
 else:
     checkbox console_accepted "accept"
 end_if

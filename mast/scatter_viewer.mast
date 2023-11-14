@@ -93,7 +93,7 @@ do gui_row()
 do gui_layout_widget("2dview")
 
 do gui_section(style="area: 200px, 0, 50, 33px;")
-dropdown menu "text: Scatter; list: arc, line, rect_fill, box_fill, box, ring, ring_density, sphere":
+on message gui_drop_down("text: Scatter; list: arc, line, rect_fill, box_fill, box, ring, ring_density, sphere", var="menu"):
     match menu:
         case "arc":
             jump edit_scatter_arc
@@ -112,7 +112,7 @@ dropdown menu "text: Scatter; list: arc, line, rect_fill, box_fill, box, ring, r
         case "sphere":
             jump edit_scatter_sphere
     end_match
-end_dropdown
+end_on
 
 <<-
 

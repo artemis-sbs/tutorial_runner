@@ -65,33 +65,33 @@ do gui_face(avatar_face)
 
 do gui_section(style="area: 25, 46, 75, 55;")
 
-button "text: Arvonian":
+on message gui_button("text: Arvonian"):
     race = "arvonian"
     jump character_editor_client_start
-end_button
+end_on
 
-button "text: Kralien":
+on message gui_button("text: Kralien"):
     race = "kralien"
     jump character_editor_client_start
-end_button
-button "text: Skaraan":
+end_on
+on message gui_button("text: Skaraan"):
     race = "skaraan"
     jump character_editor_client_start
-end_button
+end_on
 do gui_row()
-button "text: Terran":
+on message gui_button("text: Terran"):
     race = "terran"
     jump character_editor_client_start
-end_button
-button "text: Torgoth":
+end_on
+on message gui_button("text: Torgoth"):
     race = "torgoth"
     jump character_editor_client_start
-end_button
+end_on
 
-button "text: Ximni":
+on message gui_button("text: Ximni"):
     race = "ximni"
     jump character_editor_client_start
-end_button
+end_on
 
 do gui_row()
 
