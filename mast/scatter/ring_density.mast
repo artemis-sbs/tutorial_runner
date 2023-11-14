@@ -8,7 +8,7 @@ do gui_section(style=form_style)
 
 do gui_row(input_row)
 s_count = ~~" ".join(map(str,counts))~~
-input  s_count "desc: counts;"
+do gui_input("desc: counts;", var="s_count")
 
 
 ##################
@@ -16,22 +16,22 @@ do gui_row(separator)
 do gui_blank()
 do gui_row(input_row)
 s_x = "{x}"
-input  s_x "desc: x"
+do gui_input("desc: x", var="s_x")
 
 s_y = "{y}"
-input  s_y "desc: y"
+do gui_input("desc: y", var="s_y")
 s_z = "{z}"
-input  s_z "desc: z"
+do gui_input("desc: z", var="s_z")
 ##############
 ##
 do gui_row(separator)
 do gui_blank()
 do gui_row(input_row)
 s_out = "{outer_r}"
-input  s_out "desc: Outer radius"
+do gui_input("desc: Outer radius", var="s_out")
 
 s_in = "{inner_r}"
-input  s_in "desc: Inner radius"
+do gui_input("desc: Inner radius", var="s_in")
 
 ###########
 ##
@@ -39,10 +39,10 @@ do gui_row(separator)
 do gui_blank()
 do gui_row(slider_row)
 """start angle"""
-slider a_start "low: 0; high:360.0;"
+do gui_slider("low: 0; high:360.0;", var="a_start")
 do gui_row(slider_row)
 """y end angle"""
-slider a_end "low: 0; high:360.0;"
+do gui_slider("low: 0; high:360.0;", var="a_end")
 ##############
 ##
 #############
@@ -50,20 +50,20 @@ do gui_row(separator)
 do gui_blank()
 do gui_row(x_slider_row)
 """x rotation"""
-slider ax "low: 0; high:360.0;"
+do gui_slider("low: 0; high:360.0;", var="ax")
 do gui_row(y_slider_row)
 """y rotation"""
-slider ay "low: 0; high:360.0;"
+do gui_slider("low: 0; high:360.0;", var="ay")
 do gui_row(z_slider_row)
 """z rotation"""
-slider az "low: 0; high:360.0;"
+do gui_slider("low: 0; high:360.0;", var="az")
 ##############
 ##
 #############
 do gui_row(separator)
 do gui_blank()
 do gui_row(slider_row)
-checkbox rand "text: random;state: {rand}"
+do gui_checkbox("text: random;state: {rand}", var="rand")
 
 
 await choice:

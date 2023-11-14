@@ -160,9 +160,9 @@ gui control ship_select ship_picker_control("Select Ship", ship_type)
 do gui_row( style="row-height: 30px;padding:0,10px,0,0;")
 """justify: center;text: Grid Item Properties""" 
 do gui_row( style="row-height: 60px;padding:0,10px,0,0;")
-input item_name "desc: Name;" 
+do gui_input("desc: Name;" , var="item_name")
 do gui_row( style="row-height: 60px;")
-input item_roles "desc: Roles;"
+do gui_input("desc: Roles;", var="item_roles")
 
 do gui_row( style="row-height: 40;padding:4px,0,4px,0;")
 gui control item_color color_picker 
@@ -172,7 +172,8 @@ do gui_row( style="row-height: 45px;")
 do gui_hole()
 do gui_hole()
 do gui_hole()
-slider item_scale "low: 0.1;high:5.0;" 
+
+do gui_slider("low: 0.1;high:5.0;", var="item_scale")
 
 do gui_section(style="area: 20, 5, 40, 100;row-height:30;")
 

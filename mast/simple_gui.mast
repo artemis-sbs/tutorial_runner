@@ -196,7 +196,7 @@ check = False
 do gui_section( style="area:2,20,80,95;")
 for i in range(len(fonts)):
     do gui_row()
-    checkbox check """color:{colors[i]};font:{fonts[i]};text: This is test;""" 
+    do gui_checkbox("""color:{colors[i]};font:{fonts[i]};text: This is test;""", var="check") 
 next i
 
 
@@ -229,8 +229,8 @@ do gui_section( style="area:2,20,80,95;")
 
 for i in range(len(fonts)):
     do gui_row()
-    slider check """color:{colors[i]};font:{fonts[i]};low:0;high:2; show_number:no"""
-    #slider check 0 2 0.5
+    do gui_slider("""color:{colors[i]};font:{fonts[i]};low:0;high:2; show_number:no""", var="check")
+    #do gui_slider(0 2 0.5, var="check")
 next i
 
 
@@ -247,7 +247,7 @@ do gui_section( style="area:2,20,80,95;")
 
 for i in range(len(fonts)):
     do gui_row()
-    input check """color:{colors[i]};font:{fonts[i]}; desc: Description/title"""
+    do gui_input("""color:{colors[i]};font:{fonts[i]}; desc: Description/title""", var="check")
 next i
 
 
@@ -271,7 +271,7 @@ do gui_section( style="area: 1, 10, 45,100;")
 
 do gui_row("row-height: 40px;")
 do gui_hole()
-input ship_name "desc: Ship Name;text: "
+do gui_input("desc: Ship Name;text: ", var="ship_name")
 do gui_row("row-height: 50px;")
 on message gui_button("Add Ship"):
     if len(ship_name) >0:

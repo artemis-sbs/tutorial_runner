@@ -59,7 +59,7 @@ do gui_section("area: 0,80-50px, 100,80;")
 # holes give the next control its space
 do gui_hole()
 do gui_hole()
-input message "desc:Make a toast"
+do gui_input("desc:Make a toast", var="message")
 
 on message gui_button("send"):
     to_send = ~~message.strip()~~

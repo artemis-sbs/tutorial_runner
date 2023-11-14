@@ -8,45 +8,45 @@ do gui_section(style=form_style)
 
 do gui_row(slider_row)
 """count"""
-slider count "low: 1; high:100.0;"
+do gui_slider("low: 1; high:100.0;", var="count")
 do gui_row(separator)
 do gui_blank()
 do gui_row(input_row)
 s_x = "{x}"
-input  s_x "desc: x"
+do gui_input("desc: x", var="s_x")
 
 s_y = "{y}"
-input  s_y "desc: y"
+do gui_input("desc: y", var="s_y")
 s_z = "{z}"
-input  s_z "desc: z"
+do gui_input("desc: z", var="s_z")
 ##############
 ##
 do gui_row(separator)
 do gui_blank()
 do gui_row(input_row)
 s_out = "{outer_r}"
-input  s_out "desc: Radius radius"
+do gui_input("desc: Radius radius", var="s_out")
 
 s_in = "{inner_r}"
-input  s_in "desc: outer radius"
+do gui_input("desc: outer radius", var="s_in")
 #########################
 ###
 do gui_row(separator)
 do gui_blank()
 do gui_row(x_slider_row)
 """x rotation"""
-slider ax "low: 0; high:360.0;"
+do gui_slider("low: 0; high:360.0;", var="ax")
 do gui_row(y_slider_row)
 """y rotation"""
-slider ay "low: 0; high:360.0;"
+do gui_slider("low: 0; high:360.0;", var="ay")
 do gui_row(z_slider_row)
 """z rotation"""
-slider az "low: 0; high:360.0;"
+do gui_slider("low: 0; high:360.0;", var="az")
 
 do gui_row(slider_row)
-checkbox ring_only "text: ring;state: {ring_only}"
+do gui_checkbox("text: ring;state: {ring_only}", var="ring_only")
 do gui_row(slider_row)
-checkbox top_only "text: top only;state: {top_only}"
+do gui_checkbox("text: top only;state: {top_only}", var="top_only")
 
 
 

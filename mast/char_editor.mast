@@ -110,13 +110,13 @@ if widgets is not None:
             #enable = 1 if widget["optional"] == True else 0
             enable = True
             # checkbox widget["optional"]  "op:{v}", f"text: {label};state: {'on' if enable else 'off'}"
-            checkbox check  "text: {label};"
+            do gui_checkbox("text: {label};", var="check")
             if enable and widget["max"]>0:
-                slider sl1 "low: {widget['min']}; high: {widget['max']};"
+                do gui_slider("low: {widget['min']}; high: {widget['max']};", var="sl1")
             end_if
         else:
             """"text:{label}""""
-            slider sl2 "low: {widget['min']}; high: {widget['max']}; show_number: no"
+            do gui_slider("low: {widget['min']}; high: {widget['max']}; show_number: no", var="sl2")
         end_if
     next widget
 end_if

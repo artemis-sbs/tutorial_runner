@@ -67,7 +67,7 @@ do gui_section(style="area:2,20,80,35;")
 """Select your console"""
 
 do gui_section(style="area: 85,50, 99,90;")
-vradio console_select "helm,weapons, comms,science,engineering,mainscreen"
+do gui_vradio("helm,weapons, comms,science,engineering,mainscreen", var="console_select")
 do gui_blank()
 do gui_row()
 
@@ -76,7 +76,7 @@ if credits_ran:
         jump run_console
     end_on
 else:
-    checkbox console_accepted "accept"
+    do gui_checkbox("accept", var="console_accepted")
 end_if
 
 await gui

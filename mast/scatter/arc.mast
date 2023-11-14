@@ -7,37 +7,37 @@ do gui_section(style=form_style)
 
 do gui_row(slider_row)
 """count"""
-slider count "low: 1; high:100.0;"
+do gui_slider("low: 1; high:100.0;", var="count")
 do gui_row(separator)
 do gui_blank()
 do gui_row(input_row)
 s_x = "{x}"
-input  s_x "desc: x"
+do gui_input("desc: x", var="s_x")
 
 s_y = "{y}"
-input  s_y "desc: y"
+do gui_input("desc: y", var="s_y")
 s_z = "{z}"
-input  s_z "desc: z"
+do gui_input("desc: z", var="s_z")
 do gui_row(input_row)
 
 s_w = "{w}"
-input  s_w "desc: radius"
+do gui_input("desc: radius", var="s_w")
 ###########
 ##
 do gui_row(separator)
 do gui_blank()
 do gui_row(slider_row)
 """start angle"""
-slider a_start "low: 0; high:360.0;"
+do gui_slider("low: 0; high:360.0;", var="a_start")
 do gui_row(slider_row)
 """y end angle"""
-slider a_end "low: 0; high:360.0;"
+do gui_slider("low: 0; high:360.0;", var="a_end")
 #############
 ##
 do gui_row(separator)
 do gui_blank()
 do gui_row(slider_row)
-checkbox rand "text: random;state: {rand}"
+do gui_checkbox("text: random;state: {rand}", var="rand")
 
 await choice:
     * "Apply":
