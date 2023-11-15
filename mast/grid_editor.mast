@@ -156,7 +156,7 @@ end_if
 
 do gui_section(style="area: 0, 5, 20, 100;row-height:30;")
 
-gui control ship_select ship_picker_control("Select Ship", ship_type)
+do gui_content(ship_picker_control("Select Ship", ship_type), var="ship_select")
 do gui_row( style="row-height: 30px;padding:0,10px,0,0;")
 """justify: center;text: Grid Item Properties""" 
 do gui_row( style="row-height: 60px;padding:0,10px,0,0;")
@@ -165,8 +165,8 @@ do gui_row( style="row-height: 60px;")
 do gui_input("desc: Roles;", var="item_roles")
 
 do gui_row( style="row-height: 40;padding:4px,0,4px,0;")
-gui control item_color color_picker 
-gui control item_icon picker
+do gui_content(color_picker , var="item_color")
+do gui_content(picker, var="item_icon")
 do gui_row( style="row-height: 45px;")
 """scale""" 
 do gui_hole()
@@ -180,7 +180,7 @@ do gui_section(style="area: 20, 5, 40, 100;row-height:30;")
 do gui_row( style="row-height: 30px;padding:0,10px,0,0;")
 """justify: center;text: History """ 
 do gui_row( style="row-height: 90-30px;padding:4px,0,4px,0;")
-gui control item_template template_picker
+do gui_content(template_picker, var="item_template")
 
 
 on change ship_select.value:

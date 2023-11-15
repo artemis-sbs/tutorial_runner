@@ -284,7 +284,7 @@ end_on
 do gui_row(style="row-height: 300px;")
 #pick ship ship_type
 
-gui control ship_type ship_picker_control("Your Ship", ship_cur)
+do gui_content(ship_picker_control("Your Ship", ship_cur), var="ship_type")
 
 do gui_section( style="area: 50, 10, 100,100;")
 do gui_row(style="row-height: 20px;")
@@ -293,7 +293,7 @@ do gui_row(style="row-height: 20px;")
 
 ships = to_object_list(role("__PLAYER__"))
 do gui_row(style="row-height: 50;")
-gui control ship_list list_box_control(ships, text=lambda ship: ship.comms_id, ship=lambda ship: ship.art_id)
+do gui_content(list_box_control(ships, text=lambda ship: ship.comms_id, ship=lambda ship: ship.art_id), var="ship_list")
 
 await choice:
     + "menu":
