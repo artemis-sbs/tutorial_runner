@@ -58,12 +58,12 @@ sl2 = 1.0
 
 ===== character_editor_client_start ====
 
-do gui_section(style="area: 35, 5, 65, 10;")
+gui_section(style="area: 35, 5, 65, 10;")
 """Avatar Editor""""
-do gui_section(style="area: 35, 10, 65, 45;")
-do gui_face(avatar_face)
+gui_section(style="area: 35, 10, 65, 45;")
+gui_face(avatar_face)
 
-do gui_section(style="area: 25, 46, 75, 55;")
+gui_section(style="area: 25, 46, 75, 55;")
 
 on message gui_button("text: Arvonian"):
     race = "arvonian"
@@ -78,7 +78,7 @@ on message gui_button("text: Skaraan"):
     race = "skaraan"
     jump character_editor_client_start
 end_on
-do gui_row()
+gui_row()
 on message gui_button("text: Terran"):
     race = "terran"
     jump character_editor_client_start
@@ -93,16 +93,16 @@ on message gui_button("text: Ximni"):
     jump character_editor_client_start
 end_on
 
-do gui_row()
+gui_row()
 
-do gui_section(style="area: 15, 56, 85, 95;row-height:35px;")
+gui_section(style="area: 15, 56, 85, 95;row-height:35px;")
 
 widgets = avatar_widgets.get(race)
 i = 0
 if widgets is not None:
     for widget in widgets:
         if i%3 == 2:
-            do gui_row( style="padding: 1px;")
+            gui_row( style="padding: 1px;")
         end_if
         i += 1
         label = widget["label"]
@@ -110,13 +110,13 @@ if widgets is not None:
             #enable = 1 if widget["optional"] == True else 0
             enable = True
             # checkbox widget["optional"]  "op:{v}", f"text: {label};state: {'on' if enable else 'off'}"
-            do gui_checkbox("text: {label};", var="check")
+            gui_checkbox("text: {label};", var="check")
             if enable and widget["max"]>0:
-                do gui_slider("low: {widget['min']}; high: {widget['max']};", var="sl1")
+                gui_slider("low: {widget['min']}; high: {widget['max']};", var="sl1")
             end_if
         else:
             """"text:{label}""""
-            do gui_slider("low: {widget['min']}; high: {widget['max']}; show_number: no", var="sl2")
+            gui_slider("low: {widget['min']}; high: {widget['max']}; show_number: no", var="sl2")
         end_if
     next widget
 end_if

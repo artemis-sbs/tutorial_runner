@@ -67,61 +67,61 @@ shared recruits = ~~[
 
 
 ======= menu  ===============
-do gui_section( style="area:0,5,10,95;row-height:35px;")
+gui_section( style="area:0,5,10,95;row-height:35px;")
 
 on message gui_button("Text"):
     jump show_text
 end_on
-do gui_row()
+gui_row()
 
 on message gui_button("Buttons"):
     jump show_button
 end_on
-do gui_row()
+gui_row()
 on message gui_button("Checkbox"):
     jump show_checkbox
 end_on
-do gui_row()
+gui_row()
 on message gui_button("dropdown"):
     jump show_dropdown
 end_on
-do gui_row()
+gui_row()
 on message gui_button("Slider"):
     jump show_slider
 end_on
-do gui_row()
+gui_row()
 on message gui_button("Text Input"):
     jump show_text_input
 end_on
-do gui_row()
+gui_row()
 on message gui_button("Clickable"):
     jump show_clickable
 end_on
-do gui_row()
+gui_row()
 on message gui_button("Custom"):
     simulation create
     jump show_custom
 end_on
-do gui_row()
+gui_row()
 on message gui_button("Table-ish"):
     simulation create
     jump show_skills
 end_on
-do gui_row()
+gui_row()
 on message gui_button("update"):
     jump show_update
 end_on
-do gui_row()
-do gui_section(style="area:25,20,80,95;")
+gui_row()
+gui_section(style="area:25,20,80,95;")
 """"""" Example Gui """""""""""
 await gui
 
 ========= show_text =======
 
-do gui_section( style="area:2,2,80,95;")
+gui_section( style="area:2,2,80,95;")
 
 for i in range(len(fonts)):
-    do gui_row()
+    gui_row()
     """color:{colors[i]};font:{fonts[i]};text: This is test"""
 next i
 
@@ -132,7 +132,7 @@ end_await
 
 ========= show_update =======
 count = 0
-do gui_section(style="area:2,42,80,47;")
+gui_section(style="area:2,42,80,47;")
 
 
 """text: {count}""" style="tag:count-text;"
@@ -142,15 +142,15 @@ do gui_section(style="area:2,42,80,47;")
 on message gui_button("Add"):
     count += 1
     s_count += 1
-    update tag "count-text" "text: {count}"
-    update shared tag "local-count-text" "text: {count}"
-    update shared tag "sh-count-text" "text: {s_count}"
+    gui_update("count-text", "text: {count}")
+    gui_update_shared("local-count-text", "text: {count}")
+    gui_update_shared("sh-count-text", "text: {s_count}")
 end_on
-do gui_row()
+gui_row()
 """ countdown """ style="tag:countdown_tag;"
 schedule count_down
 
-do gui_section( style="area:2,2,80,35;")
+gui_section( style="area:2,2,80,35;")
 """
 Update can but used to update control(s) without a complete repaint or new layout.
 an update marked shared will update all clients.
@@ -170,7 +170,7 @@ end_await
 # set the value 
 
 for x in range(300):
-    update tag "countdown_tag" "text: {300-x};"
+    gui_update("countdown_tag", "text: {300-x};")
     delay gui 1s
 next x
 # turn off
@@ -178,9 +178,9 @@ next x
 
 ========= show_button =======
 
-do gui_section(style="area:2,20,80,95;")
+gui_section(style="area:2,20,80,95;")
 for i in range(len(fonts)):
-    do gui_row()
+    gui_row()
     on message gui_button("""color:{colors[i]};font:{fonts[i]};text: This is test"""):
     end_on
 next i
@@ -193,10 +193,10 @@ end_await
 
 ========= show_checkbox =======
 check = False
-do gui_section( style="area:2,20,80,95;")
+gui_section( style="area:2,20,80,95;")
 for i in range(len(fonts)):
-    do gui_row()
-    do gui_checkbox("""color:{colors[i]};font:{fonts[i]};text: This is test;""", var="check") 
+    gui_row()
+    gui_checkbox("""color:{colors[i]};font:{fonts[i]};text: This is test;""", var="check") 
 next i
 
 
@@ -207,12 +207,12 @@ end_await
 
 ========= show_dropdown =======
 check = "test"
-do gui_section(style="area:2,20,80,95;")
+gui_section(style="area:2,20,80,95;")
 
 
 for i in range(len(fonts)):
-    do gui_row()
-    do gui_drop_down("""color:{colors[i]};font:{fonts[i]};text: This is test;list:Fred,Wilma,Betty,Barney""")
+    gui_row()
+    gui_drop_down("""color:{colors[i]};font:{fonts[i]};text: This is test;list:Fred,Wilma,Betty,Barney""")
 next i
 
 
@@ -224,13 +224,13 @@ end_await
 
 ========= show_slider =======
 check = 0.5
-do gui_section( style="area:2,20,80,95;")
+gui_section( style="area:2,20,80,95;")
 
 
 for i in range(len(fonts)):
-    do gui_row()
-    do gui_slider("""color:{colors[i]};font:{fonts[i]};low:0;high:2; show_number:no""", var="check")
-    #do gui_slider(0 2 0.5, var="check")
+    gui_row()
+    gui_slider("""color:{colors[i]};font:{fonts[i]};low:0;high:2; show_number:no""", var="check")
+    #gui_slider(0 2 0.5, var="check")
 next i
 
 
@@ -242,12 +242,12 @@ end_await
 
 ========= show_text_input =======
 check = "text"
-do gui_section( style="area:2,20,80,95;")
+gui_section( style="area:2,20,80,95;")
 
 
 for i in range(len(fonts)):
-    do gui_row()
-    do gui_input("""color:{colors[i]};font:{fonts[i]}; desc: Description/title""", var="check")
+    gui_row()
+    gui_input("""color:{colors[i]};font:{fonts[i]}; desc: Description/title""", var="check")
 next i
 
 
@@ -261,45 +261,45 @@ end_await
 
 ship_name = ""
 ship_cur = None
-do gui_section( style="area: 0, 0, 100,10;")
+gui_section( style="area: 0, 0, 100,10;")
 """ 
 This is an example that shows custom gui controls.
 Custom controls can be created in python.
 """
 
-do gui_section( style="area: 1, 10, 45,100;")
+gui_section( style="area: 1, 10, 45,100;")
 
-do gui_row("row-height: 40px;")
-do gui_hole()
-do gui_input("desc: Ship Name;text: ", var="ship_name")
-do gui_row("row-height: 50px;")
+gui_row("row-height: 40px;")
+gui_hole()
+gui_input("desc: Ship Name;text: ", var="ship_name")
+gui_row("row-height: 50px;")
 on message gui_button("Add Ship"):
     if len(ship_name) >0:
-        do player_spawn(0,0,0, ship_name, "tsn", ship_type.value )
+        player_spawn(0,0,0, ship_name, "tsn", ship_type.value )
 
         ship_name = ""
         -> show_custom
     end_if
 end_on
-do gui_row(style="row-height: 300px;")
+gui_row(style="row-height: 300px;")
 #pick ship ship_type
 
-do gui_content(ship_picker_control("Your Ship", ship_cur), var="ship_type")
+gui_content(ship_picker_control("Your Ship", ship_cur), var="ship_type")
 
-do gui_section( style="area: 50, 10, 100,100;")
-do gui_row(style="row-height: 20px;")
+gui_section( style="area: 50, 10, 100,100;")
+gui_row(style="row-height: 20px;")
 
 """Player Ships:"""
 
 ships = to_object_list(role("__PLAYER__"))
-do gui_row(style="row-height: 50;")
-do gui_content(list_box_control(ships, text=lambda ship: ship.comms_id, ship=lambda ship: ship.art_id), var="ship_list")
+gui_row(style="row-height: 50;")
+gui_content(list_box_control(ships, text=lambda ship: ship.comms_id, ship=lambda ship: ship.art_id), var="ship_list")
 
 await choice:
     + "menu":
         simulation create
         for ship in ships:
-            do ship.destroyed()
+            ship.destroyed()
         next ship
         -> menu
 end_await
@@ -310,7 +310,7 @@ check = "text"
 
 for x in range(len(recruits)):
 
-do gui_section( style=f"area:10+x*20,20,25+x*20,65;click_color: blue; click_text:Recruit!; click_font:gui-5; click_tag:pick_{x}")
+gui_section( style=f"area:10+x*20,20,25+x*20,65;click_color: blue; click_text:Recruit!; click_font:gui-5; click_tag:pick_{x}")
 
 on click:
     pick = __CLICKED__.split("_")
@@ -318,8 +318,8 @@ on click:
     -> show_recruit
 end_on
 
-do gui_face(face_list[x])
-do gui_row()
+gui_face(face_list[x])
+gui_row()
 """color:cyan;font:gui-3; text:{recruits[x]}"""
 next x
 
@@ -331,8 +331,8 @@ end_await
 
 ========= show_recruit =======
 
-do gui_section( style="area:2,20,80,95;")
-do gui_face(face_list[the_pick])
+gui_section( style="area:2,20,80,95;")
+gui_face(face_list[the_pick])
 """ Ready for duty """
 
 await choice:
@@ -347,7 +347,7 @@ end_await
 ========= show_skills =======
 push build_skills
 
-do gui_section( style="area:0,0,100,30px;")
+gui_section( style="area:0,0,100,30px;")
 ########### TABS
 for t in skills:
     if t == tab:
@@ -378,24 +378,24 @@ deez_category = skills.get(tab)
 deez_tier = deez_category.get("tier")
 # deez_skills = deez_tier[0].get("skills")
 
-do gui_section( style="area:10,10,90,90;")
+gui_section( style="area:10,10,90,90;")
 tier_colors = ["#9993", "#0FF3", "#FF03", "#f0f3", ]
 
-do gui_row(style="background: #0f03;row-height:45px;padding: 0,0,0,3px;")
+gui_row(style="background: #0f03;row-height:45px;padding: 0,0,0,3px;")
 """" justify: center; text:{tab} """"
 tier = 0
 for t in deez_tier:
     c = {tier_colors[tier]}
-    do gui_row(style=f"background: {tier_colors[tier]};row-height:15;padding: 0,0,0,3px;")
+    gui_row(style=f"background: {tier_colors[tier]};row-height:15;padding: 0,0,0,3px;")
     deez_skills = t.get("skills")
     skill = 0
     for sk in deez_skills:
-        do gui_blank()
+        gui_blank()
         i_i = sk.get("icon",0)
-        do gui_icon(f"icon_index: {i_i}; color: white;", style=f"click_font: gui-5;click_color: blue;click_text: SKILL;click_tag: skill_{tier}_{skill};")
+        gui_icon(f"icon_index: {i_i}; color: white;", style=f"click_font: gui-5;click_color: blue;click_text: SKILL;click_tag: skill_{tier}_{skill};")
         skill += 1
     next ii
-    do gui_blank()
+    gui_blank()
     tier += 1
 next t
 
@@ -416,29 +416,29 @@ deez_skills = deez_tier[view_tier].get("skills")
 deez_skill = deez_skills[view_skill]
 
 
-do gui_section( style="area:10,10,90,10+45px;")
-do gui_row(style="background: #0f03;row-height:45px;padding: 0,0,0,3px;")
+gui_section( style="area:10,10,90,10+45px;")
+gui_row(style="background: #0f03;row-height:45px;padding: 0,0,0,3px;")
 """" justify: center; text:{deez_skill["name"]} """"
-do gui_row(style="background: #fff3;row-height:45px;padding: 0,0,0,3px;")
+gui_row(style="background: #fff3;row-height:45px;padding: 0,0,0,3px;")
 """" justify: left; text:{deez_skill["description"]} """"
 
-do gui_section( style="area:10,10+100px,50-3px,90;")
-do gui_row(style="background: #0003; padding: 0,0,0,3px; ")
-do gui_icon(f"""icon_index: {deez_skill["icon"]}; color: white;""" )
-do gui_row(style="background: #0003; padding: 0,0,0,3px; ")
+gui_section( style="area:10,10+100px,50-3px,90;")
+gui_row(style="background: #0003; padding: 0,0,0,3px; ")
+gui_icon(f"""icon_index: {deez_skill["icon"]}; color: white;""" )
+gui_row(style="background: #0003; padding: 0,0,0,3px; ")
 """ justify: left;text: challenge progress;"""
 #
 # This should be the goal of the 'next' rank
 # 
 """ justify: right;text: [0/5];"""
 
-do gui_section( style="area:50+3px,10+100px,90,90;")
+gui_section( style="area:50+3px,10+100px,90,90;")
 rank = 0
 for t in deez_skill.get("rank", []):
     if rank == 0:
-        do gui_row(style="background: #0ff3; row-height:15;padding: 0,0,0,3px;")
+        gui_row(style="background: #0ff3; row-height:15;padding: 0,0,0,3px;")
     else:
-        do gui_row(style="background: #0003; row-height:15;padding: 0,0,0,3px;")
+        gui_row(style="background: #0003; row-height:15;padding: 0,0,0,3px;")
     end_if
     """ RANK {rank+1}
 
@@ -451,7 +451,7 @@ next t
 #
 # styleized Back button
 #
-do gui_row( style="row-height:45px;padding: 0,0,0,3px;")
+gui_row( style="row-height:45px;padding: 0,0,0,3px;")
 """justify:center; color:black;text:back;""" style="background: #fff8;padding: 3px,3px,3px,3px;click_text:back;click_tag:back;"
 
 on click:
@@ -507,7 +507,7 @@ skill = ~~{
 icon_index = 0
 for k in skills:
     deez_category=skills.get(k)
-    do deez_category["tier"] = []
+    ~~ deez_category["tier"] = [] ~~
     deez_tier = deez_category["tier"]
     
     for t in range(4):
@@ -517,8 +517,8 @@ for k in skills:
         #
         skill_count = 5 - (t%2)*2
         for sk in range(skill_count):
-            do skill["icon"] = rnd_icons[icon_index]
-            do deez_skills.append(skill)
+            ~~skill["icon"] = rnd_icons[icon_index]~~
+            deez_skills.append(skill)
             icon_index += 1
 
                         skill = ~~{
@@ -553,7 +553,7 @@ for k in skills:
 
         next sk
         tier = {"skills": deez_skills}
-        do deez_tier.append(tier)    
+        deez_tier.append(tier)    
     next t
 
 next k

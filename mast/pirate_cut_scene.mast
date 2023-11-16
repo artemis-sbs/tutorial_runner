@@ -33,9 +33,9 @@ simulation create
 
 
 shared artemis =  to_id(player_spawn(0,0,0, "Artemis", "tsn", "tsn_battle_cruiser"))
-do assign_client_to_ship(0,artemis)
+assign_client_to_ship(0,artemis)
 
-do gui_section(style="area:2,20,80,35;")
+gui_section(style="area:2,20,80,35;")
 
 """ {start_text}"""
 
@@ -48,7 +48,7 @@ await choice:
 
 ======= win_server_main =====
 
-do gui_section(style="area:2,20,80,35;")
+gui_section(style="area:2,20,80,35;")
 
 """ WINNER """
 
@@ -59,7 +59,7 @@ end_await
 
 ======= lose_server_main =====
 
-do gui_section(style="area:2,20,80,35;")
+gui_section(style="area:2,20,80,35;")
 
 """ LOSER """
 
@@ -103,7 +103,7 @@ delay sim 5s
 # Create a space station
 ds1 = npc_spawn(1000,0,1000, "DS1", "tsn", "starbase_command", "behav_station")
 ds2 = npc_spawn(1000,0,-1000, "DS2", "tsn", "starbase_command", "behav_station")
-do add_role({ds1.id, ds2.id}, "Station")
+add_role({ds1.id, ds2.id}, "Station")
 
 
 simulation resume
@@ -123,21 +123,21 @@ credits_ran = False
 
 ====== select_console ======
 
-do gui_section(style="area:2,20,80,35;")
+gui_section(style="area:2,20,80,35;")
 
 """Select your console"""
 
-do gui_section(style="area: 85,50, 99,90;")
-do gui_vradio("helm,weapons, comms,science,engineering,mainscreen", var="console_select")
-do gui_blank()
-do gui_row()
+gui_section(style="area: 85,50, 99,90;")
+gui_vradio("helm,weapons, comms,science,engineering,mainscreen", var="console_select")
+gui_blank()
+gui_row()
 
 if credits_ran:
     on message gui_button("accept"):
         jump run_console
     end_on
 else:
-    do gui_checkbox("accept", var="console_accepted")
+    gui_checkbox("accept", var="console_accepted")
 end_if
 
 await gui
@@ -149,17 +149,17 @@ await gui
 cambot = npc_spawn(-1000,100,1200, "cam", "camera", "invisible", "behav_npcship")
 camera_id = to_id(cambot)
 
-#do sbs.assign_client_to_ship(client_id, camera_id)
-do sbs.set_main_view_modes(client_id, "3dview", "front", "tracking")
+#sbs.assign_client_to_ship(client_id, camera_id)
+sbs.set_main_view_modes(client_id, "3dview", "front", "tracking")
 
 pirate = npc_spawn(-1000,0,900, "Wolf", "raider", "pirate_strongbow", "behav_npcship")
 pirate_eo = pirate.engine_object
 pirate = pirate.id
-do cambot.blob.set("camera_target_UID", pirate)
+cambot.blob.set("camera_target_UID", pirate)
 
-do sbs.add_particle_emittor(pirate_eo, -1, "align:True; smoke:True; shape:hull; color:black; lifespan:60; image_cell:4; size:12; speed: 0; count:50")
+sbs.add_particle_emittor(pirate_eo, -1, "align:True; smoke:True; shape:hull; color:black; lifespan:60; image_cell:4; size:12; speed: 0; count:50")
 emittorID = sbs.add_particle_emittor(pirate_eo, -1, "align:True; shape:hull; color:purple,pink; lifespan:5; image_cell:0,3; size:20; speed: 0; count:50")
-do sbs.assign_client_to_ship(client_id, camera_id)
+sbs.assign_client_to_ship(client_id, camera_id)
 
 
 ##############
@@ -169,14 +169,14 @@ do sbs.assign_client_to_ship(client_id, camera_id)
 #
 # Credits one
 #
-do gui_activate_console("credits")
-do gui_section(style="area: 0, 0, 100, 100;")
-do gui_layout_widget("3dview")
-do sbs.assign_client_to_ship(client_id, camera_id)
+gui_activate_console("credits")
+gui_section(style="area: 0, 0, 100, 100;")
+gui_layout_widget("3dview")
+sbs.assign_client_to_ship(client_id, camera_id)
 
-do gui_section(style="area: 0, 65, 100, 100;")
+gui_section(style="area: 0, 65, 100, 100;")
 """font:gui-3; justify:center; text: The following was created using the Artemis Cosmos Engine^using the user extensible scripting capabilities.^Including this text"""
-do gui_row()
+gui_row()
 """font:gui-2; justify:center; text: Artemis Cosmos is Early Game Development. All is subject to change. """
 await gui timeout 12s
 
@@ -184,21 +184,21 @@ await gui timeout 12s
 #
 # Credits two
 #
-do gui_activate_console("credits")
-do gui_section(style="area: 0, 0, 100, 100;")
-do gui_layout_widget("3dview")
+gui_activate_console("credits")
+gui_section(style="area: 0, 0, 100, 100;")
+gui_layout_widget("3dview")
 
-do target_pos(camera_id, -1000,300,100) 
-#do sim.reposition_space_object(cambot.engine_object, -1000,300,100) 
-do cambot.blob.set("camera_target_UID", pirate)
+target_pos(camera_id, -1000,300,100) 
+#sim.reposition_space_object(cambot.engine_object, -1000,300,100) 
+cambot.blob.set("camera_target_UID", pirate)
 
 
 
 await gui timeout 5s
 
-do gui_activate_console("credits")
-do gui_section(style="area: 0, 0, 100, 100;")
-do gui_layout_widget("3dview")
+gui_activate_console("credits")
+gui_section(style="area: 0, 0, 100, 100;")
+gui_layout_widget("3dview")
 await gui timeout 50s
 
 credits_ran = True
@@ -208,8 +208,8 @@ end_if
 
 
 ========== run_console ========
-do sbs.assign_client_to_ship(client_id, artemis)
-do gui_console(console_select)
+sbs.assign_client_to_ship(client_id, artemis)
+gui_console(console_select)
 await gui
 
 ========== route_ai =========
@@ -230,7 +230,7 @@ if the_target is None:
     the_target = closest(SPAWNED_ID, role("Station"))
 end_if
 if the_target is not None:
-    do target(SPAWNED_ID, the_target, True)
+    target(SPAWNED_ID, the_target, True)
 end_if
 
 delay sim 5s

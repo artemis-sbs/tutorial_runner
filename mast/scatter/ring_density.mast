@@ -4,66 +4,66 @@
 push client_common
 
 
-do gui_section(style=form_style)
+gui_section(style=form_style)
 
-do gui_row(input_row)
+gui_row(input_row)
 s_count = ~~" ".join(map(str,counts))~~
-do gui_input("desc: counts;", var="s_count")
+gui_input("desc: counts;", var="s_count")
 
 
 ##################
-do gui_row(separator)
-do gui_blank()
-do gui_row(input_row)
+gui_row(separator)
+gui_blank()
+gui_row(input_row)
 s_x = "{x}"
-do gui_input("desc: x", var="s_x")
+gui_input("desc: x", var="s_x")
 
 s_y = "{y}"
-do gui_input("desc: y", var="s_y")
+gui_input("desc: y", var="s_y")
 s_z = "{z}"
-do gui_input("desc: z", var="s_z")
+gui_input("desc: z", var="s_z")
 ##############
 ##
-do gui_row(separator)
-do gui_blank()
-do gui_row(input_row)
+gui_row(separator)
+gui_blank()
+gui_row(input_row)
 s_out = "{outer_r}"
-do gui_input("desc: Outer radius", var="s_out")
+gui_input("desc: Outer radius", var="s_out")
 
 s_in = "{inner_r}"
-do gui_input("desc: Inner radius", var="s_in")
+gui_input("desc: Inner radius", var="s_in")
 
 ###########
 ##
-do gui_row(separator)
-do gui_blank()
-do gui_row(slider_row)
+gui_row(separator)
+gui_blank()
+gui_row(slider_row)
 """start angle"""
-do gui_slider("low: 0; high:360.0;", var="a_start")
-do gui_row(slider_row)
+gui_slider("low: 0; high:360.0;", var="a_start")
+gui_row(slider_row)
 """y end angle"""
-do gui_slider("low: 0; high:360.0;", var="a_end")
+gui_slider("low: 0; high:360.0;", var="a_end")
 ##############
 ##
 #############
-do gui_row(separator)
-do gui_blank()
-do gui_row(x_slider_row)
+gui_row(separator)
+gui_blank()
+gui_row(x_slider_row)
 """x rotation"""
-do gui_slider("low: 0; high:360.0;", var="ax")
-do gui_row(y_slider_row)
+gui_slider("low: 0; high:360.0;", var="ax")
+gui_row(y_slider_row)
 """y rotation"""
-do gui_slider("low: 0; high:360.0;", var="ay")
-do gui_row(z_slider_row)
+gui_slider("low: 0; high:360.0;", var="ay")
+gui_row(z_slider_row)
 """z rotation"""
-do gui_slider("low: 0; high:360.0;", var="az")
+gui_slider("low: 0; high:360.0;", var="az")
 ##############
 ##
 #############
-do gui_row(separator)
-do gui_blank()
-do gui_row(slider_row)
-do gui_checkbox("text: random;state: {rand}", var="rand")
+gui_row(separator)
+gui_blank()
+gui_row(slider_row)
+gui_checkbox("text: random;state: {rand}", var="rand")
 
 
 await choice:
@@ -71,7 +71,7 @@ await choice:
         count_strs = s_count.split(" ")
         counts = []
         for s in count_strs:
-            do counts.append(int(s.strip()))
+            counts.append(int(s.strip()))
         next s
 
         outer_r = int(s_out)
@@ -90,7 +90,7 @@ push clear_objects
 
 for v in scatter_ring_density(counts, x,y,z, outer_r, inner_r, a_start, a_end, rand):
     o = terrain_spawn(v.x, v.y, v.z, None, None, "plain_asteroid_6", "behav_asteroid")
-    do objects.append(to_id(o))
+    objects.append(to_id(o))
 next v
 jump edit_scatter_ring_density
 

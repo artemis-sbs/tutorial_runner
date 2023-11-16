@@ -7,7 +7,7 @@ reroute clients grid_editor_client_start_once
 
 ===== add_menu =====
 
-do gui_section(style="area:20, 0, 30, 35px;")
+gui_section(style="area:20, 0, 30, 35px;")
 on message gui_drop_down("text: Editor; list:grid,character;", var="menu"):
     match menu:
      case "grid":

@@ -58,9 +58,9 @@ simulation create
 cambot = player_spawn(0,0,-2000, "cam", "camera", "invisible")
 shared camera = to_id(cambot)
 
-do cambot.blob.set("reference_ring_3d_brightness", 0.0, 0)
+cambot.blob.set("reference_ring_3d_brightness", 0.0, 0)
 
-do assign_client_to_ship(0,camera)
+assign_client_to_ship(0,camera)
 
 
 
@@ -85,14 +85,14 @@ await gui
 
 
 
-do assign_client_to_ship(client_id,camera)
-do gui_activate_console("engineer")
-do gui_section(style="area: 50, 0, 100, 100;")
-do gui_layout_widget("3dview")
-do gui_row()
-do gui_layout_widget("2dview")
+assign_client_to_ship(client_id,camera)
+gui_activate_console("engineer")
+gui_section(style="area: 50, 0, 100, 100;")
+gui_layout_widget("3dview")
+gui_row()
+gui_layout_widget("2dview")
 
-do gui_section(style="area: 200px, 0, 50, 33px;")
+gui_section(style="area: 200px, 0, 50, 33px;")
 on message gui_drop_down("text: Scatter; list: arc, line, rect_fill, box_fill, box, ring, ring_density, sphere", var="menu"):
     match menu:
         case "arc":
@@ -118,7 +118,7 @@ end_on
 
 ===== clear_objects ===== 
 for o in objects:
-    do sbs.delete_object(o)
+    sbs.delete_object(o)
 next o
 
 <<-

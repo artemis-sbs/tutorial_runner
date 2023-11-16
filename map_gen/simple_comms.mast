@@ -85,7 +85,7 @@ sec = "Security"
 #
 await comms:
     + "Sickbay" color "blue":
-        do comms_receive("DA crew health is great!", title="sickbay", face= doctor,  color="blue")
+        comms_receive("DA crew health is great!", title="sickbay", face= doctor,  color="blue")
     + "Security" color "red":
         receive  "All secure" title sec face major color "red"
     + "Exobiology" color "green":
@@ -108,7 +108,7 @@ asteroid_types = names_plain_asteroid_keys()
 
 i = 10000
 for n in gen:
-    #do print(f"{n.x} {n.y} {n.terrain}")
+    #print(f"{n.x} {n.y} {n.terrain}")
     if i <=0: 
         break
      end_if
@@ -134,7 +134,7 @@ for n in gen:
                 # plain asteroids
                 a_type = random.choice(asteroid_types)
                 #a_type = "asteroid_crystal_blue"
-                do terrain_spawn(n.x, n.y, n.z, None, None, a_type, "behav_asteroid")
+                terrain_spawn(n.x, n.y, n.z, None, None, a_type, "behav_asteroid")
                 gen_asteroids -= 1
             end_if
         case 4:
@@ -147,7 +147,7 @@ for n in gen:
                 # plain asteroids
                 #a_type = random.choice(asteroid_types)
                 a_type = "asteroid_crystal_blue"
-                do terrain_spawn(n.x, n.y, n.z, None, None, a_type, "behav_asteroid")
+                terrain_spawn(n.x, n.y, n.z, None, None, a_type, "behav_asteroid")
                 gen_asteroids -= 1
             end_if
         case 6:
@@ -174,7 +174,7 @@ colors = ["gray", "darkblue", "red", "brown",  "blue", "orange", "cyan", "white"
 for x in range(100):
     n = gen.next()
     color = colors[n.terrain]
-    do sim.add_navpoint(n.x,n.y, n.z, "", color)
+    sim.add_navpoint(n.x,n.y, n.z, "", color)
 
 next x
 <<-
@@ -229,8 +229,8 @@ comms_id = "later"
 
 await comms:
     + "Hail":
-        do comms_transmit("Hello")
-        do comms_receive("Yo")
+        comms_transmit("Hello")
+        comms_receive("Yo")
 end_await
 -> comms_station
 
@@ -268,4 +268,4 @@ end_await
 #
 # Just enough science so the unknown is cleared
 #
-do set_engine_data(sim, SPAWNED_ID, "tsnscan", "Scan data")
+set_engine_data(sim, SPAWNED_ID, "tsnscan", "Scan data")
