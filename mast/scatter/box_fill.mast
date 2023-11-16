@@ -12,53 +12,53 @@ jump edit_scatter_box_rect_fill
 push client_common
 
 
-section style=form_style
+gui_section(style=form_style)
 
-row style=input_row
+gui_row(input_row)
 
 s_cw = "{cw}"
-input  s_cw "desc: width count"
+gui_input("desc: width count", var="s_cw")
 if box_rect == False:
     s_ch = "{ch}"
-    input  s_ch "desc: height count"
+    gui_input("desc: height count", var="s_ch")
 end_if
 
 s_cd = "{cd}"
-input  s_cd "desc: depth count"
+gui_input("desc: depth count", var="s_cd")
 
-row style=separator
-blank
-row style=input_row
+gui_row(separator)
+gui_blank()
+gui_row(input_row)
 s_x = "{x}"
-input  s_x "desc: x"
+gui_input("desc: x", var="s_x")
 
 s_y = "{y}"
-input  s_y "desc: y"
+gui_input("desc: y", var="s_y")
 s_z = "{z}"
-input  s_z "desc: z"
-row style=input_row
+gui_input("desc: z", var="s_z")
+gui_row(input_row)
 
 s_w = "{w}"
-input  s_w "desc: width"
+gui_input("desc: width", var="s_w")
 
 if box_rect == False:
     s_h = "{h}"
-    input  s_h "desc: height"
+    gui_input("desc: height", var="s_h")
 end_if
 
 s_d = "{d}"
-input  s_d "desc: depth"
-row style=separator
-blank
-row style=x_slider_row
+gui_input("desc: depth", var="s_d")
+gui_row(separator)
+gui_blank()
+gui_row(x_slider_row)
 """x rotation"""
-slider ax "low: 0; high:360.0;"
-row style=y_slider_row
+gui_slider("low: 0; high:360.0;", var="ax")
+gui_row(y_slider_row)
 """y rotation"""
-slider ay "low: 0; high:360.0;"
-row style=z_slider_row
+gui_slider("low: 0; high:360.0;", var="ay")
+gui_row(z_slider_row)
 """z rotation"""
-slider az "low: 0; high:360.0;"
+gui_slider("low: 0; high:360.0;", var="az")
 
 
 await choice:
@@ -93,7 +93,7 @@ end_if
 
 for v in scat:
     o = terrain_spawn(v.x, v.y, v.z, None, None, "plain_asteroid_6", "behav_asteroid")
-    do objects.append(to_id(o))
+    objects.append(to_id(o))
 next v
 jump edit_scatter_box_rect_fill
 

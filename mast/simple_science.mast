@@ -12,7 +12,7 @@ start_text = "This is a start project for mast^to demonstrate science console"
 # Avoid scheduling this multiple times
 #
 ->END if has_link_to(SCIENCE_SELECTED_ID, "science", SCIENCE_ORIGIN_ID)
-do link(SCIENCE_SELECTED_ID, "science", SCIENCE_ORIGIN_ID)
+link(SCIENCE_SELECTED_ID, "science", SCIENCE_ORIGIN_ID)
 
 if has_role(SCIENCE_SELECTED_ID, "Station"):
     jump station_science
@@ -32,7 +32,7 @@ await scan:
     + "intl":
         scan results "The people seem smart enough"
 end_await
-do print ("Station scan done")
+print ("Station scan done")
 ->END
 
 ====== raider_science  ===========
@@ -46,6 +46,6 @@ await scan:
     + "intl":
         scan results "The have spaceships, but seem quite dumb"
 end_await
-do print ("Raider scan done")
+print ("Raider scan done")
 ->END
 

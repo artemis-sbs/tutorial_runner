@@ -9,14 +9,13 @@ import scatter/sphere.mast
 
 shared objects = []
 
-style slider_row="row-height: 46px;padding: 6px,0,2px, 6px;"
-style x_slider_row="row-height: 46px;padding: 6px,0,2px, 6px;background:red;"
-style y_slider_row="row-height: 46px;padding: 6px,0,2px, 6px;background:green;"
-style z_slider_row="row-height: 46px;padding: 6px,0,2px, 6px;background:blue;"
-
-style input_row="row-height: 45px;padding: 6px,0,2px, 6px;"
-style separator="row-height: 40px;"
-style form_style="area: 0, 7, 50, 90;"
+ slider_row = gui_style_def("row-height: 46px;padding: 6px,0,2px, 6px;")
+ x_slider_row = gui_style_def("row-height: 46px;padding: 6px,0,2px, 6px;background:red;")
+ y_slider_row = gui_style_def("row-height: 46px;padding: 6px,0,2px, 6px;background:green;")
+ z_slider_row = gui_style_def("row-height: 46px;padding: 6px,0,2px, 6px;background:blue;")
+ input_row = gui_style_def("row-height: 45px;padding: 6px,0,2px, 6px;")
+ separator = gui_style_def("row-height: 40px;")
+ form_style = gui_style_def("area: 0, 7, 50, 90;")
 
 
 counts = [10,20]
@@ -59,9 +58,9 @@ simulation create
 cambot = player_spawn(0,0,-2000, "cam", "camera", "invisible")
 shared camera = to_id(cambot)
 
-do cambot.blob.set("reference_ring_3d_brightness", 0.0, 0)
+cambot.blob.set("reference_ring_3d_brightness", 0.0, 0)
 
-do assign_client_to_ship(0,camera)
+assign_client_to_ship(0,camera)
 
 
 
@@ -86,15 +85,15 @@ await gui
 
 
 
-do assign_client_to_ship(client_id,camera)
-activate console engineer
-section style="area: 50, 0, 100, 100;"
-layout widget "3dview"
-row
-layout widget "2dview" 
+assign_client_to_ship(client_id,camera)
+gui_activate_console("engineer")
+gui_section(style="area: 50, 0, 100, 100;")
+gui_layout_widget("3dview")
+gui_row()
+gui_layout_widget("2dview")
 
-section style="area: 200px, 0, 50, 33px;"
-dropdown menu "text: Scatter; list: arc, line, rect_fill, box_fill, box, ring, ring_density, sphere":
+gui_section(style="area: 200px, 0, 50, 33px;")
+on message gui_drop_down("text: Scatter; list: arc, line, rect_fill, box_fill, box, ring, ring_density, sphere", var="menu"):
     match menu:
         case "arc":
             jump edit_scatter_arc
@@ -113,13 +112,13 @@ dropdown menu "text: Scatter; list: arc, line, rect_fill, box_fill, box, ring, r
         case "sphere":
             jump edit_scatter_sphere
     end_match
-end_dropdown
+end_on
 
 <<-
 
 ===== clear_objects ===== 
 for o in objects:
-    do sbs.delete_object(o)
+    sbs.delete_object(o)
 next o
 
 <<-

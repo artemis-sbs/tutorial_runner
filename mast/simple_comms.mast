@@ -53,10 +53,10 @@ comms_info "static"
 #
 # Setup faces for the departments
 #
-do set_inventory_value(COMMS_ORIGIN_ID, "face_sickbay", random_terran())
-do set_inventory_value(COMMS_ORIGIN_ID, "face_exobiology", random_terran())
-do set_inventory_value(COMMS_ORIGIN_ID, "face_counselor", random_terran())
-do set_inventory_value(COMMS_ORIGIN_ID, "face_security",  random_terran())
+set_inventory_value(COMMS_ORIGIN_ID, "face_sickbay", random_terran())
+set_inventory_value(COMMS_ORIGIN_ID, "face_exobiology", random_terran())
+set_inventory_value(COMMS_ORIGIN_ID, "face_counselor", random_terran())
+set_inventory_value(COMMS_ORIGIN_ID, "face_security",  random_terran())
 
 
 ================ internal_comms_loop ==================
@@ -65,20 +65,20 @@ do set_inventory_value(COMMS_ORIGIN_ID, "face_security",  random_terran())
 #
 await comms:
     + "Sickbay" color "blue":
-        do comms_receive_internal("DA crew health is great!", from_name="sickbay", color="blue")
+        comms_receive_internal("DA crew health is great!", from_name="sickbay", color="blue")
     + "Security" color "red":
-        do comms_receive_internal("All secure", from_name="security",   color="red")
+        comms_receive_internal("All secure", from_name="security",   color="red")
     + "Exobiology" color "green":
-        do comms_receive_internal("Testing running, one moment", from_name="exobiology", color="green")
+        comms_receive_internal("Testing running, one moment", from_name="exobiology", color="green")
         # It is best to schedule delayed responses so the comms buttons are not stalled
         schedule test_finished
     + "counselor" color "cyan":
-        do comms_receive_internal("Something is disturbing the crew", from_name="counselor", color="cyan")
+        comms_receive_internal("Something is disturbing the crew", from_name="counselor", color="cyan")
         #
         # but you can delay comms, There will be no buttons during this delay
         #
         delay sim 3s
-        do comms_receive_internal("Things feel like they are getting worse", from_name="counselor", color="cyan")
+        comms_receive_internal("Things feel like they are getting worse", from_name="counselor", color="cyan")
 end_await
 -> internal_comms_loop
 
@@ -87,7 +87,7 @@ end_await
 # COMMS variables should migrate to this task
 
 delay sim 2s
-do comms_receive_internal( "test results finished. Tell the captain we have a pathogen. This could be bad.", from_name="exobiology", color= "green")
+comms_receive_internal( "test results finished. Tell the captain we have a pathogen. This could be bad.", from_name="exobiology", color= "green")
 ->END
 
 
@@ -95,9 +95,9 @@ do comms_receive_internal( "test results finished. Tell the captain we have a pa
 
 await comms:
     + "Hail":
-        do comms_receive("We will destroy you, disgusting Terran scum!")
+        comms_receive("We will destroy you, disgusting Terran scum!")
     + "Surrender now":
-        do comms_receive("""OK we give up""")
+        comms_receive("""OK we give up""")
 end_await
 -> npc_comms
 
@@ -131,8 +131,8 @@ comms_id = "later"
 
 await comms:
     + "Hail":
-        do comms_transmit("Hello")
-        do comms_receive("Yo")
+        comms_transmit("Hello")
+        comms_receive("Yo")
 end_await
 -> comms_station
 
@@ -170,5 +170,5 @@ end_await
 #
 # Just enough science so the unknown is cleared
 #
-#do set_engine_data(SPAWNED_ID, "tsnscan", "Scan data")
-do science_set_scan_data(artemis, SPAWNED_ID,  "scan", "Scan data")
+#set_engine_data(SPAWNED_ID, "tsnscan", "Scan data")
+science_set_scan_data(artemis, SPAWNED_ID,  "scan", "Scan data")

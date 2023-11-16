@@ -20,9 +20,9 @@ log "BAR"
 ~~ customers[client_id]= my_face ~~
 
 ============== GotoBar ===================
-section style="area: 0,0,60,80-30px;"
+gui_section("area: 0,0,60,80-30px;")
 
-face barkeep
+gui_face(barkeep)
 """""""""""""""""""""""""""""""""
 Thirsty?
 I have
@@ -38,30 +38,30 @@ I'm all out.
 If you go to DS1 and get more supply them the Next one is on me.
 ^^^^^^^^^^^^ if martinis == 0 and vodka == 0 and beer ==0
 
-section style="area: 0,80,100,100-30px;"
-face my_face
+gui_section("area: 0,80,100,100-30px;")
+gui_face(my_face)
 for c in customers.values():
     if c != my_face:
-    face c
+    gui_face(c)
     end_if
 next c
 
-section
 
-section style="area: 60,0, 100,80-30px;row-height: 65px;"
+
+gui_section("area: 60,0, 100,80-30px;row-height: 65px;")
 for msg in reversed(messages):
-    face msg["face"]
+    gui_face(msg["face"])
     """{msg["msg"]}"""
-    row
+    gui_row()
 next c
 
-section style="area: 0,80-50px, 100,80;"
+gui_section("area: 0,80-50px, 100,80;")
 # holes give the next control its space
-hole
-hole
-input message "desc:Make a toast"
+gui_hole()
+gui_hole()
+gui_input("desc:Make a toast", var="message")
 
-button "send":
+on message gui_button("send"):
     to_send = ~~message.strip()~~
     if len(to_send)>0:
 ~~~ 
@@ -74,11 +74,11 @@ if len(messages)>12:
     end_if
     # This is broken it pushes and pops wrong
     ->GotoBar
-end_button
+end_on
 
 #
 # Watch for changes in data
-# If it changes redo go
+# If it changes rego
 #
 on change len(customers.values()):
     refresh GotoBar
@@ -103,11 +103,11 @@ await choice:
 + "Vodka" if vodka > 0:
     shared vodka = vodka-1
 + "Had enough"  if (beer+martinis+vodka) > 0:
-    do customers.pop(client_id, None)
+    customers.pop(client_id, None)
     refresh GotoBar
      pop
 disconnect:
-    do customers.pop(client_id, None)
+    customers.pop(client_id, None)
     ->END
 end_await
 
@@ -116,10 +116,10 @@ if (beer+martinis+vodka) > 0:
     ->GotoBar
 end_if
 
-section style="area: 30, 20, 80, 60;"
+gui_section("area: 30, 20, 80, 60;")
 
-face barkeep
-row
+gui_face(barkeep)
+gui_row()
 """""""""""""""""""""""""""""""""""
 BAR is closed until more supplies arrive
 they are available at DS1

@@ -3,41 +3,41 @@
 
 push client_common
 
-section style=form_style
+gui_section(style=form_style)
 
-row style=slider_row
+gui_row(slider_row)
 """count"""
-slider count "low: 1; high:100.0;"
-row style=separator
-blank
-row style=input_row
+gui_slider("low: 1; high:100.0;", var="count")
+gui_row(separator)
+gui_blank()
+gui_row(input_row)
 s_x = "{x}"
-input  s_x "desc: start x"
+gui_input("desc: start x", var="s_x")
 s_y = "{y}"
-input  s_y "desc: start y"
+gui_input("desc: start y", var="s_y")
 s_z = "{z}"
-input  s_z "desc: start z"
-row style=input_row
+gui_input("desc: start z", var="s_z")
+gui_row(input_row)
 
 s_w = "{w}"
-input  s_w "desc: end x"
+gui_input("desc: end x", var="s_w")
 s_h = "{h}"
-input  s_h "desc: end y"
+gui_input("desc: end y", var="s_h")
 s_d = "{d}"
-input  s_d "desc: end z"
-row style=separator
-blank
-row style=x_slider_row
+gui_input("desc: end z", var="s_d")
+gui_row(separator)
+gui_blank()
+gui_row(x_slider_row)
 
 """x rotation"""
-slider ax "low: 0; high:360.0;"
-row style=y_slider_row
+gui_slider("low: 0; high:360.0;", var="ax")
+gui_row(y_slider_row)
 """y rotation"""
-slider ay "low: 0; high:360.0;"
-row style=separator
-blank
-row style=slider_row
-checkbox rand "text: Random;state:{rand}"
+gui_slider("low: 0; high:360.0;", var="ay")
+gui_row(separator)
+gui_blank()
+gui_row(slider_row)
+gui_checkbox("text: random;state: {rand}", var="rand")
 
 await choice:
     * "Apply":
@@ -55,7 +55,7 @@ push clear_objects
 
 for v in scatter_line(int(count), x,y,z, w, h, d, rand):
     o = terrain_spawn(v.x, v.y, v.z, None, None, "plain_asteroid_6", "behav_asteroid")
-    do objects.append(to_id(o))
+    objects.append(to_id(o))
 next v
 jump edit_scatter_line
 
