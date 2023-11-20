@@ -8,11 +8,11 @@
 # A good place to setup AI is in the Spawn task
 # A spawn task is run soon after the object is spawned
 #
-route spawn route_ai
+route_spawn("route_ai")
 #
 # Show that multiple routes can be made
-route spawn route_station
-route change console select_console
+route_spawn("route_station")
+route_change_console("select_console")
 
 if IS_SERVER:
     start_text = "This is a start project for mast"
@@ -29,7 +29,7 @@ end_if
 # Create the player ship so the clients see it
 # This is a simple script that has one playable ship
 #
-simulation create
+sim_create()
 
 
 shared artemis =  to_id(player_spawn(0,0,0, "Artemis", "tsn", "tsn_battle_cruiser"))
@@ -77,7 +77,7 @@ end_await
 players = role("__PLAYER__")
 if len(players) == 0:
     start_text = "You lost"
-    simulation pause
+    sim_pause()
     reroute server lose_server_main
     reroute clients select_console
     ->END
@@ -88,7 +88,7 @@ end_if
 raiders = role("raider")
 if len(raiders) == 0:
     start_text = "You won"
-    simulation pause
+    sim_pause()
     reroute server win_server_main
     reroute clients select_console
     ->END
@@ -106,7 +106,7 @@ ds2 = npc_spawn(1000,0,-1000, "DS2", "tsn", "starbase_command", "behav_station")
 add_role({ds1.id, ds2.id}, "Station")
 
 
-simulation resume
+sim_resume()
 reroute clients opening_scene
 #schedule end_game
 delay gui 99m

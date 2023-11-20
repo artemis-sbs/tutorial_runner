@@ -5,7 +5,7 @@
 #logger
 
 start_text = "This is a project used to create the early access release two video"
-route change console select_console
+route_change_console("select_console")
 shared grid_data = load_json_data(get_mission_dir_filename("mast/grid_data.json"))
 
 reroute server server_main
@@ -21,7 +21,7 @@ shared artemis = None
 # Create the player ship so the clients see it
 # This is a simple script that has one playable ship
 #
-simulation create
+sim_create()
 delay gui 1s
 shared artemis =  to_id(player_spawn(0,0,0, "Artemis", "tsn", "tsn_light_cruiser"))
 assign_client_to_ship(0,artemis)
@@ -41,7 +41,7 @@ await choice:
 
 ======== start ======
 
-simulation resume
+sim_resume()
 await gui
 
 

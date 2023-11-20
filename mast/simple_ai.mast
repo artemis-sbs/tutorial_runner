@@ -4,10 +4,10 @@ import simple_common.mast
 # A good place to setup AI is in the Spawn task
 # A spawn task is run soon after the object is spawned
 #
-route spawn route_ai
+route_spawn("route_ai")
 #
 # Show that multiple routes can be made
-route spawn route_station
+route_spawn("route_station")
 
 start_text = "This is a start project for mast"
 

@@ -50,7 +50,7 @@ reroute clients client_start
 
 
 ==== server_start ==== 
-simulation create
+sim_create()
 
 # Create a Invisible ship
 # and that's it for the server
@@ -64,7 +64,7 @@ assign_client_to_ship(0,camera)
 
 
 
-simulation resume
+sim_resume()
 await gui
 
 

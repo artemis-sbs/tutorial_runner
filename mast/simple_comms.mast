@@ -11,11 +11,11 @@ import simple_common.mast
 # Then no other routes should override it
 #
 
-route comms select comms_route
-route comms select casino_comms_route
-route spawn clear_unknown
+route_comms_select("comms_route")
+route_comms_select("casino_comms_route")
+route_spawn("clear_unknown")
 
-route grid select damcon_route
+route_grid_select("damcon_route")
 
 start_text = "This is a start project for mast^to demonstrate comms console"
 

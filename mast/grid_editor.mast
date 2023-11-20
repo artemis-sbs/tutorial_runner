@@ -1,6 +1,7 @@
 
-route grid point add_grid_object
-route grid select grid_comms
+route_grid_point("add_grid_object")
+route_grid_select("grid_comms")
+route_grid_focus("watch_sel")
 
 shared started = False
 shared grid_data = load_json_data(get_mission_dir_filename("mast/grid_data.json"))
@@ -29,7 +30,7 @@ shared selection_go = None
 # Create the player ship so the clients see it
 # This is a simple script that has one playable ship
 #
-simulation create
+sim_create()
 shared artemis =  to_id(player_spawn(0,0,0, "Artemis", "tsn", "tsn_light_cruiser"))
 set_face(artemis, random_terran())
 assign_client_to_ship(0,artemis)
@@ -38,7 +39,7 @@ push rebuild_grid_items
 
 await choice:
     + "start":
-        simulation resume
+        sim_resume()
         started=True
 end_await
 
@@ -57,8 +58,6 @@ for ship in grid_data.values():
     next item
 next ship
 
-
-schedule watch_sel
 assign_client_to_ship(client_id,artemis)
 
 ==== wait_for_start ====
@@ -180,7 +179,7 @@ gui_section(style="area: 20, 5, 40, 100;row-height:30;")
 gui_row( style="row-height: 30px;padding:0,10px,0,0;")
 """justify: center;text: History """ 
 gui_row( style="row-height: 90-30px;padding:4px,0,4px,0;")
-gui_content(template_picker, var="item_template")
+item_template = gui_content(template_picker)
 
 
 on change ship_select.value:
@@ -406,10 +405,9 @@ jump grid_comms
 # This watches for anytime the selection changes 
 # in parallel with the await comms
 #
-await select grid
-jump watch_sel if GRID_SELECTED_ID is None
+->END if GRID_SELECTED_ID is None
 item = items.get(GRID_SELECTED_ID)
-jump watch_sel if item is None
+->END if item is None
 
 item = item["item"]
 
@@ -432,7 +430,7 @@ item_color.content.selected.add(color)
 
 reroute clients grid_editor_client_start
 
-jump watch_sel
+->END
 
 ===== save_data =====
 save_json_data(get_mission_dir_filename("mast/grid_data.json"), grid_data)

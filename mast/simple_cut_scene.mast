@@ -5,7 +5,7 @@
 #logger
 
 start_text = "This is a start project for mast"
-route change console select_console
+route_change_console("select_console")
 reroute server server_main
 reroute clients client_main
 
@@ -15,7 +15,7 @@ reroute clients client_main
 # Create the player ship so the clients see it
 # This is a simple script that has one playable ship
 #
-simulation create
+sim_create()
 delay gui 1s
 shared artemis =  to_id(player_spawn(0,0,0, "Artemis", "tsn", "tsn_battle_cruiser"))
 assign_client_to_ship(0,artemis)
@@ -45,7 +45,7 @@ ds2 = npc_spawn(1000,0,-1000, "DS2", "tsn, station", "starbase_command", "behav_
 k001 = npc_spawn(-1000,0,1000, "K001", "raider", "kralien_battleship", "behav_npcship")
 shared camera_id = to_id(k001)
 
-simulation resume
+sim_resume()
 reroute clients opening_scene
 
 await gui

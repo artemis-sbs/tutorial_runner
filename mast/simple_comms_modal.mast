@@ -9,11 +9,11 @@
 # where a comms button changes the ui
 # Simulating a modal dialog
 #
-route comms select comms_route
+route_comms_select("comms_route")
 
-route weapons select weapons_select_route
+route_weapons_select("weapons_select_route")
 #
-route change console select_console
+route_change_console("select_console")
 
 if IS_SERVER:
     start_text = "This is a start project for mast"
@@ -28,7 +28,7 @@ end_if
 # Create the player ship so the clients see it
 # This is a simple script that has one playable ship
 #
-simulation create
+sim_create()
 #delay gui 1s
 shared artemis =  to_id(player_spawn(0,0,0, "Artemis", "tsn", "tsn_battle_cruiser"))
 assign_client_to_ship(0,artemis)
@@ -59,7 +59,7 @@ set_face(T001.id, random_terran())
 
 # Create an enemy
 k001 = npc_spawn(-1000,0,1000, "K001", "raider", "kralien_dreadnaught", "behav_npcship")
-simulation resume
+sim_resume()
 
 await gui
 

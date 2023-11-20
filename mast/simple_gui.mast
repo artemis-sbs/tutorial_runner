@@ -69,13 +69,29 @@ shared recruits = ~~[
 ======= menu  ===============
 gui_section( style="area:0,5,10,95;row-height:35px;")
 
+#
+# Goal code?
+#
+# button_labels = [("text", "show_text"), ("Buttons", "show_buttons")]
+# for x in button_labels:
+#    b = x[0]
+#    l = x[1]
+#    on message gui_button(b) capture b,l:
+#        jump(l)
+#    end_on
+#    gui_row()
+# next x
+
+
+
+
 on message gui_button("Text"):
-    jump show_text
+    jump("show_text")
 end_on
 gui_row()
 
 on message gui_button("Buttons"):
-    jump show_button
+    jump show_test
 end_on
 gui_row()
 on message gui_button("Checkbox"):
@@ -99,12 +115,12 @@ on message gui_button("Clickable"):
 end_on
 gui_row()
 on message gui_button("Custom"):
-    simulation create
+    sim_create()
     jump show_custom
 end_on
 gui_row()
 on message gui_button("Table-ish"):
-    simulation create
+    sim_create()
     jump show_skills
 end_on
 gui_row()
@@ -297,7 +313,7 @@ gui_content(list_box_control(ships, text=lambda ship: ship.comms_id, ship=lambda
 
 await choice:
     + "menu":
-        simulation create
+        sim_create()
         for ship in ships:
             ship.destroyed()
         next ship
