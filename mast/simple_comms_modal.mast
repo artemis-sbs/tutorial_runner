@@ -118,7 +118,7 @@ elif has_role(COMMS_SELECTED_ID, 'raider'):
 end_if
 # Anything else has no comms buttons
 # and static as the id
-comms_info "static"
+comms_info("static")
 
 ->END
 

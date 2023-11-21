@@ -26,11 +26,11 @@ end_if
 
 await scan:
     + "scan":
-        scan results "This is a friendly station"
+        scan_results("This is a friendly station")
     + "bio":
-        scan results "Just a bunch of people"
+        scan_results("Just a bunch of people")
     + "intl":
-        scan results "The people seem smart enough"
+        scan_results("The people seem smart enough")
 end_await
 print ("Station scan done")
 ->END
@@ -40,11 +40,11 @@ print ("Station scan done")
 
 await scan:
     + "scan":
-        scan results "Looks like some bad dudes"
+        scan_results("Looks like some bad dudes")
     + "bio":
-        scan results "Whew can smell travel through space?"
+        scan_results("Whew can smell travel through space?")
     + "intl":
-        scan results "The have spaceships, but seem quite dumb"
+        scan_results("The have spaceships, but seem quite dumb")
 end_await
 print ("Raider scan done")
 ->END

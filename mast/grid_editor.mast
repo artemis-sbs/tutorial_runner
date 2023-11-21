@@ -256,7 +256,7 @@ go.blob.set("icon_scale", item_scale, 0)
 blob = to_blob(artemis)
 # blob.set("grid_selected_UID", go.id, 0)
 gid = go.id
-follow route grid select artemis gid
+follow_route_grid_select(artemis, gid)
 
 items[go.id] = {"index": i, "go": go, "item": g}
 ~~templates[g['name']] = g~~
@@ -264,7 +264,7 @@ internal_items.append(g)
 push save_data
 COMMS_SELECTED_ID = to_id(go)
 push update_selection
-refresh grid_editor_client_start
+gui_refresh("grid_editor_client_start")
 
 
 ->END
@@ -302,7 +302,7 @@ next k
 
 blob = to_blob(artemis)
 blob.set("grid_selected_UID", COMMS_SELECTED_ID, 0)
-follow route grid select artemis COMMS_SELECTED_ID
+follow_route_grid_select(artemis, COMMS_SELECTED_ID)
 
 if selection_go is not None:
 # set pos
