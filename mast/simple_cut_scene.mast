@@ -36,7 +36,7 @@ await choice:
 ======== start ======
 
 # Create the world here
-delay 1s
+await delay_sim(1)
 # Create a space station
 ds1 = npc_spawn(1000,0,1000, "DS1", "tsn, station", "starbase_command", "behav_station")
 ds2 = npc_spawn(1000,0,-1000, "DS2", "tsn, station", "starbase_command", "behav_station")
