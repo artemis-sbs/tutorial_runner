@@ -78,8 +78,8 @@ players = role("__PLAYER__")
 if len(players) == 0:
     start_text = "You lost"
     sim_pause()
-    reroute server lose_server_main
-    reroute clients select_console
+    gui_reroute_server( lose_server_main)
+    gui_reroute_clients(select_console)
     ->END
 end_if
 #
@@ -89,11 +89,11 @@ raiders = role("raider")
 if len(raiders) == 0:
     start_text = "You won"
     sim_pause()
-    reroute server win_server_main
-    reroute clients select_console
+    gui_reroute_server( win_server_main)
+    gui_reroute_clients(select_console)
     ->END
 end_if
-delay sim 5s
+await delay_sim(5)
 -> end_game
 
 ======== start ======
@@ -107,9 +107,9 @@ add_role({ds1.id, ds2.id}, "Station")
 
 
 sim_resume()
-reroute clients opening_scene
+gui_reroute_clients(opening_scene)
 #schedule end_game
-delay gui 99m
+await delay_app(minutes=99)
 
 
 ====== client_main =======
@@ -164,7 +164,7 @@ sbs.assign_client_to_ship(client_id, camera_id)
 
 ##############
 ## Avoiding bug, 3d view will crash without delay
-#delay sim 1s
+#await delay_sim(1)
 
 #
 # Credits one
@@ -233,7 +233,7 @@ if the_target is not None:
     target(SPAWNED_ID, the_target, True)
 end_if
 
-delay sim 5s
+await delay_sim(5)
 jump npc_targeting_ai
 
 
@@ -242,6 +242,6 @@ jump npc_targeting_ai
 # Just an example to show multiple spawn routes
 
 if has_role(SPAWNED_ID, "station"):
-    log "Station"
+    log("Station")
 end_if
 ->END

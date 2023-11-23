@@ -6,8 +6,8 @@
 
 start_text = "This is a start project for mast"
 route_change_console("select_console")
-reroute server server_main
-reroute clients client_main
+gui_reroute_server( server_main)
+gui_reroute_clients(client_main)
 
 
 ======= server_main =====
@@ -16,7 +16,7 @@ reroute clients client_main
 # This is a simple script that has one playable ship
 #
 sim_create()
-delay gui 1s
+await delay_app(1)
 shared artemis =  to_id(player_spawn(0,0,0, "Artemis", "tsn", "tsn_battle_cruiser"))
 assign_client_to_ship(0,artemis)
 
@@ -46,7 +46,7 @@ k001 = npc_spawn(-1000,0,1000, "K001", "raider", "kralien_battleship", "behav_np
 shared camera_id = to_id(k001)
 
 sim_resume()
-reroute clients opening_scene
+gui_reroute_clients(opening_scene)
 
 await gui
 

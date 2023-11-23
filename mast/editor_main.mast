@@ -1,8 +1,8 @@
 import grid_editor.mast
 import char_editor.mast
 
-reroute server server_start
-reroute clients grid_editor_client_start_once
+gui_reroute_server( server_start)
+gui_reroute_clients(grid_editor_client_start_once)
 
 
 ===== add_menu =====

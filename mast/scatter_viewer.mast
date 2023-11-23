@@ -43,8 +43,8 @@ rand = False
 top_only = False
 ring_only = False
 
-reroute server server_start
-reroute clients client_start
+gui_reroute_server( server_start)
+gui_reroute_clients(client_start)
 
 
 

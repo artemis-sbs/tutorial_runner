@@ -7,8 +7,8 @@
 # This handles the change client button to return to the select_console
 #
 route_change_console("select_console")
-reroute server server_main
-reroute clients client_main
+gui_reroute_server( server_main)
+gui_reroute_clients(client_main)
 enemy_count = 1
 start_text = "This is a start project for mast"
 
@@ -19,7 +19,7 @@ start_text = "This is a start project for mast"
 # This is a simple script that has one playable ship
 #
 sim_create()
-#delay gui 1s
+#await delay_app(1)
 shared artemis =  to_id(player_spawn(0,0,0, "Artemis", "tsn", "tsn_battle_cruiser"))
 
 set_face(artemis, random_terran())
@@ -72,8 +72,8 @@ players = role("__PLAYER__")
 if len(players) == 0:
     start_text = "You lost"
     sim_pause()
-    reroute server lose_server_main
-    reroute clients select_console
+    gui_reroute_server( lose_server_main)
+    gui_reroute_clients(select_console)
     ->END
 end_if
 #
@@ -83,11 +83,11 @@ raiders = role("raider")
 if len(raiders) == 0:
     start_text = "You won"
     sim_pause()
-    reroute server win_server_main
-    reroute clients select_console
+    gui_reroute_server( win_server_main)
+    gui_reroute_clients(select_console)
     ->END
 end_if
-delay sim 5s
+await delay_sim(5)
 -> end_game
 
 ======== start ======
@@ -108,7 +108,7 @@ for x in range(enemy_count):
 next x
 
 sim_resume()
-schedule end_game
+task_schedule(end_game)
 
 ==== additional_start ===
 await gui

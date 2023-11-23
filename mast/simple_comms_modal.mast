@@ -29,7 +29,7 @@ end_if
 # This is a simple script that has one playable ship
 #
 sim_create()
-#delay gui 1s
+#await delay_app(1)
 shared artemis =  to_id(player_spawn(0,0,0, "Artemis", "tsn", "tsn_battle_cruiser"))
 assign_client_to_ship(0,artemis)
 set_face(artemis, random_terran())
@@ -133,7 +133,7 @@ plot_point = get_inventory_value(COMMS_SELECTED_ID, "plot_point", 0)
 
 await comms:
     + "Hail":
-        reroute client client_id station_story_route
+        reroute_client(client_id, station_story_route)
 end_await
 ->  comms_station
 
@@ -142,7 +142,7 @@ station_face = get_face(COMMS_SELECTED_ID)
 
 await comms:
     + "Give Orders":
-        reroute client client_id friendly_give_orders
+        reroute_client(client_id, friendly_give_orders)
 end_await
 ->  comms_friendly
 

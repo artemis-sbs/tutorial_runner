@@ -164,7 +164,7 @@ on message gui_button("Add"):
 end_on
 gui_row()
 """ countdown """ style="tag:countdown_tag;"
-schedule count_down
+task_schedule(count_down)
 
 gui_section( style="area:2,2,80,35;")
 """
@@ -187,7 +187,7 @@ end_await
 
 for x in range(300):
     gui_update("countdown_tag", "text: {300-x};")
-    delay gui 1s
+    await delay_app(1)
 next x
 # turn off
 ->END

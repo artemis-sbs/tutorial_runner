@@ -8,8 +8,8 @@ start_text = "This is a project used to create the early access release two vide
 route_change_console("select_console")
 shared grid_data = load_json_data(get_mission_dir_filename("mast/grid_data.json"))
 
-reroute server server_main
-reroute clients run_console
+gui_reroute_server( server_main)
+gui_reroute_clients(run_console)
 # This is where damcons stuff starts
 route grid spawn route_grid_spawn
 
@@ -22,7 +22,7 @@ shared artemis = None
 # This is a simple script that has one playable ship
 #
 sim_create()
-delay gui 1s
+await delay_app(1)
 shared artemis =  to_id(player_spawn(0,0,0, "Artemis", "tsn", "tsn_light_cruiser"))
 assign_client_to_ship(0,artemis)
 
@@ -94,90 +94,90 @@ jump other_room if has_role(SPAWNED_ID, "room")
 
 ==== narration ==== 
 grid_short_status(SPAWNED_ID, f"Hello, we're damcons", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 grid_short_status(SPAWNED_ID, f"We talk now!", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 grid_short_status(SPAWNED_ID, f"We thought we'd tell you about...", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 grid_short_status(SPAWNED_ID, f"the new Artemis: Cosmos early access update!", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 grid_short_status(SPAWNED_ID, f"The player ships now feel...", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 grid_short_status(SPAWNED_ID, f"Like a complete ship", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 #
 # Show systems
 #
 push show_grid_items {"filter_color": "lime", "SPAWNED_ID": artemis}
-delay sim 2s
+await delay_sim(2)
 grid_short_status(SPAWNED_ID, f"These are systems", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 grid_short_status(SPAWNED_ID, f"systems can vary for each ship", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 grid_short_status(SPAWNED_ID, f"The amount of system rooms", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 grid_short_status(SPAWNED_ID, f"affect the damage the ship can take", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 
 #
 # Show rooms
 #
 push show_grid_items {"filter_color": "silver", "SPAWNED_ID": artemis}
-delay sim 2s
+await delay_sim(2)
 grid_short_status(SPAWNED_ID, f"The ships have other rooms", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 grid_short_status(SPAWNED_ID, f"You will need to fix all damage", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 grid_short_status(SPAWNED_ID, f"But systems should take priority", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 
 
 
 grid_short_status(SPAWNED_ID, f"systems take heat damage", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 grid_short_status(SPAWNED_ID, f"all rooms and hallways take internal damage", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 grid_short_status(SPAWNED_ID, f"internal damage is directional", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 grid_short_status(SPAWNED_ID, f"where the hull is hit...", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 grid_short_status(SPAWNED_ID, f"is where damage occurs!", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 #
 #
 grid_short_status(SPAWNED_ID, f"Engineering can enhance performance", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 #
 # show sliders
 #
 grid_short_status(SPAWNED_ID, f"gathering anomalies can help too", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 #
 # show anomolies
 #
 grid_short_status(SPAWNED_ID, f"future scripts will provide more ways", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 grid_short_status(SPAWNED_ID, f"endless possibilities", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 #
 #
 #
 grid_short_status(SPAWNED_ID, f"rooms assign damcons work", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 grid_short_status(SPAWNED_ID, f"like fixing damage", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 grid_short_status(SPAWNED_ID, f"scripting can add other types of work", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 
 go =  grid_spawn(artemis,  "DC2", "DC2xx", 5, 14, 78, "purple", "#, wife")
-delay sim 4s
+await delay_sim(4)
 grid_target_pos(SPAWNED_ID, 8,5)
 grid_short_status(SPAWNED_ID, f"I should have gone to detocs", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 grid_short_status(SPAWNED_ID, f"There's a lot more stuff", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 grid_short_status(SPAWNED_ID, f"Enjoy the release", "blue", 3)
-delay sim 4s
+await delay_sim(4)
 grid_short_status(SPAWNED_ID, f"give us feedback!", "blue", 3)
 ->END
 
@@ -218,40 +218,40 @@ next g
 ==== wife ==== 
 grid_short_status(SPAWNED_ID, f"harcourt!!", "red", 3)
 grid_target_pos(SPAWNED_ID, 4,10)
-delay sim 4s
+await delay_sim(4)
 
 grid_short_status(SPAWNED_ID, f"You've been drinking again", "red", 3)
-delay sim 4s
+await delay_sim(4)
 ->END
 
 
 ==== system_engine ====
 if random.randrange(5)==3:
-delay sim 2s
+await delay_sim(2)
 grid_short_status(SPAWNED_ID, "Whosh", "blue", 3)
 end_if
 ->END
 ==== system_weapon ==== 
 if random.randrange(5)==3:
-delay sim 2s
+await delay_sim(2)
 grid_short_status(SPAWNED_ID, "Pew pew", "red", 3)
 end_if
 ->END
 ==== system_sensor ==== 
 if random.randrange(5)==3:
-delay sim 2s
+await delay_sim(2)
 grid_short_status(SPAWNED_ID, "scanning", "purple", 3)
 end_if
 ->END
 ==== system_shield ==== 
 if random.randrange(5)==3:
-delay sim 2s
+await delay_sim(2)
 grid_short_status(SPAWNED_ID, "I got you", "black", 3)
 end_if
 ->END
 ==== other_room ==== 
 if random.randrange(5)==3:
-delay sim 2s
+await delay_sim(2)
 grid_short_status(SPAWNED_ID, "Hello", "black", 3)
 end_if
 ->END

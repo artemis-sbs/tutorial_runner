@@ -70,14 +70,14 @@ await comms:
         comms_receive_internal("All secure", from_name="security",   color="red")
     + "Exobiology" color "green":
         comms_receive_internal("Testing running, one moment", from_name="exobiology", color="green")
-        # It is best to schedule delayed responses so the comms buttons are not stalled
-        schedule test_finished
+        # It is best to task_schedule delayed responses so the comms buttons are not stalled
+        task_schedule(test_finished)
     + "counselor" color "cyan":
         comms_receive_internal("Something is disturbing the crew", from_name="counselor", color="cyan")
         #
         # but you can delay comms, There will be no buttons during this delay
         #
-        delay sim 3s
+        await delay_sim(3)
         comms_receive_internal("Things feel like they are getting worse", from_name="counselor", color="cyan")
 end_await
 -> internal_comms_loop
@@ -86,7 +86,7 @@ end_await
 # This is a new task to delay the response of the test results
 # COMMS variables should migrate to this task
 
-delay sim 2s
+await delay_sim(2)
 comms_receive_internal( "test results finished. Tell the captain we have a pathogen. This could be bad.", from_name="exobiology", color= "green")
 ->END
 

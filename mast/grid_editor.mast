@@ -428,7 +428,7 @@ color = colors.index(item["color"])
 item_color.content.selected = set()
 item_color.content.selected.add(color)
 
-reroute clients grid_editor_client_start
+gui_reroute_clients(grid_editor_client_start)
 
 ->END
 
@@ -437,6 +437,6 @@ save_json_data(get_mission_dir_filename("mast/grid_data.json"), grid_data)
 <<-
 
 ==== recycle_ship =====
-delay sim 5s
+await delay_sim(5)
 sbs.delete_object(old_ship)
 ->END

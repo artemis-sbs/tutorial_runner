@@ -32,7 +32,7 @@ if the_target is not None:
     target(SPAWNED_ID, the_target, True)
 end_if
 
-delay sim 5s
+await delay_sim(5)
 jump npc_targeting_ai
 
 
@@ -41,6 +41,6 @@ jump npc_targeting_ai
 # Just an example to show multiple spawn routes
 
 if has_role(SPAWNED_ID, "station"):
-    log "Station"
+    log("Station")
 end_if
 ->END

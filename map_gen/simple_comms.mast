@@ -37,7 +37,7 @@ push add_some_stuff
 
 sim_resume()
 #schedule end_game
-delay gui 99m
+await delay_app(0,99)
 
 ================ casino_comms_route ==================
 if has_roles(COMMS_SELECTED_ID, "Station, casino"):
@@ -97,7 +97,7 @@ await comms:
         #
         # but you can delay comms, There will be no buttons during this delay
         #
-        delay sim 3s
+        await delay_sim(3)
         receive  "Things feel like they are getting worse" title "counselor" face counselor color "cyan"
 end_await
 -> internal_comms_loop
@@ -184,7 +184,7 @@ next x
 # This is a new task to delay the response of the test results
 # COMMS variables should migrate to this task
 
-delay sim 2s
+await delay_sim(2)
 receive  "test results finished. Tell the captain we have a pathogen. This could be bad." title "Exobiology" face biologist color "green"
 ->END
 

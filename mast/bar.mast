@@ -16,7 +16,7 @@ end_if
 
 
 ===== EnterBar ===
-log "BAR"
+log("BAR")
 ~~ customers[client_id]= my_face ~~
 
 ============== GotoBar ===================
