@@ -50,7 +50,7 @@ gui_checkbox("text: top only;state: {top_only}", var="top_only")
 
 
 
-await choice:
+await gui():
     * "Apply":
         x = int(s_x)
         y = int(s_y)

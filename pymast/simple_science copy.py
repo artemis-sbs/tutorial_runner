@@ -4,9 +4,9 @@ from  sbs_utils.handlerhooks import *
 from sbs_utils.mast.label import label
 from sbs_utils.procedural import roles
 from .simple_common import CommonStory
-from sbs_utils.procedural.execution import jump, AWAIT, get_variable
-from sbs_utils.procedural.science import scan
-from sbs_utils.procedural.routes import route_science_select
+from sbs_utils.procedural.execution import jump, AWAIT
+#from sbs_utils.procedural.science import scan
+#from sbs_utils.procedural.routes import route_science_select
 
 class Story(CommonStory):
     def __init__(self, *args, **kwargs):
@@ -14,7 +14,7 @@ class Story(CommonStory):
 
         self.start_text = "This is a start project for mast"
         # self.enemy_count = 4
-        route_science_select(self.handle_science)
+        #route_science_select(self.handle_science)
 
     
     @label()
@@ -25,11 +25,10 @@ class Story(CommonStory):
         # this is used to resolve where to START the conversation with the TO ship
         #
         # SCIENCE_SELECTED_ID is the id of the target
-        
 
-        if roles.has_roles(get_variable("SCIENCE_SELECTED_ID"), 'tsn, Station'):
+        if roles.has_roles(self.task.SCIENCE_SELECTED_ID, 'tsn, Station'):
             yield jump(self.station_science)
-        elif roles.has_role(get_variable("SCIENCE_SELECTED_ID"), 'raider'):
+        elif roles.has_role(self.task.SCIENCE_SELECTED_ID, 'raider'):
             yield jump(self.npc_science)
 
     @label()
@@ -43,7 +42,6 @@ class Story(CommonStory):
         def button_intel(story, science):
             return "The people seem smart enough"
         
-        print("Routed science station")
 
         yield AWAIT(scan())
 
@@ -65,8 +63,6 @@ class Story(CommonStory):
         
         def button_intel(story, science):
             return "The have spaceships, but seem quite dumb"
-        
-        print("Routed science npc")
 
         yield AWAIT(scan())
         # yield self.await_science({

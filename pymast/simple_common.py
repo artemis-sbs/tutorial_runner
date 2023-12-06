@@ -1,13 +1,16 @@
 import sbslibs
 import sbs
 from  sbs_utils.handlerhooks import *
-from sbs_utils.pymast.pymaststory import PyMastStory
-from sbs_utils.pymast.pymasttask import label
+from sbs_utils.mast.maststory import MastStory
+from sbs_utils.mast.label import label
 from sbs_utils.procedural import query, roles, spawn
+from sbs_utils.procedural.execution import AWAIT, jump, get_variable, set_variable
+from sbs_utils.procedural.timers import delay_sim
 from sbs_utils import faces
+from sbs_utils.procedural.gui import gui_row, gui_button, gui_blank, gui, gui_section, gui_text, gui_vradio, gui_console
 
 
-class CommonStory(PyMastStory):
+class CommonStory(MastStory):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -28,12 +31,16 @@ class CommonStory(PyMastStory):
         sbs.assign_client_to_ship(0,self.artemis)
 
         print(f"start_server {self.start_text}")
-        self.gui_section("area:2,20,80,35;")
-        self.gui_text(f""" {self.start_text}""")
+        gui_section("area:2,20,80,35;")
+        gui_text(f""" {self.start_text}""")
 
-        yield self.await_gui({
-            "Start": self.start
-        })
+        # gui_choice("Start", label=self.start)
+        gui_section("area:2,90,80,95;")
+        def go():
+            jump(self.start)
+        gui_button("start", on_message=go)
+
+        yield AWAIT(gui())
 
         
     @label()
@@ -47,7 +54,7 @@ class CommonStory(PyMastStory):
         if len(players) == 0:
             self.start_text = "You lost"
             sbs.pause_sim()
-            yield self.jump(self.start_server)
+            yield jump(self.start_server)
         #
         # No more enemies
         #
@@ -56,10 +63,10 @@ class CommonStory(PyMastStory):
             self.start_text = "You Won"
             print(f"end_game {self.start_text}")
             sbs.pause_sim()
-            yield self.jump(self.start_server)
+            yield jump(self.start_server)
             
-        yield self.delay(5)
-        yield self.jump(self.end_game)
+        yield AWAIT(delay_sim(5))
+        yield jump(self.end_game)
 
     @label()
     def start(self):
@@ -77,7 +84,7 @@ class CommonStory(PyMastStory):
             faces.set_face(k001.id, faces.random_kralien())
 
         sbs.resume_sim()
-        yield self.jump(self.end_game)
+        yield jump(self.end_game)
 
 
     @label()
@@ -89,33 +96,35 @@ class CommonStory(PyMastStory):
         # Default the console to helm
         #
         print("Client Start Basic AI")
-        self.task.console_select = "helm"
-        yield self.jump(self.select_console)
+        set_variable("console_select",  "helm")
+        yield jump(self.select_console)
 
     @label()
     def select_console(self):
-        self.gui_section("area:2,20,80,35;")
+        gui_section("area:2,20,80,35;")
 
-        self.gui_text("""Select your console""")
+        gui_text("""Select your console""")
 
-        self.gui_section("area: 85,50, 99,90;row-height:200px")
-        console_radio = self.gui_radio("helm,weapons, comms,science,engineering", self.task.console_select, True)
-        self.gui_row("row-height: 30px;")
-        self.gui_blank()
-        self.gui_row("row-height: 30px;")
-        self.gui_button("accept", self.console_selected)
+        gui_section("area: 85,50, 99,90;row-height:200px")
+        #
+        #
+        #
+        console_radio = gui_vradio("helm,weapons, comms,science,engineering", var="console_select")
+        #
+        #
+        #
+        gui_row("row-height: 30px;")
+        gui_blank()
+        gui_row("row-height: 30px;")
+        gui_button("accept", jump=self.console_selected)
 
-        def on_message(sim, event):
-            if event.sub_tag.startswith(console_radio.tag):
-                self.task.console_select = console_radio.value
-                return True
-
-        yield self.await_gui(on_message=on_message)
+        
+        yield AWAIT(gui())
         
     @label()
     def console_selected(self):
-        sbs.assign_client_to_ship(self.task.page.client_id,self.artemis)
-        self.gui_console(self.task.console_select)
-        yield self.await_gui()
+        sbs.assign_client_to_ship(get_variable("client_id"),self.artemis)
+        gui_console(get_variable("console_select"))
+        yield AWAIT(gui())
 
 

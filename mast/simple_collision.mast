@@ -16,7 +16,7 @@ anom = terrain_spawn(400,0,1000, None, "anomaly, super_warp", "container_1b", "b
 
 
 
-await gui
+await gui()
 
 ==== handle_collision ===
 if has_roles(COLLISION_ORIGIN_ID, "anomaly, magic_beans"):

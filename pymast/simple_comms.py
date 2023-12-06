@@ -1,9 +1,11 @@
 import sbslibs
 import sbs
 from  sbs_utils.handlerhooks import *
-from sbs_utils.pymast.pymaststory import PyMastStory
-from sbs_utils.pymast.pymasttask import label
+from sbs_utils.mast.label import label
 from sbs_utils.procedural import roles
+from sbs_utils.procedural import routes
+from sbs_utils.procedural.timers import delay_sim
+from sbs_utils.procedural.execution import AWAIT, END, jump, set_variable, get_variable
 from sbs_utils import faces
 from .simple_common import CommonStory
 
@@ -12,8 +14,8 @@ class Story(CommonStory):
         super().__init__(*args, **kwargs)
 
         self.start_text = "This is a start project for mast"
-        self.route_comms_select(self.handle_comms)
-        self.route_grid_select(self.damcon_route)
+        routes.route_comms_select(self.handle_comms)
+        routes.route_grid_select(self.damcon_route)
 
 
     @label()
@@ -27,15 +29,16 @@ class Story(CommonStory):
 
         if self.task.COMMS_SELECTED_ID == self.task.COMMS_ORIGIN_ID:
             # This is the same ship
-            yield self.jump(self.internal_comms)
+            yield jump(self.internal_comms)
         elif roles.has_role(self.task.COMMS_SELECTED_ID, 'Station'):
-            yield self.jump(self.comms_station)
+            yield jump(self.comms_station)
         elif roles.has_role(self.task.COMMS_SELECTED_ID, 'raider'):
-            yield self.jump(self.npc_comms)
+            yield jump(self.npc_comms)
 
         # Anything else has no comms buttons
         # and static as the id
         #comms_info "static"
+        yield END()
 
     #================ internal_comms ==================
     @label()
@@ -43,11 +46,11 @@ class Story(CommonStory):
         #
         # Setup faces for the departments
         #
-        self.task.doctor = faces.random_terran()
-        self.task.biologist = faces.random_terran()
-        self.task.counselor = faces.random_terran()
-        self.task.major = faces.random_terran()
-        yield self.jump(self.internal_comms_loop)
+        set_variable("doctor", faces.random_terran())
+        set_variable("biologist", faces.random_terran())
+        set_variable("counselor", faces.random_terran())
+        set_variable("major", faces.random_terran())
+        yield jump(self.internal_comms_loop)
 
     # ================ internal_comms_loop ==================
     @label()
@@ -60,7 +63,7 @@ class Story(CommonStory):
             comms.receive("Testing running, one moment", face=story.task.biologist, color="green", title="exobiology")
         def button_counselor(story, comms):
             comms.receive("Something is disturbing the crew", face=story.task.counselor, color="cyan", title="counselor")
-            yield story.task.delay(seconds=2, use_sim=True)
+            yield AWAIT(delay_sim(seconds=2))
             comms.receive("Things feel like they are getting worse", face=story.task.counselor, color="cyan", title="counselor")
         
         yield self.await_comms({
@@ -70,7 +73,7 @@ class Story(CommonStory):
             "counselor": button_counselor,
         })
         # loop
-        yield self.jump(self.internal_comms_loop)
+        yield jump(self.internal_comms_loop)
 
         # -> internal_comms_loop
 
@@ -88,7 +91,7 @@ class Story(CommonStory):
             "Surrender": button_surrender
         })
         # loop
-        yield self.jump(self.npc_comms)
+        yield jump(self.npc_comms)
 
     def button_hail(story, comms):
         comms.transmit(f"Hello method")
@@ -112,16 +115,17 @@ class Story(CommonStory):
             "Pass Data": lambda s,c: button_hail_data(s,c, "Artemis")
         })
         # loop
-        yield self.jump(self.comms_station)
+        yield jump(self.comms_station)
 
     # ================ damcon_route ==================
     @label()
     def damcon_route(self):
         # COMMS_SELECTED_ID is the id of the target
         if roles.has_role(self.task.COMMS_SELECTED_ID, 'flint'):
-            yield self.jump(self.comms_flintstone)
+            yield jump(self.comms_flintstone)
         elif roles.has_role(self.task.COMMS_SELECTED_ID, 'rubble'):
-            yield self.jump(self.comms_rubble)
+            yield jump(self.comms_rubble)
+        yield END()
 
     # ================ comms_flintstone ==================
     @label()
@@ -134,7 +138,7 @@ class Story(CommonStory):
             "Hail": button_hail
         })
         # -> comms_flintstone
-        yield self.jump(self.comms_flintstone)
+        yield jump(self.comms_flintstone)
 
     # ================ comms_rubble ==================
     @label()
@@ -147,7 +151,7 @@ class Story(CommonStory):
             "Hail": button_hail
         })
         # -> comms_flintstone
-        yield self.jump(self.comms_rubble)
+        yield jump(self.comms_rubble)
 
 
 

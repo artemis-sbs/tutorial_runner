@@ -30,7 +30,7 @@ gui_section(style="area:2,20,80,35;")
 
 """ {start_text}"""
 
-await choice:
+await gui():
     + "Start":
         -> start
     end_await
@@ -42,7 +42,7 @@ await choice:
 ======== start ======
 
 sim_resume()
-await gui
+await gui()
 
 
 
@@ -53,7 +53,7 @@ on change artemis:
 end_on
 
 """ waiting for mission start""""
-await gui
+await gui()
 
 ====== game_started ====
 #
@@ -75,7 +75,7 @@ console_select = "engineering"
 
 assign_client_to_ship(client_id,artemis)
 gui_console(console_select)
-await gui
+await gui()
 
 
 

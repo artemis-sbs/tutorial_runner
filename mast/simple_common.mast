@@ -33,7 +33,7 @@ gui_section(style="area:2,20,80,35;")
 
 """ {start_text}"""
 
-await choice:
+await gui():
     + "Start":
         -> start
     end_await
@@ -46,7 +46,7 @@ gui_section(style="area:2,20,80,35;")
 
 """ WINNER """
 
-await choice:
+await gui():
     + "restart":
         -> server_main
 end_await
@@ -57,7 +57,7 @@ gui_section(style="area:2,20,80,35;")
 
 """ LOSER """
 
-await choice:
+await gui():
     + "restart":
         ->server_main
 end_await
@@ -111,7 +111,7 @@ sim_resume()
 task_schedule(end_game)
 
 ==== additional_start ===
-await gui
+await gui()
 
 
 ====== client_main =======
@@ -135,7 +135,7 @@ on message gui_button("accept"):
     ->console_selected
 end_on
 
-await gui
+await gui()
 ->END
 
 ====== console_selected ====
@@ -146,5 +146,5 @@ gui_console(console_select)
 # see reuse.mast
 #
 ======= console_bottom_choices ====
-await gui
+await gui()
 

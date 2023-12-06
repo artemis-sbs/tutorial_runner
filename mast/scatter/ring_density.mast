@@ -66,7 +66,7 @@ gui_row(slider_row)
 gui_checkbox("text: random;state: {rand}", var="rand")
 
 
-await choice:
+await gui():
     * "Apply":
         count_strs = s_count.split(" ")
         counts = []

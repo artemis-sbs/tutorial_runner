@@ -24,7 +24,7 @@ gui_section(style="area:2,20,80,35;")
 
 """ {start_text}"""
 
-await choice:
+await gui():
     + "Start":
         -> start
     end_await
@@ -48,7 +48,8 @@ shared camera_id = to_id(k001)
 sim_resume()
 gui_reroute_clients(opening_scene)
 
-await gui
+await gui():
+end_await
 
 
 ====== client_main =======
@@ -79,7 +80,7 @@ else:
     gui_checkbox("accept", var="console_accepted")
 end_if
 
-await gui
+await gui()
 ->END
 
 ====== opening_scene ====
@@ -106,7 +107,7 @@ gui_section(style="area: 0, 30px, 100, 100;")
 gui_layout_widget("3dview")
 gui_section(style="area: 0, 10, 100, 65;")
 """font:gui-5; justify:center; text: in a.d. 2101"""
-await gui timeout 5s
+await gui(timeout(5))
 
 #
 # Credits two
@@ -117,7 +118,7 @@ gui_section(style="area: 0, 30px, 100, 100;")
 gui_layout_widget("3dview")
 gui_section(style="area: 0, 35, 100, 60;")
 """font:gui-6; justify:center; text: war was beginning"""
-await gui timeout 5s
+await gui(timeout(5))
 
 #
 # Credits two
@@ -131,7 +132,7 @@ gui_section(style="area: 25, 5, 74, 35;")
 gui_face(captain_face)
 gui_section(style="area: 0, 35, 100, 60;")
 """font:gui-6; justify:center; text: captain: what happen?"""
-await gui timeout 5s
+await gui(timeout(5))
 
 
 #
@@ -145,7 +146,7 @@ gui_section(style="area: 25, 5, 74, 35;")
 gui_face(mechanic_face)
 gui_section(style="area: 0, 35, 100, 60;")
 """font:gui-6; justify:center; text: mechanic: somebody set up us the bomb"""
-await gui timeout 5s
+await gui(timeout(5))
 
 
 #
@@ -158,7 +159,7 @@ gui_section(style="area: 25, 5, 74, 35;")
 gui_face(operator_face)
 gui_section(style="area: 0, 35, 100, 60;")
 """font:gui-6; justify:center; text: Operator: we get signal."""
-await gui timeout 5s
+await gui(timeout(5))
 
 #
 # Show captains face
@@ -173,7 +174,7 @@ gui_section(style="area: 0, 35, 100, 60;")
 """font:gui-6; justify:center; text: Operator: we get signal."""
 gui_row()
 """font:gui-6; justify:center; text: Captain: What !"""
-await gui timeout 5s
+await gui(timeout(5))
 
 
 #
@@ -187,7 +188,7 @@ gui_face(operator_face)
 gui_section(style="area: 0, 35, 100, 60;")
 
 """font:gui-6; justify:center; text: Operator: Main screen turn on."""
-await gui timeout 5s
+await gui(timeout(5))
 
 #
 # Show captains face
@@ -200,7 +201,7 @@ gui_face(captain_face)
 
 gui_section(style="area: 0, 35, 100, 60;")
 """font:gui-6; justify:center; text: Captain: it's you !!"""
-await gui timeout 5s
+await gui(timeout(5))
 
 #
 # Show CATS face
@@ -213,7 +214,7 @@ gui_face(cats_face)
 
 gui_section(style="area: 0, 35, 100, 60;")
 """font:gui-6; justify:center; text: cats: how are you gentleman !!"""
-await gui timeout 5s
+await gui(timeout(5))
 
 #
 # Show CATS face
@@ -226,7 +227,7 @@ gui_face(cats_face)
 
 gui_section(style="area: 0, 35, 100, 60;")
 """font:gui-6; justify:center; text: cats: all your base are belong to us."""
-await gui timeout 5s
+await gui(timeout(5))
 
 #
 # Show CATS face
@@ -239,7 +240,7 @@ gui_face(cats_face)
 
 gui_section(style="area: 0, 35, 100, 60;")
 """font:gui-6; justify:center; text: cats: you are on the way to destruction."""
-await gui timeout 5s
+await gui(timeout(5))
 
 #
 # Show Captain face
@@ -252,7 +253,7 @@ gui_face(captain_face)
 
 gui_section(style="area: 0, 35, 100, 60;")
 """font:gui-6; justify:center; text: captain: what you say !!"""
-await gui timeout 5s
+await gui(timeout(5))
 
 #
 # Show CATS face
@@ -265,7 +266,7 @@ gui_face(cats_face)
 
 gui_section(style="area: 0, 35, 100, 60;")
 """font:gui-6; justify:center; text: cats: you have no chance to survive make your time."""
-await gui timeout 5s
+await gui(timeout(5))
 
 #
 # Show CATS face
@@ -278,7 +279,7 @@ gui_face(cats_face)
 
 gui_section(style="area: 0, 35, 100, 60;")
 """font:gui-6; justify:center; text: cats: HA HA HA HA....."""
-await gui timeout 5s
+await gui(timeout(5))
 
 
 credits_ran = True
@@ -291,5 +292,5 @@ end_if
 sbs.assign_client_to_ship(client_id, artemis)
 
 gui_console(console_select)
-await gui
+await gui()
 

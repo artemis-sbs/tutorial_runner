@@ -65,7 +65,7 @@ assign_client_to_ship(0,camera)
 
 
 sim_resume()
-await gui
+await gui()
 
 
 ==== client_start ==== 
@@ -74,7 +74,7 @@ await gui
 
 
 push client_common
-await gui
+await gui()
 
 ==== client_common ====
 

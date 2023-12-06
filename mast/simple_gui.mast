@@ -91,7 +91,7 @@ end_on
 gui_row()
 
 on message gui_button("Buttons"):
-    jump show_test
+    jump show_button
 end_on
 gui_row()
 on message gui_button("Checkbox"):
@@ -130,7 +130,7 @@ end_on
 gui_row()
 gui_section(style="area:25,20,80,95;")
 """"""" Example Gui """""""""""
-await gui
+await gui()
 
 ========= show_text =======
 
@@ -141,7 +141,7 @@ for i in range(len(fonts)):
     """color:{colors[i]};font:{fonts[i]};text: This is test"""
 next i
 
-await choice:
+await gui():
     + "menu":
         -> menu
 end_await
@@ -176,7 +176,7 @@ run this example on multiple clients.
 """
 
 
-await choice:
+await gui():
     + "menu":
         -> menu
 end_await
@@ -202,7 +202,7 @@ for i in range(len(fonts)):
 next i
 
 
-await choice:
+await gui():
     + "menu":
         -> menu
 end_await
@@ -216,7 +216,7 @@ for i in range(len(fonts)):
 next i
 
 
-await choice:
+await gui():
     + "menu":
         -> menu
 end_await
@@ -232,7 +232,7 @@ for i in range(len(fonts)):
 next i
 
 
-await choice:
+await gui():
     + "menu":
         -> menu
 end_await
@@ -250,7 +250,7 @@ for i in range(len(fonts)):
 next i
 
 
-await choice:
+await gui():
     + "menu":
         -> menu
 end_await
@@ -267,7 +267,7 @@ for i in range(len(fonts)):
 next i
 
 
-await choice:
+await gui():
     + "menu":
         -> menu
 end_await
@@ -311,7 +311,7 @@ ships = to_object_list(role("__PLAYER__"))
 gui_row(style="row-height: 50;")
 gui_content(list_box_control(ships, text=lambda ship: ship.comms_id, ship=lambda ship: ship.art_id), var="ship_list")
 
-await choice:
+await gui():
     + "menu":
         sim_create()
         for ship in ships:
@@ -340,7 +340,7 @@ gui_row()
 next x
 
 
-await choice:
+await gui():
     + "menu":
         -> menu
 end_await
@@ -351,7 +351,7 @@ gui_section( style="area:2,20,80,95;")
 gui_face(face_list[the_pick])
 """ Ready for duty """
 
-await choice:
+await gui():
     + "menu":
         -> menu
 end_await
@@ -416,7 +416,7 @@ for t in deez_tier:
 next t
 
 
-await choice:
+await gui():
     + "menu":
         -> menu
 end_await
@@ -477,7 +477,7 @@ on click:
 end_on
 
 
-await choice:
+await gui():
     + "menu":
         -> menu
 end_await

@@ -37,14 +37,14 @@ assign_client_to_ship(0,artemis)
 
 push rebuild_grid_items
 
-await choice:
+await gui():
     + "start":
         sim_resume()
         started=True
 end_await
 
 """ Editor"""
-await gui
+await gui()
 
 =========== grid_editor_client_start_once =======
 #
@@ -65,7 +65,7 @@ jump grid_editor_client_start if started==True
 gui_section(style="area: 10,40,90,50;")
 """ justify:center; text: Waiting for Start """"
 
-await gui timeout 1s
+await gui(timeout(1))
 jump wait_for_start
 
 
@@ -206,7 +206,7 @@ end_on
 # Needs to be last?
 push add_menu
 
-await gui
+await gui()
 
 ===== add_grid_object ========
 

@@ -10,7 +10,7 @@ start_text = "This is a start project for mast"
 #
 
 ==== replace: console_bottom_choices ====
-await choice:
+await gui():
     + "Head to the bar":
         push EnterBar
 end_await

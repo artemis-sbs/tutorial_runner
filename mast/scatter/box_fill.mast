@@ -61,7 +61,7 @@ gui_row(z_slider_row)
 gui_slider("low: 0; high:360.0;", var="az")
 
 
-await choice:
+await gui():
     * "Apply":
         cw = int(s_cw)
         if box_rect==False:

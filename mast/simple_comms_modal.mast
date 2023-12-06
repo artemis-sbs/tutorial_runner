@@ -38,7 +38,7 @@ gui_section(style="area:2,20,80,35;")
 
 """ {start_text}"""
 
-await choice:
+await gui():
     + "Start":
         -> start
 end_await
@@ -61,7 +61,7 @@ set_face(T001.id, random_terran())
 k001 = npc_spawn(-1000,0,1000, "K001", "raider", "kralien_dreadnaught", "behav_npcship")
 sim_resume()
 
-await gui
+await gui()
 
 
 ====== client_main =======
@@ -86,7 +86,7 @@ on message gui_button("accept"):
     ->console_selected
 end_on
 
-await gui
+await gui()
 ->END
 
 ====== console_selected ====
@@ -95,7 +95,7 @@ assign_client_to_ship(client_id,artemis)
 set_inventory_value(client_id, "assigned_ship", artemis)
 
 gui_console(console_select)
-await gui
+await gui()
 
 
 ================ comms_route ==================
@@ -172,7 +172,7 @@ end_match
 ===== show_comms_again ==== 
 comms_console = "comms"
 gui_console(comms_console)
-await gui
+await gui()
 
 
 ==== station_story_start ======
@@ -186,7 +186,7 @@ text: Hello {player_name} we  have been waiting for you.
 you have a choice to make
 """
 
-await choice:
+await gui():
    + "Choose One":
       set_inventory_value(comms_selected, "first_choice", True)
    + "Choose Two":
@@ -208,7 +208,7 @@ But how would you choose this.
 """
 
 
-await choice:
+await gui():
    + "Choose One":
       set_inventory_value(comms_selected, "second_choice", True)
    + "Choose Two":
@@ -236,7 +236,7 @@ I remember them:
     second {second}
 """
 
-await choice:
+await gui():
    + "RETURN to CONSOLE":
         jump console_selected
 end_await
@@ -276,7 +276,7 @@ text: Hello {player_name} tell us what to do
 # The selection will be made in parallel
 # and set in inventory
 #
-await choice:
+await gui():
    + "APPLY":
         target_id = get_inventory_value(comms_selected, "WEAPONS_SELECTED_ID", None)
         target_point = get_inventory_value(comms_selected, "WEAPONS_SELECTED_POINT", None)
