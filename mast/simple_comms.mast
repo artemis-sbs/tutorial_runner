@@ -63,7 +63,7 @@ set_inventory_value(COMMS_ORIGIN_ID, "face_security",  random_terran())
 #
 # Shows button color, face and title overrides
 #
-await comms:
+await comms():
     + "Sickbay" color "blue":
         comms_receive_internal("DA crew health is great!", from_name="sickbay", color="blue")
     + "Security" color "red":
@@ -115,14 +115,14 @@ await comms:
 end_await
 if flip == guess:
     money += 10
-    receive "Winner - bank {money}"
+    comms_receive( "Winner - bank {money}")
 else:
     money -= 10
-    receive "Loser - bank {money}"
+    comms_receive("Loser - bank {money}")
 end_if
 
 jump comms_casino_loop if money > 0
-receive "You went bust"
+comms_receive("You went bust")
 ->END
 
 
@@ -152,7 +152,7 @@ end_if
 
 await comms:
     + "Hail":
-        have client_id broadcast "Yabba Daba Dooo"
+        comms_broadcast(client_id, "Yabba Daba Dooo")
 
 end_await
 -> comms_flintstone
@@ -161,7 +161,7 @@ end_await
 
 await comms:
     + "Hail":
-        have client_id broadcast "Who ya doing fred?"
+        comms_broadcast(client_id, "Who ya doing fred?")
 
 end_await
 -> comms_rubble

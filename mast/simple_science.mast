@@ -24,7 +24,7 @@ end_if
 ========= station_science =======
 
 
-await scan:
+await scan():
     + "scan":
         scan_results("This is a friendly station")
     + "bio":
@@ -32,13 +32,15 @@ await scan:
     + "intl":
         scan_results("The people seem smart enough")
 end_await
-print ("Station scan done")
+
+print ("Science scan done")
+
 ->END
 
 ====== raider_science  ===========
 
 
-await scan:
+await scan():
     + "scan":
         scan_results("Looks like some bad dudes")
     + "bio":
