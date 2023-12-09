@@ -93,7 +93,7 @@ comms_receive_internal( "test results finished. Tell the captain we have a patho
 
 ================ npc_comms ==================
 
-await comms:
+await comms():
     + "Hail":
         comms_receive("We will destroy you, disgusting Terran scum!")
     + "Surrender now":
@@ -107,7 +107,7 @@ end_await
 money = 100
 ================ comms_casino_loop ==================
 flip = random.randint(0,1)
-await comms:
+await comms():
     + "Heads":
         guess = 0
     + "Tails":
@@ -129,7 +129,7 @@ comms_receive("You went bust")
 ======== comms_station ====== 
 comms_id = "later"
 
-await comms:
+await comms():
     + "Hail":
         comms_transmit("Hello")
         comms_receive("Yo")
@@ -150,7 +150,7 @@ end_if
 
 ================ comms_flintstone ==================
 
-await comms:
+await comms():
     + "Hail":
         comms_broadcast(client_id, "Yabba Daba Dooo")
 
@@ -159,7 +159,7 @@ end_await
 
 ================ comms_rubble ==================
 
-await comms:
+await comms():
     + "Hail":
         comms_broadcast(client_id, "Who ya doing fred?")
 

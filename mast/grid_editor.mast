@@ -351,7 +351,7 @@ y = blob.get("cury", 0)
 end_if
 
 
-await comms:
+await comms():
  + "update":
         item = items[COMMS_SELECTED_ID]["item"]
         index = items[COMMS_SELECTED_ID]["index"]

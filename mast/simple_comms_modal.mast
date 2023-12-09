@@ -131,7 +131,7 @@ comms_info("static")
 station_face = get_face(COMMS_SELECTED_ID)
 plot_point = get_inventory_value(COMMS_SELECTED_ID, "plot_point", 0)
 
-await comms:
+await comms():
     + "Hail":
         reroute_client(client_id, station_story_route)
 end_await
@@ -140,7 +140,7 @@ end_await
 ===== comms_friendly =======
 station_face = get_face(COMMS_SELECTED_ID)
 
-await comms:
+await comms():
     + "Give Orders":
         reroute_client(client_id, friendly_give_orders)
 end_await

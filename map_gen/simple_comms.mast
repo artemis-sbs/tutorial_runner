@@ -83,7 +83,7 @@ sec = "Security"
 #
 # Shows button color, face and title overrides
 #
-await comms:
+await comms():
     + "Sickbay" color "blue":
         comms_receive("DA crew health is great!", title="sickbay", face= doctor,  color="blue")
     + "Security" color "red":
@@ -191,7 +191,7 @@ receive  "test results finished. Tell the captain we have a pathogen. This could
 
 ================ npc_comms ==================
 
-await comms:
+await comms():
     + "Hail":
         receive "We will destroy you, disgusting Terran scum!"
     + "Surrender now":
@@ -205,7 +205,7 @@ end_await
 money = 100
 ================ comms_casino_loop ==================
 flip = random.randint(0,1)
-await comms:
+await comms():
     + "Heads":
         guess = 0
     + "Tails":
@@ -227,7 +227,7 @@ receive "You went bust"
 ======== comms_station ====== 
 comms_id = "later"
 
-await comms:
+await comms():
     + "Hail":
         comms_transmit("Hello")
         comms_receive("Yo")
@@ -248,7 +248,7 @@ end_if
 
 ================ comms_flintstone ==================
 
-await comms:
+await comms():
     + "Hail":
         have client_id broadcast "Yabba Daba Dooo"
 
@@ -257,7 +257,7 @@ end_await
 
 ================ comms_rubble ==================
 
-await comms:
+await comms():
     + "Hail":
         have client_id broadcast "Who ya doing fred?"
 
