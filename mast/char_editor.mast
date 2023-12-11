@@ -65,30 +65,30 @@ gui_face(avatar_face)
 
 gui_section(style="area: 25, 46, 75, 55;")
 
-on message gui_button("text: Arvonian"):
+on gui_message(gui_button("text: Arvonian")):
     race = "arvonian"
     jump character_editor_client_start
 end_on
 
-on message gui_button("text: Kralien"):
+on gui_message(gui_button("text: Kralien")):
     race = "kralien"
     jump character_editor_client_start
 end_on
-on message gui_button("text: Skaraan"):
+on gui_message(gui_button("text: Skaraan")):
     race = "skaraan"
     jump character_editor_client_start
 end_on
 gui_row()
-on message gui_button("text: Terran"):
+on gui_message(gui_button("text: Terran")):
     race = "terran"
     jump character_editor_client_start
 end_on
-on message gui_button("text: Torgoth"):
+on gui_message(gui_button("text: Torgoth")):
     race = "torgoth"
     jump character_editor_client_start
 end_on
 
-on message gui_button("text: Ximni"):
+on gui_message(gui_button("text: Ximni")):
     race = "ximni"
     jump character_editor_client_start
 end_on

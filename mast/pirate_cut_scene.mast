@@ -133,7 +133,7 @@ gui_blank()
 gui_row()
 
 if credits_ran:
-    on message gui_button("accept"):
+    on gui_message(gui_button("accept")):
         jump run_console
     end_on
 else:

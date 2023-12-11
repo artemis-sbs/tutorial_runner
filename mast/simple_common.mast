@@ -131,7 +131,7 @@ gui_section(style="area: 85,50, 99,90;")
 gui_vradio("helm,weapons, comms,science,engineering,mainscreen", var="console_select")
 gui_row("row-height:40px;")
 
-on message gui_button("accept"):
+on gui_message(gui_button("accept")):
     ->console_selected
 end_on
 

@@ -82,7 +82,7 @@ gui_vradio("helm,weapons, comms,science,engineering,mainscreen", var="console_se
 gui_blank()
 gui_row()
 
-on message gui_button("accept"):
+on gui_message(gui_button("accept")):
     ->console_selected
 end_on
 

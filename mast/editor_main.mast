@@ -8,7 +8,7 @@ gui_reroute_clients(grid_editor_client_start_once)
 ===== add_menu =====
 
 gui_section(style="area:20, 0, 30, 35px;")
-on message gui_drop_down("text: Editor; list:grid,character;", var="menu"):
+on gui_message(gui_drop_down("text: Editor; list:grid,character;", var="menu")):
     match menu:
      case "grid":
             jump grid_editor_client_start
