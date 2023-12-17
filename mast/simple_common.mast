@@ -36,7 +36,7 @@ gui_section(style="area:2,20,80,35;")
 await gui():
     + "Start":
         -> start
-    end_await
+
 -> server_main
 
 
@@ -49,7 +49,7 @@ gui_section(style="area:2,20,80,35;")
 await gui():
     + "restart":
         -> server_main
-end_await
+
 
 ======= lose_server_main =====
 
@@ -60,7 +60,7 @@ gui_section(style="area:2,20,80,35;")
 await gui():
     + "restart":
         ->server_main
-end_await
+
 
 
 ===== end_game =======
@@ -75,7 +75,7 @@ if len(players) == 0:
     gui_reroute_server( lose_server_main)
     gui_reroute_clients(select_console)
     ->END
-end_if
+
 #
 # No more enemies
 #
@@ -86,7 +86,7 @@ if len(raiders) == 0:
     gui_reroute_server( win_server_main)
     gui_reroute_clients(select_console)
     ->END
-end_if
+
 await delay_sim(5)
 -> end_game
 
@@ -105,7 +105,7 @@ set_face(ds2.id, random_terran())
 for x in range(enemy_count):
     k001 = npc_spawn(-1000+x*250,0,1000, f"K00{x}", "raider", "kralien_battleship", "behav_npcship")
     set_face(k001.id, random_face("kralien_battleship"))
-next x
+
 
 sim_resume()
 task_schedule(end_game)
@@ -133,9 +133,11 @@ gui_row("row-height:40px;")
 
 on gui_message(gui_button("accept")):
     ->console_selected
-end_on
 
-await gui()
+
+await gui():
+    + "Accept":
+        ->console_selected
 ->END
 
 ====== console_selected ====

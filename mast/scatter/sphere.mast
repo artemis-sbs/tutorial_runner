@@ -60,7 +60,7 @@ await gui():
         inner_r = int(s_in)
 
         jump apply_sphere
-end_await
+
 jump edit_scatter_sphere
 
 ==== apply_sphere ====
@@ -69,6 +69,6 @@ push clear_objects
 for v in scatter_sphere(int(count), x,y,z,outer_r, inner_r, top_only, ring_only):
     o = terrain_spawn(v.x, v.y, v.z, None, None, "plain_asteroid_6", "behav_asteroid")
     objects.append(to_id(o))
-next v
+
 jump edit_scatter_sphere
 

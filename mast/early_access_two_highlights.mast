@@ -11,7 +11,7 @@ shared grid_data = load_json_data(get_mission_dir_filename("mast/grid_data.json"
 gui_reroute_server( server_main)
 gui_reroute_clients(run_console)
 # This is where damcons stuff starts
-route grid spawn route_grid_spawn
+route_grid_spawn(handle_grid_spawn)
 
 shared artemis = None
 
@@ -33,7 +33,7 @@ gui_section(style="area:2,20,80,35;")
 await gui():
     + "Start":
         -> start
-    end_await
+
 -> server_main
 
 
@@ -50,7 +50,7 @@ await gui()
 
 on change artemis:
     jump game_started
-end_on
+
 
 """ waiting for mission start""""
 await gui()
@@ -79,7 +79,7 @@ await gui()
 
 
 
-======= route_grid_spawn ====== 
+======= handle_grid_spawn ====== 
 
 jump narration if has_role(SPAWNED_ID, "narrator")
 jump wife if has_role(SPAWNED_ID, "wife")
@@ -211,7 +211,7 @@ for g in internal_items:
 
     go =  grid_spawn(SPAWNED_ID,  name_tag, name_tag, loc_x, loc_y, g["icon"], color, g["roles"])
     go.blob.set("icon_scale", g["scale"], 0)
-next g
+
 
 <<-
 
@@ -227,31 +227,31 @@ await delay_sim(4)
 
 ==== system_engine ====
 if random.randrange(5)==3:
-await delay_sim(2)
-grid_short_status(SPAWNED_ID, "Whosh", "blue", 3)
-end_if
+    await delay_sim(2)
+    grid_short_status(SPAWNED_ID, "Whosh", "blue", 3)
+
 ->END
 ==== system_weapon ==== 
 if random.randrange(5)==3:
-await delay_sim(2)
-grid_short_status(SPAWNED_ID, "Pew pew", "red", 3)
-end_if
+    await delay_sim(2)
+    grid_short_status(SPAWNED_ID, "Pew pew", "red", 3)
+
 ->END
 ==== system_sensor ==== 
 if random.randrange(5)==3:
-await delay_sim(2)
-grid_short_status(SPAWNED_ID, "scanning", "purple", 3)
-end_if
+    await delay_sim(2)
+    grid_short_status(SPAWNED_ID, "scanning", "purple", 3)
+
 ->END
 ==== system_shield ==== 
 if random.randrange(5)==3:
-await delay_sim(2)
-grid_short_status(SPAWNED_ID, "I got you", "black", 3)
-end_if
+    await delay_sim(2)
+    grid_short_status(SPAWNED_ID, "I got you", "black", 3)
+
 ->END
 ==== other_room ==== 
 if random.randrange(5)==3:
-await delay_sim(2)
-grid_short_status(SPAWNED_ID, "Hello", "black", 3)
-end_if
+    await delay_sim(2)
+    grid_short_status(SPAWNED_ID, "Hello", "black", 3)
+
 ->END

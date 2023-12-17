@@ -18,7 +18,7 @@ if has_role(SCIENCE_SELECTED_ID, "Station"):
     jump station_science
 elif has_role(SCIENCE_SELECTED_ID, "raider"):
     jump raider_science
-end_if
+
 ->END
 
 ========= station_science =======
@@ -31,7 +31,7 @@ await scan():
         scan_results("Just a bunch of people")
     + "intl":
         scan_results("The people seem smart enough")
-end_await
+
 
 print ("Science scan done")
 
@@ -47,7 +47,7 @@ await scan():
         scan_results("Whew can smell travel through space?")
     + "intl":
         scan_results("The have spaceships, but seem quite dumb")
-end_await
+
 print ("Raider scan done")
 ->END
 

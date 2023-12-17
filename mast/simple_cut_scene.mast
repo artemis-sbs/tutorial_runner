@@ -27,7 +27,7 @@ gui_section(style="area:2,20,80,35;")
 await gui():
     + "Start":
         -> start
-    end_await
+
 -> server_main
 
 
@@ -48,8 +48,8 @@ shared camera_id = to_id(k001)
 sim_resume()
 gui_reroute_clients(opening_scene)
 
-await gui():
-end_await
+await gui()
+    
 
 
 ====== client_main =======
@@ -75,10 +75,9 @@ gui_row()
 if credits_ran:
     on gui_message(gui_button("accept")):
         jump run_console
-    end_on
 else:
     gui_checkbox("accept", var="console_accepted")
-end_if
+
 
 await gui()
 ->END
@@ -285,7 +284,7 @@ await gui(timeout(5))
 credits_ran = True
 if not console_accepted:
     jump select_console
-end_if
+
 
 
 ========== run_console ========

@@ -20,7 +20,7 @@ if IS_SERVER:
     ->server_main
 else:
     -> client_main
-end_if
+
 
 
 ======= server_main =====
@@ -41,7 +41,7 @@ gui_section(style="area:2,20,80,35;")
 await gui():
     + "Start":
         -> start
-end_await
+
 -> server_main
 
 ======== start ======
@@ -84,7 +84,7 @@ gui_row()
 
 on gui_message(gui_button("accept")):
     ->console_selected
-end_on
+
 
 await gui()
 ->END
@@ -115,7 +115,7 @@ elif has_role(COMMS_SELECTED_ID, 'tsn'):
     jump comms_friendly
 elif has_role(COMMS_SELECTED_ID, 'raider'):
      jump npc_comms
-end_if
+
 # Anything else has no comms buttons
 # and static as the id
 comms_info("static")
@@ -134,7 +134,7 @@ plot_point = get_inventory_value(COMMS_SELECTED_ID, "plot_point", 0)
 await comms():
     + "Hail":
         reroute_client(client_id, station_story_route)
-end_await
+
 ->  comms_station
 
 ===== comms_friendly =======
@@ -143,7 +143,7 @@ station_face = get_face(COMMS_SELECTED_ID)
 await comms():
     + "Give Orders":
         reroute_client(client_id, friendly_give_orders)
-end_await
+
 ->  comms_friendly
 
 
@@ -156,7 +156,7 @@ if player:
     player_name = player.name
 else:
     player_name = "Terran"
-end_if
+
 
 
 
@@ -167,7 +167,7 @@ match plot_point:
         jump station_story_one
     case 2:
         jump station_story_two
-end_match
+
 
 ===== show_comms_again ==== 
 comms_console = "comms"
@@ -193,7 +193,7 @@ await gui():
       set_inventory_value(comms_selected, "first_choice", False)
    + "RETURN to CONSOLE":
         jump console_selected
-end_await
+
 
 
 ====== station_story_one ====
@@ -215,7 +215,7 @@ await gui():
       set_inventory_value(comms_selected, "second_choice", False)
    + "RETURN to CONSOLE":
         jump console_selected
-end_await
+
 
 
 ====== station_story_two ====
@@ -239,7 +239,7 @@ I remember them:
 await gui():
    + "RETURN to CONSOLE":
         jump console_selected
-end_await
+
 
 
 
@@ -253,7 +253,7 @@ if player:
     player_name = player.name
 else:
     player_name = "Terran"
-end_if
+
 #
 # Switch to the friendly ship
 #
@@ -284,10 +284,10 @@ await gui():
             target(sim, comms_selected, target_id, True)
         else:
             target_pos(sim, comms_selected, target_point.x, target_point.y, target_point.z )
-        end_if
+
    + "CANCEL":
         jump console_selected
-end_await
+
 
 #
 # Get back on the right ship
@@ -311,7 +311,7 @@ nav = get_inventory_value(WEAPONS_ORIGIN_ID, "WEAPONS_SELECTED_NAV", None)
 if nav:
     sim.delete_navpoint_by_reference(nav)
     set_inventory_value(WEAPONS_ORIGIN_ID, "WEAPONS_SELECTED_NAV", None)
-end_if
+
 # Handle initial clicks
 if EVENT.selected_id != 0:
     set_inventory_value(WEAPONS_ORIGIN_ID, "WEAPONS_SELECTED_POINT", None)
@@ -323,7 +323,7 @@ else:
     nav = sim.add_navpoint(EVENT.source_point.x,EVENT.source_point.y, EVENT.source_point.z, "goto", "white")
     nav.visibleToShip =WEAPONS_ORIGIN_ID
     set_inventory_value(WEAPONS_ORIGIN_ID, "WEAPONS_SELECTED_NAV", nav)
-end_if
+
 #Done no point running more
 ->END
 

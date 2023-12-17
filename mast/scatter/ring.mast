@@ -80,7 +80,7 @@ await gui():
         z = int(s_z)
       
         jump apply_ring
-end_await
+
 jump edit_scatter_ring
 
 ==== apply_ring ====
@@ -89,6 +89,6 @@ push clear_objects
 for v in scatter_ring(ca, cr, x,y,z, outer_r, inner_r, a_start, a_end, rand):
     o = terrain_spawn(v.x, v.y, v.z, None, None, "plain_asteroid_6", "behav_asteroid")
     objects.append(to_id(o))
-next v
+
 jump edit_scatter_ring
 

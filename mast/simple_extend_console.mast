@@ -13,6 +13,6 @@ start_text = "This is a start project for mast"
 await gui():
     + "Head to the bar":
         push EnterBar
-end_await
+
 # Need this when return from pushed
 jump console_selected

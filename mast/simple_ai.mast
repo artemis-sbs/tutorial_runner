@@ -18,7 +18,7 @@ start_text = "This is a start project for mast"
 #
 if has_role(SPAWNED_ID, "raider"):
     jump npc_targeting_ai
-end_if
+
 #if not a raider end the task
 ->END
 
@@ -27,10 +27,10 @@ end_if
 the_target = closest(SPAWNED_ID, role("__PLAYER__"), 2000)
 if the_target is None:
     the_target = closest(SPAWNED_ID, role("Station"))
-end_if
+
 if the_target is not None:
     target(SPAWNED_ID, the_target, True)
-end_if
+
 
 await delay_sim(5)
 jump npc_targeting_ai
@@ -42,5 +42,5 @@ jump npc_targeting_ai
 
 if has_role(SPAWNED_ID, "station"):
     log("Station")
-end_if
+
 ->END

@@ -26,5 +26,5 @@ if has_roles(COLLISION_ORIGIN_ID, "anomaly, magic_beans"):
 elif has_roles(COLLISION_ORIGIN_ID, "anomaly, super_warp"):
     print("super_warp")
     sbs.delete_object(COLLISION_ORIGIN_ID)
-end_if
+
 ->END

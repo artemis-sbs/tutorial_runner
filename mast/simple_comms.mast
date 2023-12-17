@@ -22,7 +22,7 @@ start_text = "This is a start project for mast^to demonstrate comms console"
 ================ casino_comms_route ==================
 if has_roles(COMMS_SELECTED_ID, "Station, casino"):
     jump comms_casino
-end_if
+
 ->END
 
 
@@ -41,7 +41,7 @@ elif has_role(COMMS_SELECTED_ID, 'Station'):
     jump comms_station
 elif has_role(COMMS_SELECTED_ID, 'raider'):
      jump npc_comms
-end_if
+
 
 # Anything else has no comms buttons
 # and static as the id
@@ -79,7 +79,7 @@ await comms():
         #
         await delay_sim(3)
         comms_receive_internal("Things feel like they are getting worse", from_name="counselor", color="cyan")
-end_await
+
 -> internal_comms_loop
 
 ====== test_finished ======
@@ -98,7 +98,7 @@ await comms():
         comms_receive("We will destroy you, disgusting Terran scum!")
     + "Surrender now":
         comms_receive("""OK we give up""")
-end_await
+
 -> npc_comms
 
 
@@ -112,14 +112,14 @@ await comms():
         guess = 0
     + "Tails":
         guess = 1
-end_await
+
 if flip == guess:
     money += 10
     comms_receive( "Winner - bank {money}")
 else:
     money -= 10
     comms_receive("Loser - bank {money}")
-end_if
+
 
 jump comms_casino_loop if money > 0
 comms_receive("You went bust")
@@ -133,7 +133,7 @@ await comms():
     + "Hail":
         comms_transmit("Hello")
         comms_receive("Yo")
-end_await
+
 -> comms_station
 
 
@@ -145,7 +145,7 @@ if has_role(COMMS_SELECTED_ID, 'flint'):
     jump comms_flintstone
 elif has_role(COMMS_SELECTED_ID, 'rubble'):
      jump comms_rubble
-end_if
+
 ->END
 
 ================ comms_flintstone ==================
@@ -154,7 +154,6 @@ await comms():
     + "Hail":
         comms_broadcast(client_id, "Yabba Daba Dooo")
 
-end_await
 -> comms_flintstone
 
 ================ comms_rubble ==================
@@ -163,7 +162,7 @@ await comms():
     + "Hail":
         comms_broadcast(client_id, "Who ya doing fred?")
 
-end_await
+
 -> comms_rubble
 
 ======= clear_unknown =====

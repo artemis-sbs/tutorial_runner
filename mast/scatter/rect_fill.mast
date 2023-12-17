@@ -51,7 +51,7 @@ await gui():
         h = int(s_h)
         d = int(s_d)
         jump apply_rect_fill
-end_await
+
 jump edit_scatter_rect_fill
 
 ==== apply_rect_fill ====
@@ -59,6 +59,6 @@ push clear_objects
 for v in scatter_rect_fill(int(count), x,y,z,w,h,d,True, ax,ay,az, True):
     o = terrain_spawn(v.x, v.y, v.z, None, None, "plain_asteroid_6", "behav_asteroid")
     objects.append(to_id(o))
-next v
+
 jump edit_scatter_rect_fill
 

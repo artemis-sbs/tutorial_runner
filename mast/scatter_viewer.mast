@@ -9,13 +9,13 @@ import scatter/sphere.mast
 
 shared objects = []
 
- slider_row = gui_style_def("row-height: 46px;padding: 6px,0,2px, 6px;")
- x_slider_row = gui_style_def("row-height: 46px;padding: 6px,0,2px, 6px;background:red;")
- y_slider_row = gui_style_def("row-height: 46px;padding: 6px,0,2px, 6px;background:green;")
- z_slider_row = gui_style_def("row-height: 46px;padding: 6px,0,2px, 6px;background:blue;")
- input_row = gui_style_def("row-height: 45px;padding: 6px,0,2px, 6px;")
- separator = gui_style_def("row-height: 40px;")
- form_style = gui_style_def("area: 0, 7, 50, 90;")
+slider_row = gui_style_def("row-height: 46px;padding: 6px,0,2px, 6px;")
+x_slider_row = gui_style_def("row-height: 46px;padding: 6px,0,2px, 6px;background:red;")
+y_slider_row = gui_style_def("row-height: 46px;padding: 6px,0,2px, 6px;background:green;")
+z_slider_row = gui_style_def("row-height: 46px;padding: 6px,0,2px, 6px;background:blue;")
+input_row = gui_style_def("row-height: 45px;padding: 6px,0,2px, 6px;")
+separator = gui_style_def("row-height: 40px;")
+form_style = gui_style_def("area: 0, 7, 50, 90;")
 
 
 counts = [10,20]
@@ -93,7 +93,8 @@ gui_row()
 gui_layout_widget("2dview")
 
 gui_section(style="area: 200px, 0, 50, 33px;")
-on gui_message(gui_drop_down("text: Scatter; list: arc, line, rect_fill, box_fill, box, ring, ring_density, sphere", var="menu")):
+todo = gui_drop_down("text: Scatter; list: arc, line, rect_fill, box_fill, box, ring, ring_density, sphere", var="menu")
+on gui_message(todo):
     match menu:
         case "arc":
             jump edit_scatter_arc
@@ -111,15 +112,13 @@ on gui_message(gui_drop_down("text: Scatter; list: arc, line, rect_fill, box_fil
             jump edit_scatter_ring_density
         case "sphere":
             jump edit_scatter_sphere
-    end_match
-end_on
-
+    
 <<-
 
 ===== clear_objects ===== 
 for o in objects:
     sbs.delete_object(o)
-next o
+
 
 <<-
 

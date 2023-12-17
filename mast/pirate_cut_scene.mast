@@ -19,7 +19,7 @@ if IS_SERVER:
     ->server_main
 else:
     -> client_main
-end_if
+
 
 
 ======= server_main =====
@@ -42,7 +42,7 @@ gui_section(style="area:2,20,80,35;")
 await gui():
     + "Start":
         -> start
-    end_await
+
 -> server_main
 
 
@@ -55,7 +55,7 @@ gui_section(style="area:2,20,80,35;")
 await gui():
     + "restart":
         -> server_main
-end_await
+
 
 ======= lose_server_main =====
 
@@ -66,7 +66,7 @@ gui_section(style="area:2,20,80,35;")
 await gui():
     + "restart":
         ->server_main
-end_await
+
 
 
 ===== end_game =======
@@ -81,7 +81,7 @@ if len(players) == 0:
     gui_reroute_server( lose_server_main)
     gui_reroute_clients(select_console)
     ->END
-end_if
+
 #
 # No more enemies
 #
@@ -92,7 +92,7 @@ if len(raiders) == 0:
     gui_reroute_server( win_server_main)
     gui_reroute_clients(select_console)
     ->END
-end_if
+
 await delay_sim(5)
 -> end_game
 
@@ -135,10 +135,9 @@ gui_row()
 if credits_ran:
     on gui_message(gui_button("accept")):
         jump run_console
-    end_on
 else:
     gui_checkbox("accept", var="console_accepted")
-end_if
+
 
 await gui()
 ->END
@@ -204,7 +203,7 @@ await gui(timeout(50))
 credits_ran = True
 if not console_accepted:
     jump select_console
-end_if
+
 
 
 ========== run_console ========
@@ -218,7 +217,7 @@ await gui()
 #
 if has_role(SPAWNED_ID, "raider"):
     jump npc_targeting_ai
-end_if
+
 #if not a raider end the task
 ->END
 
@@ -228,10 +227,10 @@ end_if
 the_target = closest(SPAWNED_ID, role("__PLAYER__"), 2000)
 if the_target is None:
     the_target = closest(SPAWNED_ID, role("Station"))
-end_if
+
 if the_target is not None:
     target(SPAWNED_ID, the_target, True)
-end_if
+
 
 await delay_sim(5)
 jump npc_targeting_ai
@@ -243,5 +242,5 @@ jump npc_targeting_ai
 
 if has_role(SPAWNED_ID, "station"):
     log("Station")
-end_if
+
 ->END

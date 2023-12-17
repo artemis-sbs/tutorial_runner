@@ -72,7 +72,7 @@ await gui():
         counts = []
         for s in count_strs:
             counts.append(int(s.strip()))
-        next s
+
 
         outer_r = int(s_out)
         inner_r = int(s_in)
@@ -82,7 +82,7 @@ await gui():
         z = int(s_z)
       
         jump apply_ring_density
-end_await
+
 jump edit_scatter_ring_density
 
 ==== apply_ring_density ====
@@ -91,6 +91,6 @@ push clear_objects
 for v in scatter_ring_density(counts, x,y,z, outer_r, inner_r, a_start, a_end, rand):
     o = terrain_spawn(v.x, v.y, v.z, None, None, "plain_asteroid_6", "behav_asteroid")
     objects.append(to_id(o))
-next v
+
 jump edit_scatter_ring_density
 

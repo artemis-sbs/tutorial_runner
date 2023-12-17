@@ -65,33 +65,31 @@ gui_face(avatar_face)
 
 gui_section(style="area: 25, 46, 75, 55;")
 
-on gui_message(gui_button("text: Arvonian")):
+on gui_message(gui_button("Arvonian")):
     race = "arvonian"
     jump character_editor_client_start
-end_on
 
-on gui_message(gui_button("text: Kralien")):
+on gui_message(gui_button("Kralien")):
     race = "kralien"
     jump character_editor_client_start
-end_on
-on gui_message(gui_button("text: Skaraan")):
+
+on gui_message(gui_button("Skaraan")):
     race = "skaraan"
     jump character_editor_client_start
-end_on
+
 gui_row()
-on gui_message(gui_button("text: Terran")):
+on gui_message(gui_button("Terran")):
     race = "terran"
     jump character_editor_client_start
-end_on
-on gui_message(gui_button("text: Torgoth")):
+
+on gui_message(gui_button("Torgoth")):
     race = "torgoth"
     jump character_editor_client_start
-end_on
 
-on gui_message(gui_button("text: Ximni")):
+on gui_message(gui_button("Ximni")):
     race = "ximni"
     jump character_editor_client_start
-end_on
+
 
 gui_row()
 
@@ -103,7 +101,7 @@ if widgets is not None:
     for widget in widgets:
         if i%3 == 2:
             gui_row( style="padding: 1px;")
-        end_if
+
         i += 1
         label = widget["label"]
         if "optional" in widget:
@@ -113,14 +111,10 @@ if widgets is not None:
             gui_checkbox("text: {label};", var="check")
             if enable and widget["max"]>0:
                 gui_slider("low: {widget['min']}; high: {widget['max']};", var="sl1")
-            end_if
         else:
             """"text:{label}""""
             gui_slider("low: {widget['min']}; high: {widget['max']}; show_number: no", var="sl2")
-        end_if
-    next widget
-end_if
             
 push add_menu
 
-await gui 
+await gui() 

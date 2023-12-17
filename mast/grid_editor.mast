@@ -41,7 +41,7 @@ await gui():
     + "start":
         sim_resume()
         started=True
-end_await
+
 
 """ Editor"""
 await gui()
@@ -55,8 +55,6 @@ for ship in grid_data.values():
     gos = ship['grid_objects']
     for item in gos:
         ~~templates[item['name']] = item~~
-    next item
-next ship
 
 assign_client_to_ship(client_id,artemis)
 
@@ -74,7 +72,7 @@ jump wait_for_start
 
 if grid_data.get(ship_type) is None:
     grid_data[ship_type] = {"grid_objects":[]}
-end_if
+
 shared internal_items = grid_data[ship_type]["grid_objects"]
 if last_ship_type != ship_type:
     #
@@ -101,7 +99,7 @@ if last_ship_type != ship_type:
     #assign_client_to_ship(client_id,artemis)
 
     last_ship_type = ship_type
-end_if
+
 
 
 gui_activate_console("engineer")
@@ -135,7 +133,7 @@ color_picker = ~~list_box_control(colors,
 t = []
 for key in sorted(templates.keys(), key=lambda x: x.lower()):
     t.append(templates[key])
-next key
+
 
 template_picker = ~~list_box_control(t, 
                                icon = lambda value: f"color:{value['color']};icon_index:{value['icon']};",
@@ -147,11 +145,11 @@ template_picker = ~~list_box_control(t,
 if item_color != "" and len(item_color.content.selected)>0:
     color_picker.selected = item_color.content.selected
     color_picker.cur = next(iter(color_picker.selected))
- end_if
+
 if item_icon != ""and len(item_icon.content.selected)>0:
     picker.selected = item_icon.content.selected
     picker.cur = next(iter(picker.selected))
-end_if
+
 
 gui_section(style="area: 0, 5, 20, 100;row-height:30;")
 
@@ -185,7 +183,7 @@ item_template = gui_content(template_picker)
 on change ship_select.value:
     ship_type = ship_select.value
     jump grid_editor_client_start
-end_on
+
 on change item_template.value:
     item = item_template.value[0]
     item_name = item['name']
@@ -202,7 +200,7 @@ on change item_template.value:
 
 
     jump grid_editor_client_start
-end_on
+
 # Needs to be last?
 push add_menu
 
@@ -227,8 +225,6 @@ for g_id in items:
         # Found existing item
         COMMS_SELECTED_ID = g_id
         jump update_selection
-    end_if
-next g
 #
 # Add needs to have the values: e.g. name, roles
 #
@@ -280,8 +276,6 @@ for g in internal_items:
     go.blob.set("icon_scale", g["scale"], 0)
     items[go.id] = {"index": i, "go": go, "item": g}
     i+=1
-next g
-
 
 <<-
 
@@ -293,7 +287,7 @@ for k in items:
     #go = items[k]
     # delete by id
     sbs.delete_grid_object(artemis, k)
-next k
+
 <<-
 
 
@@ -305,24 +299,22 @@ blob.set("grid_selected_UID", COMMS_SELECTED_ID, 0)
 follow_route_grid_select(artemis, COMMS_SELECTED_ID)
 
 if selection_go is not None:
-# set pos
-blob = to_blob(COMMS_SELECTED_ID)
-x = blob.get("curx", 0)
-y = blob.get("cury", 0)
-selection_go.blob.set("curx", x)
-selection_go.blob.set("cury", y)
-
-
+    # set pos
+    blob = to_blob(COMMS_SELECTED_ID)
+    x = blob.get("curx", 0)
+    y = blob.get("cury", 0)
+    selection_go.blob.set("curx", x)
+    selection_go.blob.set("cury", y)
 else:
-#create it
-blob = to_blob(COMMS_SELECTED_ID)
-x = blob.get("curx", 0)
-y = blob.get("cury", 0)
+    #create it
+    blob = to_blob(COMMS_SELECTED_ID)
+    x = blob.get("curx", 0)
+    y = blob.get("cury", 0)
     shared selection_go =  grid_spawn(artemis,  "selection", "sel1", x, y, 56, "black", "#")
     #print (selection_go)
     selection_go.blob.set("icon_scale",  2.0)
 
-end_if
+
 <<-
 
 ====== grid_comms =====
@@ -330,25 +322,20 @@ end_if
 #print("Changing select")
 
 if selection_go is not None:
-# set pos
-
-
-blob = to_blob(COMMS_SELECTED_ID)
-x = blob.get("curx", 0)
-y = blob.get("cury", 0)
-selection_go.blob.set("curx", x)
-selection_go.blob.set("cury", y)
-
+    # set pos
+    blob = to_blob(COMMS_SELECTED_ID)
+    x = blob.get("curx", 0)
+    y = blob.get("cury", 0)
+    selection_go.blob.set("curx", x)
+    selection_go.blob.set("cury", y)
 else:
-#create it
-blob = to_blob(COMMS_SELECTED_ID)
-x = blob.get("curx", 0)
-y = blob.get("cury", 0)
+    #create it
+    blob = to_blob(COMMS_SELECTED_ID)
+    x = blob.get("curx", 0)
+    y = blob.get("cury", 0)
     shared selection_go =  grid_spawn(artemis,  "selection", "sel1", x, y, 56, "black", "#")
     #print (selection_go)
     selection_go.blob.set("icon_scale",  2.0)
-
-end_if
 
 
 await comms():
@@ -380,8 +367,6 @@ await comms():
             got = roles[0].strip()
             go.set_go_type(got)
             go.set_name(item_name)
-
-        end_if
   + "delete": 
         # delete the item
         sbs.delete_grid_object(artemis, COMMS_SELECTED_ID)
@@ -390,9 +375,9 @@ await comms():
         if go is not None:
             # print (f"{go}")
             internal_items.remove(go["item"])
-        end_if
+
        ->END
-end_await
+
 push save_data
 
 jump grid_comms
