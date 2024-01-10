@@ -110,7 +110,11 @@ def start_server():
 
         redirect_gui(SimplePage)
         #yield PollResults.OK_JUMP
-        
+
+    def run_simple_agent_mast():
+        class SimplePage(StoryPage):
+            story_file = "mast/simple_agent.mast"
+        redirect_gui(SimplePage)
 
     def run_simple_gui_mast():
         class SimplePage(StoryPage):
@@ -165,6 +169,8 @@ def start_server():
     gui_button("simple science", on_message=run_simple_science_mast)
     gui_row()
     gui_button("simple collision", on_message=run_simple_collision_mast)
+    gui_row()
+    gui_button("simple agent", on_message=run_simple_agent_mast)
     gui_row()
     gui_button("simple comms", on_message=run_simple_comms_mast)
     gui_row()
