@@ -22,7 +22,8 @@ shared ship_type = "tsn_light_cruiser"
 shared last_ship_type = "tsn_light_cruiser"
 shared colors =  ["black", "white", "gray", "silver", "maroon", "red", "purple", "fushsia", "green", "lime", "olive", "yellow", "navy", "blue", "teal",  "aqua"]
 shared selection_go = None
-
+shared pos_x = None
+shared pos_y = None
 
 
 =========== server_start =======
@@ -83,6 +84,9 @@ if last_ship_type != ship_type:
     #schedule recycle_ship
     #artemis =  to_id(player_spawn(0,0,0, ship_type, "tsn", ship_type))
     shared selection_go=None
+    print("CLEAR")
+    shared pos_x = None
+    shared pos_y = None
     
     #
     # This doesn't work in 0.79
@@ -101,11 +105,19 @@ if last_ship_type != ship_type:
     last_ship_type = ship_type
 
 
-
 gui_activate_console("engineer")
 gui_section(style="area: 60, 0, 100, 100;")
 gui_layout_widget("ship_internal_view")
-gui_section(style="area: 42, 10, 60, 90;")
+
+
+gui_section(style="area: 42, 1, 60, 1+60px;")
+gui_row( style="row-height:50px")
+
+on gui_message(gui_button("Add additional at location")):
+    #print("{pos_x} {pos_y}")
+    jump add_grid_object_common if pos_x is not None and pos_y is not None
+
+gui_section(style="area: 42, 10, 60, 99;")
 gui_row( style="row-height:60")
 gui_layout_widget("grid_object_list")
 gui_row( style="row-height:20")
@@ -207,13 +219,13 @@ push add_menu
 await gui()
 
 ===== add_grid_object ========
-
-#print (f"{item_name} {item_roles} '{item_color.value}' '{item_icon.value}'")
-#print(f"{EVENT.source_point.x} {EVENT.source_point.y}")
+shared pos_x = EVENT.source_point.x 
+shared pos_y = EVENT.source_point.y
 
 #
 # Check if this is a selection not an add
 #
+
 for g_id in items:
     item = items.get(g_id)
     ->END if item is None
@@ -221,24 +233,30 @@ for g_id in items:
     item = item.get("item")
     ->END if item is None
     
-    if item["x"] == EVENT.source_point.x and item["y"] == EVENT.source_point.y:
+    if item["x"] == pos_x and item["y"] == pos_y:
         # Found existing item
         COMMS_SELECTED_ID = g_id
         jump update_selection
+
+==== add_grid_object_common ===
+
+print (f"{item_name} {item_roles} '{item_color.value}' '{item_icon.value}'")
+print(f"{pos_x} {pos_y}")
+
 #
 # Add needs to have the values: e.g. name, roles
 #
 ->END if item_name is None or item_name == ""
 ->END if item_roles is None or item_roles == ""
+# ->END if pos_x is None or pos_y is None
 
 
-
-print("Update1")
+#print("Update1")
 icon = int(item_icon.value[0])
 color = item_color.value[0]
 g = ~~ {
-    "x": EVENT.source_point.x, 
-    "y":EVENT.source_point.y, 
+    "x": pos_x, 
+    "y":pos_y, 
     "icon": icon, 
     "name":item_name, 
     "color": color, 
@@ -305,37 +323,25 @@ if selection_go is not None:
     y = blob.get("cury", 0)
     selection_go.blob.set("curx", x)
     selection_go.blob.set("cury", y)
+    pos_x = x
+    pos_y = y
 else:
     #create it
     blob = to_blob(COMMS_SELECTED_ID)
     x = blob.get("curx", 0)
     y = blob.get("cury", 0)
+    pos_x = x
+    pos_y = y
     shared selection_go =  grid_spawn(artemis,  "selection", "sel1", x, y, 56, "black", "#")
     #print (selection_go)
     selection_go.blob.set("icon_scale",  2.0)
 
-
 <<-
+->END
 
 ====== grid_comms =====
 
 #print("Changing select")
-
-if selection_go is not None:
-    # set pos
-    blob = to_blob(COMMS_SELECTED_ID)
-    x = blob.get("curx", 0)
-    y = blob.get("cury", 0)
-    selection_go.blob.set("curx", x)
-    selection_go.blob.set("cury", y)
-else:
-    #create it
-    blob = to_blob(COMMS_SELECTED_ID)
-    x = blob.get("curx", 0)
-    y = blob.get("cury", 0)
-    shared selection_go =  grid_spawn(artemis,  "selection", "sel1", x, y, 56, "black", "#")
-    #print (selection_go)
-    selection_go.blob.set("icon_scale",  2.0)
 
 
 await comms():
@@ -393,6 +399,27 @@ jump grid_comms
 ->END if GRID_SELECTED_ID is None
 item = items.get(GRID_SELECTED_ID)
 ->END if item is None
+
+if selection_go is not None:
+    # set pos
+    blob = to_blob(GRID_SELECTED_ID)
+    x = blob.get("curx", 0)
+    y = blob.get("cury", 0)
+    pos_x = x
+    pos_y = y
+    selection_go.blob.set("curx", x)
+    selection_go.blob.set("cury", y)
+else:
+    #create it
+    blob = to_blob(GRID_SELECTED_ID)
+    x = blob.get("curx", 0)
+    y = blob.get("cury", 0)
+    pos_x = x
+    pos_y = y
+    shared selection_go =  grid_spawn(artemis,  "selection", "sel1", x, y, 56, "black", "#")
+    #print (selection_go)
+    selection_go.blob.set("icon_scale",  2.0)
+
 
 item = item["item"]
 
