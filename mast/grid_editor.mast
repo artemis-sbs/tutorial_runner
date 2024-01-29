@@ -82,7 +82,7 @@ if last_ship_type != ship_type:
     #old_ship = artemis
     #schedule recycle_ship
     #artemis =  to_id(player_spawn(0,0,0, ship_type, "tsn", ship_type))
-    #shared selection_go=None
+    shared selection_go=None
     
     #
     # This doesn't work in 0.79

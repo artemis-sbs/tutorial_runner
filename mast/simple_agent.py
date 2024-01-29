@@ -115,7 +115,7 @@ class Harvester(Npc):
             test = sbs.distance_id(self.id, task.base_id)
             if test < 600:
                 self.state = HarvesterState.EMPTYING
-                # change delay to 5 sec
+                # change delay to 2 sec
                 task.delay = 2
         elif self.state == HarvesterState.EMPTYING:
             self.amount -= 100
