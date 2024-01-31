@@ -170,4 +170,4 @@ await comms():
 # Just enough science so the unknown is cleared
 #
 #set_engine_data(SPAWNED_ID, "tsnscan", "Scan data")
-science_set_scan_data(artemis, SPAWNED_ID,  "scan", "Scan data")
+science_set_scan_data(artemis, SPAWNED_ID, "Scan data")

@@ -53,7 +53,7 @@ class Harvester(Npc):
     def handle_spawn(self):
         pls = role("__player__")
         for pl in pls:
-            science_set_scan_data(pl, self.id,  "scan", "Scan data")
+            science_set_scan_data(pl, self.id,  "Scan data")
 
     @RouteDamageObject
     def handle_damage(self, event):
