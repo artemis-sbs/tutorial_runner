@@ -104,7 +104,7 @@ end_await
 
 
 ==== add_some_stuff ====
-asteroid_types = names_plain_asteroid_keys()
+asteroid_types = ship_data_plain_asteroid_keys()
 
 i = 10000
 for n in gen:

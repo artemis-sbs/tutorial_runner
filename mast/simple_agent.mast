@@ -14,7 +14,7 @@ t_min = terrain_value * 7
 t_max = t_min * 3
 spawn_points = scatter.box(random.randint(t_min,t_max), 0,0,0, 100000/4, 1000, 100000/4, centered=True)
 
-asteroid_types = names_asteroid_keys()
+asteroid_types = ship_data_asteroid_keys()
 for v in spawn_points:
     
     amount = random.randint(t_min+10,t_max+10)
