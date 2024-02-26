@@ -64,7 +64,7 @@ jump grid_editor_client_start if started==True
 gui_section(style="area: 10,40,90,50;")
 """ justify:center; text: Waiting for Start """"
 
-await gui(timeout(1))
+await gui(timeout=timeout(1))
 jump wait_for_start
 
 

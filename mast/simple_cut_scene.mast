@@ -16,7 +16,7 @@ gui_reroute_clients(client_main)
 # This is a simple script that has one playable ship
 #
 sim_create()
-await delay_app(1)
+
 shared artemis =  to_id(player_spawn(0,0,0, "Artemis", "tsn", "tsn_battle_cruiser"))
 assign_client_to_ship(0,artemis)
 
@@ -36,7 +36,6 @@ await gui():
 ======== start ======
 
 # Create the world here
-await delay_sim(1)
 # Create a space station
 ds1 = npc_spawn(1000,0,1000, "DS1", "tsn, station", "starbase_command", "behav_station")
 ds2 = npc_spawn(1000,0,-1000, "DS2", "tsn, station", "starbase_command", "behav_station")
@@ -49,7 +48,6 @@ sim_resume()
 gui_reroute_clients(opening_scene)
 
 await gui()
-    
 
 
 ====== client_main =======
@@ -106,7 +104,7 @@ gui_section(style="area: 0, 30px, 100, 100;")
 gui_layout_widget("3dview")
 gui_section(style="area: 0, 10, 100, 65;")
 """font:gui-5; justify:center; text: in a.d. 2101"""
-await gui(timeout(5))
+await gui(timeout=timeout(5))
 
 #
 # Credits two
@@ -117,7 +115,7 @@ gui_section(style="area: 0, 30px, 100, 100;")
 gui_layout_widget("3dview")
 gui_section(style="area: 0, 35, 100, 60;")
 """font:gui-6; justify:center; text: war was beginning"""
-await gui(timeout(5))
+await gui(timeout=timeout(5))
 
 #
 # Credits two
@@ -131,7 +129,7 @@ gui_section(style="area: 25, 5, 74, 35;")
 gui_face(captain_face)
 gui_section(style="area: 0, 35, 100, 60;")
 """font:gui-6; justify:center; text: captain: what happen?"""
-await gui(timeout(5))
+await gui(timeout=timeout(5))
 
 
 #
@@ -145,7 +143,7 @@ gui_section(style="area: 25, 5, 74, 35;")
 gui_face(mechanic_face)
 gui_section(style="area: 0, 35, 100, 60;")
 """font:gui-6; justify:center; text: mechanic: somebody set up us the bomb"""
-await gui(timeout(5))
+await gui(timeout=timeout(5))
 
 
 #
@@ -158,7 +156,7 @@ gui_section(style="area: 25, 5, 74, 35;")
 gui_face(operator_face)
 gui_section(style="area: 0, 35, 100, 60;")
 """font:gui-6; justify:center; text: Operator: we get signal."""
-await gui(timeout(5))
+await gui(timeout=timeout(5))
 
 #
 # Show captains face
@@ -173,7 +171,7 @@ gui_section(style="area: 0, 35, 100, 60;")
 """font:gui-6; justify:center; text: Operator: we get signal."""
 gui_row()
 """font:gui-6; justify:center; text: Captain: What !"""
-await gui(timeout(5))
+await gui(timeout=timeout(5))
 
 
 #
@@ -187,7 +185,7 @@ gui_face(operator_face)
 gui_section(style="area: 0, 35, 100, 60;")
 
 """font:gui-6; justify:center; text: Operator: Main screen turn on."""
-await gui(timeout(5))
+await gui(timeout=timeout(5))
 
 #
 # Show captains face
@@ -200,7 +198,7 @@ gui_face(captain_face)
 
 gui_section(style="area: 0, 35, 100, 60;")
 """font:gui-6; justify:center; text: Captain: it's you !!"""
-await gui(timeout(5))
+await gui(timeout=timeout(5))
 
 #
 # Show CATS face
@@ -213,7 +211,7 @@ gui_face(cats_face)
 
 gui_section(style="area: 0, 35, 100, 60;")
 """font:gui-6; justify:center; text: cats: how are you gentleman !!"""
-await gui(timeout(5))
+await gui(timeout=timeout(5))
 
 #
 # Show CATS face
@@ -226,7 +224,7 @@ gui_face(cats_face)
 
 gui_section(style="area: 0, 35, 100, 60;")
 """font:gui-6; justify:center; text: cats: all your base are belong to us."""
-await gui(timeout(5))
+await gui(timeout=timeout(5))
 
 #
 # Show CATS face
@@ -239,7 +237,7 @@ gui_face(cats_face)
 
 gui_section(style="area: 0, 35, 100, 60;")
 """font:gui-6; justify:center; text: cats: you are on the way to destruction."""
-await gui(timeout(5))
+await gui(timeout=timeout(5))
 
 #
 # Show Captain face
@@ -252,7 +250,7 @@ gui_face(captain_face)
 
 gui_section(style="area: 0, 35, 100, 60;")
 """font:gui-6; justify:center; text: captain: what you say !!"""
-await gui(timeout(5))
+await gui(timeout=timeout(5))
 
 #
 # Show CATS face
@@ -265,7 +263,7 @@ gui_face(cats_face)
 
 gui_section(style="area: 0, 35, 100, 60;")
 """font:gui-6; justify:center; text: cats: you have no chance to survive make your time."""
-await gui(timeout(5))
+await gui(timeout=timeout(5))
 
 #
 # Show CATS face
@@ -278,7 +276,7 @@ gui_face(cats_face)
 
 gui_section(style="area: 0, 35, 100, 60;")
 """font:gui-6; justify:center; text: cats: HA HA HA HA....."""
-await gui(timeout(5))
+await gui(timeout=timeout(5))
 
 
 credits_ran = True

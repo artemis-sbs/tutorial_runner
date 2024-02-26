@@ -37,10 +37,10 @@ class CommonStory(MastStory):
         # gui_choice("Start", label=self.start)
         gui_section("area:2,90,80,95;")
         def go():
-            jump(self.start)
+            yield jump(self.start)
         gui_button("start", on_message=go)
 
-        yield AWAIT(gui())
+        yield AWAIT(gui({"start": go}))
 
         
     @label()

@@ -13,9 +13,9 @@ from sbs_utils.procedural.gui import gui_reroute_server, gui_row, gui_button, gu
 
 
 class Story(MastStory):
-    def ____init__(self):
-        super.__init__()
-        self.main = self.main_gui
+    # def __init__(self):
+    #     super.__init__()
+    #     self.main = self.main_gui
 
     def test(self):
         print("Press")

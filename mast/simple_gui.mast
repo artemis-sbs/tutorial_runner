@@ -285,7 +285,7 @@ gui_input("desc: Ship Name;text: ", var="ship_name")
 gui_row("row-height: 50px;")
 on gui_message(gui_button("Add Ship")):
     if len(ship_name) >0:
-        player_spawn(0,0,0, ship_name, "tsn", ship_type.value )
+        player_spawn(0,0,0, ship_name, "tsn", ship_type )
 
         ship_name = ""
         -> show_custom
@@ -293,7 +293,7 @@ on gui_message(gui_button("Add Ship")):
 gui_row(style="row-height: 300px;")
 #pick ship ship_type
 
-gui_content(ship_picker_control("Your Ship", ship_cur), var="ship_type")
+gui_content(ship_picker_control("Your Ship", ship_cur, show_desc=False), var="ship_type")
 
 gui_section( style="area: 50, 10, 100,100;")
 gui_row(style="row-height: 20px;")

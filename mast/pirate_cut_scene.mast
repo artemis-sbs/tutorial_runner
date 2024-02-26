@@ -177,7 +177,7 @@ gui_section(style="area: 0, 65, 100, 100;")
 """font:gui-3; justify:center; text: The following was created using the Artemis Cosmos Engine^using the user extensible scripting capabilities.^Including this text"""
 gui_row()
 """font:gui-2; justify:center; text: Artemis Cosmos is Early Game Development. All is subject to change. """
-await gui(timeout(12))
+await gui(timeout=timeout(12))
 
 
 #
@@ -193,12 +193,12 @@ cambot.blob.set("camera_target_UID", pirate)
 
 
 
-await gui(timeout(5))
+await gui(timeout=timeout(5))
 
 gui_activate_console("credits")
 gui_section(style="area: 0, 0, 100, 100;")
 gui_layout_widget("3dview")
-await gui(timeout(50))
+await gui(timeout=timeout(50))
 
 credits_ran = True
 if not console_accepted:
