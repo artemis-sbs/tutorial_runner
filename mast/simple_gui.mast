@@ -84,8 +84,8 @@ gui_section( style="area:0,5,10,95;row-height:35px;")
 
 
 
-
-on gui_message(gui_button("Text")):
+b = gui_button("Text") #, style="margin: 2px,2px,2px,2px;")
+on gui_message(b):
     jump("show_text")
 
 gui_row()
@@ -121,19 +121,87 @@ on gui_message(gui_button("Custom")):
 gui_row()
 on gui_message(gui_button("Table-ish")):
     sim_create()
-    jump show_skills
+    jump build_skills
 
 gui_row()
 on gui_message(gui_button("update")):
     jump show_update
 
 gui_row()
-gui_section(style="area:25,20,80,95;")
+on gui_message(gui_button("margins")):
+    jump show_margin_border_padding
+
+gui_row()
+on gui_message(gui_button("layout")):
+    jump show_layout
+
+gui_row()
 """"""" Example Gui """""""""""
+
 await gui()
 
-========= show_text =======
+============ show_layout =======
 
+gui_section(style="area:0,0,100,100;color: blue;")
+gui_row("row-height:2em;background:cyan;color:black;")
+gui_text("top")
+gui_row()
+gui_text("l\ne\nf\nt", style="col-width:2em;background:yellow;color:black;")
+with gui_sub_section("background:red;") as test:
+    gui_text("middle top")
+    with gui_sub_section("background:green;") as test2:
+        gui_text("inner top")
+        gui_row()
+        gui_text("inner shared")
+        on gui_message(gui_button("menu")):
+            jump menu
+
+    gui_row()    
+    gui_text("middle bottom")
+    gui_row()    
+    gui_text("text:middle bottom;font:gui-2;")
+
+gui_text("r\ni\ng\nh\nt", style="col-width:2em;background:yellow;color:black;")
+gui_row("row-height: 2em;background:cyan;color:black;")
+gui_text("bottom")
+
+await gui()
+
+
+============= show_margin_border_padding ==============
+
+gui_section(style="area:5,10,95,19;border: 5px, 5px, 0,0;font:gui-6;border-color:yellow;")
+
+gui_row("border: 1px, 1px, 0,0;border-color:black;")
+gui_text("one", style="margin: 1.2em; border: 1px,1px,1px,1px; border-color:white;padding:1,1,1,1;background:red;")
+gui_text("two", style="margin: 1; border: 1px,1px,1px,1px; border-color:white; padding:2,1,1,1;background:blue;")
+
+gui_text("left", style="margin: 1; border: 5px,0,0,0; border-color:white;padding:1,1,1,1;background:green;")
+gui_text("right", style="margin: 1; border: 0,0,5px,0; border-color:white;padding:1,1,1,1;background:green;")
+gui_text("top", style="margin: 1; border: 0,5px,0,0; border-color:white;padding:1,1,1,1;background:green;")
+gui_text("bottom", style="margin: 1; border: 0,0,0,5px; border-color:#fff3;padding:1,1,1,1;background:#0f02;")
+
+gui_section(style="area:5,20,95,29;")
+gui_text("one", style="xmargin: 1,1,1,1; padding:1,1,1,1;background:red;")
+gui_text("two", style="xmargin: 1,1,1,1; padding:2,1,1,1;background:blue;")
+gui_text("three", style="xmargin: 1,1,1,1; padding:3,1,1,1;background:green;")
+
+gui_section(style="area:5,30,95,39;")
+gui_text("one", style="margin: 1,1,1,1; xpadding:1,1,1,1;background:red;")
+gui_text("two", style="margin: 1,1,1,1; xpadding:2,1,1,1;background:blue;")
+gui_text("three", style="margin: 1,1,1,1; xpadding:3,1,1,1;background:green;")
+
+gui_section(style="area:5,40,95,49;")
+gui_text("one", style="margin: 1,1,1,1; padding:1,1,1,1;background:red;")
+gui_text("two", style="margin: 1,1,1,1; padding:2,1,1,1;background:blue;")
+gui_text("three", style="margin: 1,1,1,1; padding:3,1,1,1;background:green;")
+
+await gui():
+    + "menu":
+        -> menu
+
+
+========= show_text =======
 gui_section( style="area:2,2,80,95;")
 
 for i in range(len(fonts)):
@@ -348,8 +416,6 @@ await gui():
 
 
 ========= show_skills =======
-push build_skills
-
 gui_section( style="area:0,0,100,30px;")
 ########### TABS
 for t in skills:
@@ -468,7 +534,7 @@ await gui():
 ====== build_skills ====== 
 
 # Do this just once
-pop if skills_built
+jump  show_skills if skills_built
 skills_built = True
 
 rnd_icons = random.sample(range(140), k=4*(16))
@@ -552,7 +618,7 @@ for k in skills:
 
         tier = {"skills": deez_skills}
         deez_tier.append(tier)    
+jump show_skills
 
 
-pop
 

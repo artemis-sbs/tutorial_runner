@@ -6,18 +6,20 @@ from sbs_utils.mast.label import label
 from sbs_utils.mast.pollresults import PollResults
 from sbs_utils.mast.mast import Mast
 from sbs_utils.gui import Gui
+from sbs_utils.agent import clear_shared
 
-import pymast.simple_ai as simple_ai
-import pymast.simple_science as simple_science
-import pymast.simple_comms as simple_comms
-import pymast.simple_gui as simple_gui
+#import pymast.simple_ai as simple_ai
+#import pymast.simple_science as simple_science
+#import pymast.simple_comms as simple_comms
+#import pymast.simple_gui as simple_gui
 
 from sbs_utils.procedural.gui import gui_reroute_server, gui_row, gui_button, gui, gui_section, gui_text
 from sbs_utils.procedural.execution import AWAIT
-
+from sbs_utils import fs
 
 start_text = "This runs example from tutorials"
 Mast.include_code = True
+mission_name = fs.get_mission_name()
 
 @label()
 def start_client():
@@ -47,12 +49,7 @@ def start_server():
         
 
     def run_simple_ai():
-        class SimplePage(StoryPage):
-            story = simple_ai.Story()
-            main_server = story.start_server
-            main_client = story.start_client
-        redirect_gui(SimplePage)
-        #yield PollResults.OK_JUMP
+        sbs.run_next_mission(f"{mission_name}/simple_ai")
         
         
     def run_simple_ai_mast():
@@ -64,11 +61,7 @@ def start_server():
 
 
     def run_simple_science():
-        class SimplePage(StoryPage):
-            story = simple_science.Story()
-            main_server = story.start_server
-            main_client = story.start_client
-        redirect_gui(SimplePage)
+        sbs.run_next_mission(f"{mission_name}/simple_science")
 
         
     def run_simple_science_mast():
@@ -84,10 +77,7 @@ def start_server():
         redirect_gui(SimplePage)
 
     def run_simple_comms():
-        class SimplePage(StoryPage):
-            story = simple_comms.Story()
-
-        redirect_gui(SimplePage)
+        sbs.run_next_mission(f"{mission_name}/simple_comms")
 
     def run_simple_comms_mast():
         class SimplePage(StoryPage):
@@ -103,13 +93,7 @@ def start_server():
         redirect_gui(SimplePage)
 
     def run_simple_gui():
-        class SimplePage(StoryPage):
-            story = simple_gui.Story()
-            main_server = story.start
-            main_client = story.start
-
-        redirect_gui(SimplePage)
-        #yield PollResults.OK_JUMP
+        sbs.run_next_mission(f"{mission_name}/simple_gui")
 
     def run_simple_agent_mast():
         class SimplePage(StoryPage):

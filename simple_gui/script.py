@@ -7,10 +7,14 @@ from sbs_utils.mast.label import label
 
 from sbs_utils import faces
 import functools
-from sbs_utils.procedural.gui import gui_reroute_server, gui_row, gui_button, gui, gui_section, gui_text
+from sbs_utils.procedural.gui import gui_reroute_server, gui_row, gui_button, gui, gui_section, gui_text, gui_content, gui_icon, gui_hole
 from sbs_utils.procedural.gui import gui_checkbox, gui_face, gui_drop_down, gui_slider, gui_input
 from sbs_utils.procedural.execution import jump, AWAIT
 from sbs_utils.procedural.timers import delay_app
+from sbs_utils.widgets.layout_listbox import layout_list_box_control
+
+import random
+
 
 class Story(MastStory):
     def __init__(self, *args, **kwargs):
@@ -61,9 +65,54 @@ class Story(MastStory):
         gui_button(f"""text:Reroute""", jump=self.page_reroute)
         
 
-        gui_section("area:25,20,80,85;")
+        gui_section("area:20,20,45,85;")
         gui_text(f""" This is an example of creating GUI items """)
+
+        def test_template(item):
+            gui_row("row-height:1px;background:blue;")
+            gui_row("row-height:1px;")
+            gui_row("row-height: 25px;background: #1575;")
+            gui_icon(f"icon_index: {item['icons'][0]};color:white;")
+            gui_text("text:Label;justify:left;", "padding: 5px,0,0,0;")
+            gui_text(f"text:{item['test']};justify:center;")
+            gui_text("text:other;justify:right;", "padding: 0,0,0,5px;")
+            gui_icon(f"icon_index: {item['icons'][1]};color:green;")
+            gui_row("row-height:1px;background:green;")
+            gui_row()
+            gui_text("text: hkhjh  j hajkhkjfh  j hfhakf J HFHjkfhkjh afja kjh kjh vskh kjf h kh k fa;", "padding: 0,15px,0,3px;")
+
         
+            
+        words = ["hello", "gasp","spine","other","die","graze","avenue","cinema","groan","wriggle","excess","teacher","fuel"]
+        items = []
+        for x in words:
+            items.append({"test": x, "icons": [random.randint(0,100), random.randint(0,100)]})
+
+        gui_section("area:50,2,95,45;background: #fff1;")
+        lb_vert = layout_list_box_control(items, template_func=test_template, title="text:Vertical listbox; justify:center;color:white;", 
+                 item_width=45,
+                 item_height=12,
+                 multi=True)
+        lb_vert.title_background = "#1578"
+        gui_content(lb_vert)
+        
+        def test_horz_template(item):
+            gui_row("row-height: 4;")
+            gui_icon(f"icon_index: {item['icons'][0]};color:white;")
+            gui_text(f"text:{item['test']};justify:left;", "padding: 5px,0,0,0;")
+            gui_row("row-height: 10;")
+            gui_text("text: hkhjh  j hajkhkjfh  j hfhakf J HFHjkfhkjh afja kjh kjh vskh kjf h kh k fa;", "padding: 0,15px,0,3px;")
+
+        gui_section("area:5,60,95,78;background: #fff1;")
+        lb_horz = layout_list_box_control(items, template_func=test_horz_template, title="text:horizontal listbox; justify:center;color:white;", 
+                 item_width=15,
+                 item_height=12,
+                 multi=True)
+        lb_horz.horizontal = True
+        lb_horz.title_background = "#1578"
+        gui_content(lb_horz)
+        
+
         #yield self.await_gui()
         yield AWAIT(gui())
         
@@ -197,3 +246,12 @@ class Story(MastStory):
         yield self.await_gui({
             "menu": self.start
         })
+
+from sbs_utils.mast.maststorypage import StoryPage
+class SimplePage(StoryPage):
+    story = Story()
+    main_server = story.start_server
+    main_client = story.start_client
+
+Gui.server_start_page_class(SimplePage)
+Gui.client_start_page_class(SimplePage)

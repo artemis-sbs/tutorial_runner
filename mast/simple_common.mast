@@ -110,6 +110,7 @@ for x in range(enemy_count):
 sim_resume()
 task_schedule(end_game)
 
+
 ==== additional_start ===
 await gui()
 

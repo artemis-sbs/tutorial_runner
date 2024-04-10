@@ -18,32 +18,29 @@ log("BAR")
 ~~ customers[client_id]= my_face ~~
 
 ============== GotoBar ===================
-gui_section("area: 0,0,60,80-30px;")
+text_sec = gui_section("area: 0,0,60,80-30px;")
 
 gui_face(barkeep)
 """""""""""""""""""""""""""""""""
 Thirsty?
 I have
-"""""""""""""""""""""""""""""""""
-^^^    {martinis} Martini{"s" if martinis>1 else ""}^^^ if martinis>0
-^^^    {"and " if martinis>0 and (vodka) == 0 else ""}{beer} beer{"s" if beer>1 else ""}^^^ if beer > 0
-^^^    {"and " if (beer+martinis) > 0 else ""}{vodka} vodka^^^ if vodka > 0
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-...
+{f'{martinis} Martini{"s" if martinis>1 else ""}' if martinis>0 else ""}
+{f'{"and " if martinis>0 and (vodka) == 0 else ""}{beer} beer{"s" if beer>1 else ""}' if beer > 0 else ""}
+
+{f'{"and " if (beer+martinis) > 0 else ""}{vodka} vodka' if vodka > 0 else ""}
+"""""""""""""""""""""""""""""""""""""""""""""""" if martinis != 0 or vodka != 0 or beer ==0
+""""""
 nothing
-....
+
 I'm all out. 
 If you go to DS1 and get more supply them the Next one is on me.
-^^^^^^^^^^^^ if martinis == 0 and vodka == 0 and beer ==0
+"""""""""""" if martinis == 0 and vodka == 0 and beer ==0
 
 gui_section("area: 0,80,100,100-30px;")
 gui_face(my_face)
 for c in customers.values():
     if c != my_face:
         gui_face(c)
-
-
-
 
 
 gui_section("area: 60,0, 100,80-30px;row-height: 65px;")
@@ -67,7 +64,7 @@ on gui_message(gui_button("send")):
             messages.pop(0)
         message = ""
         message_id += 1
-        # This is broken it pushes and pops wrong
+        
         ->GotoBar
 
 
@@ -86,33 +83,50 @@ on change message_id:
 
 
 on change beer+martinis+vodka:
-    gui_refresh("GotoBar")
-    jump GotoBar
+    if beer+martinis+vodka == 0:
+        jump bar_out_of_stock
+
+
+
+
+
+
+
+
+
 
 
 await gui():
-    + "Martini" if martinis > 0:
+    + "Martini" if martinis>0:
         shared martinis = martinis-1
-        ->GotoBar
-    + "Beer"  if beer > 0:
-        shared beer = beer-1
-        ->GotoBar
-    + "Vodka" if vodka > 0:
+        if martinis <=0:
+            gui_hide_choice()
+        gui_represent(text_sec)
+        ->AWAIT_AGAIN
+
+    + "beer" if beer >0:
+        shared beer= beer-1
+        if beer <=0:
+            gui_hide_choice()
+
+        gui_represent(text_sec)
+        ->AWAIT_AGAIN
+
+    + "Vodka" if vodka >0:
         shared vodka = vodka-1
-        ->GotoBar
-    + "Had enough"  if (beer+martinis+vodka) > 0:
-        customers.pop(client_id, None)
-        gui_refresh("GotoBar")
-        pop
+        if vodka <=0:
+            gui_hide_choice()
+        gui_represent(text_sec)
+        ->AWAIT_AGAIN
+
+    + "Had enough":
+        gui_history_back()
+
     =disconnect:
         customers.pop(client_id, None)
         ->END
 
-
-if (beer+martinis+vodka) > 0:
-    gui_refresh("GotoBar")
-    ->GotoBar
-
+====== bar_out_of_stock ====
 
 gui_section("area: 30, 20, 80, 60;")
 
@@ -123,4 +137,5 @@ BAR is closed until more supplies arrive
 they are available at DS1
 """""""""""""""""""""""""""""""""""
 await gui(timeout=timeout(5))
-pop
+
+gui_history_back()

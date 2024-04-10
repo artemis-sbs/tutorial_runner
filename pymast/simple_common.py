@@ -66,6 +66,7 @@ class CommonStory(MastStory):
             yield jump(self.start_server)
             
         yield AWAIT(delay_sim(5))
+        print("End game")
         yield jump(self.end_game)
 
     @label()
