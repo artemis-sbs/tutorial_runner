@@ -8,7 +8,7 @@ from sbs_utils.mast.label import label
 from sbs_utils import faces
 import functools
 from sbs_utils.procedural.gui import gui_reroute_server, gui_row, gui_button, gui, gui_section, gui_text, gui_content, gui_icon, gui_hole
-from sbs_utils.procedural.gui import gui_checkbox, gui_face, gui_drop_down, gui_slider, gui_input
+from sbs_utils.procedural.gui import gui_checkbox, gui_face, gui_drop_down, gui_slider, gui_input, gui_list_box
 from sbs_utils.procedural.execution import jump, AWAIT
 from sbs_utils.procedural.timers import delay_app
 from sbs_utils.widgets.layout_listbox import layout_list_box_control
@@ -88,13 +88,10 @@ class Story(MastStory):
         for x in words:
             items.append({"test": x, "icons": [random.randint(0,100), random.randint(0,100)]})
 
-        gui_section("area:50,2,95,45;background: #fff1;")
-        lb_vert = layout_list_box_control(items, template_func=test_template, title="text:Vertical listbox; justify:center;color:white;", 
-                 item_width=45,
-                 item_height=12,
-                 multi=True)
+        gui_section("area:50,2,95,45;")
+        
+        lb_vert = gui_list_box(items, "row-height: 10;background: #fff1;", template_func=test_template, title="text:Vertical listbox; justify:center;color:white;", multi=True)
         lb_vert.title_background = "#1578"
-        gui_content(lb_vert)
         
         def test_horz_template(item):
             gui_row("row-height: 4;")
@@ -104,13 +101,14 @@ class Story(MastStory):
             gui_text("text: hkhjh  j hajkhkjfh  j hfhakf J HFHjkfhkjh afja kjh kjh vskh kjf h kh k fa;", "padding: 0,15px,0,3px;")
 
         gui_section("area:5,60,95,78;background: #fff1;")
-        lb_horz = layout_list_box_control(items, template_func=test_horz_template, title="text:horizontal listbox; justify:center;color:white;", 
-                 item_width=15,
-                 item_height=12,
-                 multi=True)
-        lb_horz.horizontal = True
+        lb_horz = gui_list_box(items, "col-width: 10em;background: #fff1;", template_func=test_horz_template, title="text:horizontal listbox; justify:center;color:white;", multi=True)
         lb_horz.title_background = "#1578"
-        gui_content(lb_horz)
+        #lb_horz.horizontal = True
+        # lb_horz = layout_list_box_control(items, template_func=test_horz_template, title="text:horizontal listbox; justify:center;color:white;", 
+        #          multi=True)
+        # lb_horz.horizontal = True
+        # lb_horz.title_background = "#1578"
+        # gui_content(lb_horz,"row-height: 12;col-width: 5;")
         
 
         #yield self.await_gui()
