@@ -170,16 +170,44 @@ await gui()
 
 ============= show_margin_border_padding ==============
 
-gui_section(style="area:5,10,95,19;border: 5px, 5px, 0,0;font:gui-6;border-color:yellow;")
+# Put a section behind too show red
+gui_section(style="area:0,0,100,25;font:gui-6;background:#F002;")
+gui_section(style="area:0,0,100,25;margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F2;background:#0F02;")
+gui_row()
+gui_text("section red margin, blue border, green background", style="margin:13px,3px,3px,3px;xbackground: yellow;")
 
-gui_row("border: 1px, 1px, 0,0;border-color:black;")
-gui_text("one", style="margin: 1.2em; border: 1px,1px,1px,1px; border-color:white;padding:1,1,1,1;background:red;")
-gui_text("two", style="margin: 1; border: 1px,1px,1px,1px; border-color:white; padding:2,1,1,1;background:blue;")
+gui_section(style="area:0,25,100,50;font:gui-6;background:#F002;")
+gui_section(style="area:0,25,100,50;") #margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F2;background:#0F02;")
+gui_row(style="margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F2;background:#0F02;")
+gui_text("row red margin, blue border, green background", style="margin:13px,3px,3px,3px;xbackground: yellow;")
 
-gui_text("left", style="margin: 1; border: 5px,0,0,0; border-color:white;padding:1,1,1,1;background:green;")
-gui_text("right", style="margin: 1; border: 0,0,5px,0; border-color:white;padding:1,1,1,1;background:green;")
-gui_text("top", style="margin: 1; border: 0,5px,0,0; border-color:white;padding:1,1,1,1;background:green;")
-gui_text("bottom", style="margin: 1; border: 0,0,0,5px; border-color:#fff3;padding:1,1,1,1;background:#0f02;")
+gui_section(style="area:0,50,100,75;font:gui-6;background:#F002;")
+gui_section(style="area:0,50,100,75;") #margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F2;background:#0F02;")
+gui_row() # )
+gui_text("col red margin, blue border, green background", style="margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F2;background:#0F02;")
+
+
+gui_section(style="area:0,75,100,95;font:gui-6;background:#F00f;")
+gui_section(style="area:0,75,100,95;margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00Ff;background:#0F0f;")
+gui_row(style="margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00Ff;background:#0F0f;")
+gui_text("all red margin, blue border, green background", style="margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00Ff;background:#0F0f;")
+
+
+await gui():
+    + "menu":
+        -> menu
+
+
+#gui_section(style="area:5,10,95,19;border: 5px, 5px, 0,0;font:gui-6;border-color:yellow;")
+
+#gui_row("border: 1px, 1px, 0,0;border-color:black;")
+#gui_text("one", style="margin: 1.2em; border: 1px,1px,1px,1px; border-color:white;padding:1,1,1,1;background:red;")
+#gui_text("two", style="margin: 1; border: 1px,1px,1px,1px; border-color:white; padding:2,1,1,1;background:blue;")
+
+#gui_text("left", style="margin: 1; border: 5px,0,0,0; border-color:white;padding:1,1,1,1;background:green;")
+#gui_text("right", style="margin: 1; border: 0,0,5px,0; border-color:white;padding:1,1,1,1;background:green;")
+#gui_text("top", style="margin: 1; border: 0,5px,0,0; border-color:white;padding:1,1,1,1;background:green;")
+#gui_text("bottom", style="margin: 1; border: 0,0,0,5px; border-color:#fff3;padding:1,1,1,1;background:#0f02;")
 
 gui_section(style="area:5,20,95,29;")
 gui_text("one", style="xmargin: 1,1,1,1; padding:1,1,1,1;background:red;")

@@ -17,14 +17,14 @@ from sbs_utils.procedural.gui import gui_reroute_server, gui_row, gui_button, gu
 from sbs_utils.procedural.execution import AWAIT
 from sbs_utils import fs
 
-start_text = "This runs example from tutorials"
+start_text = "text:This is an A >> \u0041 << This is an ellipsis >> \u007c  << AA ;font:gui-3;"
 Mast.include_code = True
 mission_name = fs.get_mission_name()
 
 @label()
 def start_client():
     gui_section("area:2,20,80,35;")
-    gui_text(f"""Waiting for the server to select example mission.""")
+    gui_text(f"""Waiting for the server to select example mission. MY Glyphs >> \u0130 \u0131 <<""")
 
     yield AWAIT(gui())
     # It should never go beyond this

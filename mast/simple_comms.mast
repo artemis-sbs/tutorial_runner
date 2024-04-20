@@ -11,7 +11,10 @@ import simple_common.mast
 # Then no other routes should override it
 #
 
-route_comms_select("comms_route")
+# route_comms_nav("/", comms_route)
+# route_comms_nav("/taunt", comms_route_taunt)
+
+route_comms(comms_route)
 route_comms_select("casino_comms_route")
 route_spawn("clear_unknown")
 

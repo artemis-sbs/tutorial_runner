@@ -90,8 +90,8 @@ class Story(MastStory):
 
         gui_section("area:50,2,95,45;")
         
-        lb_vert = gui_list_box(items, "row-height: 10;background: #fff1;", template_func=test_template, title="text:Vertical listbox; justify:center;color:white;", multi=True)
-        lb_vert.title_background = "#1578"
+        lb_vert = gui_list_box(items, "row-height: 10;background: #fff1;", item_template=test_template, title_template="text:Vertical listbox; justify:center;color:white;", title_section_style="background:#1578;", multi=True)
+        #lb_vert.title_background = "#1578"
         
         def test_horz_template(item):
             gui_row("row-height: 4;")
@@ -101,8 +101,8 @@ class Story(MastStory):
             gui_text("text: hkhjh  j hajkhkjfh  j hfhakf J HFHjkfhkjh afja kjh kjh vskh kjf h kh k fa;", "padding: 0,15px,0,3px;")
 
         gui_section("area:5,60,95,78;background: #fff1;")
-        lb_horz = gui_list_box(items, "col-width: 10em;background: #fff1;", template_func=test_horz_template, title="text:horizontal listbox; justify:center;color:white;", multi=True)
-        lb_horz.title_background = "#1578"
+        lb_horz = gui_list_box(items, "col-width: 10em;background: #fff1;", item_template=test_horz_template, title_template="text:horizontal listbox; justify:center;color:white;",  title_section_style="background:#1578;", multi=True)
+        #lb_horz.title_background = "#1578"
         #lb_horz.horizontal = True
         # lb_horz = layout_list_box_control(items, template_func=test_horz_template, title="text:horizontal listbox; justify:center;color:white;", 
         #          multi=True)
