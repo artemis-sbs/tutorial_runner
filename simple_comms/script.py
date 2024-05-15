@@ -82,7 +82,7 @@ def internal_comms_loop():
         comms.comms_receive("Things feel like they are getting worse", face=get_variable("counselor"), color="cyan", title="counselor")
         yield PollResults.OK_YIELD 
     
-    yield AWAIT(comms.comms({
+    yield AWAIT(comms.comms("",{
         "sickbay": button_sickbay,
         "security": button_security,
         "exobiology": button_exobiology,
@@ -103,7 +103,7 @@ def npc_comms():
     def button_surrender(story, comms):
         comms.comms_receive("OK we give up")
 
-    yield AWAIT(comms.comms({
+    yield AWAIT(comms.comms("",{
         "Hail": button_hail,
         "Surrender": button_surrender
     }))
@@ -126,7 +126,7 @@ def comms_station():
         comms.comms_receive("Yo")
 
 
-    yield AWAIT(comms.comms({
+    yield AWAIT(comms.comms("",{
         "Hail-function": button_hail,
         "Hail-method": button_hail,
         "Pass Data": lambda s,c: button_hail_data(s,c, "Artemis")
@@ -153,7 +153,7 @@ def comms_flintstone():
         comms.broadcast(story.client_id, "Yabba Daba Dooo", "orange")
         
 
-    yield AWAIT(comms.comms({
+    yield AWAIT(comms.comms("",{
         "Hail": button_hail
     }))
     # -> comms_flintstone
@@ -166,7 +166,7 @@ def comms_rubble():
         comms.broadcast(get_variable("client_id"), "Hey fred .... how you doin fred?", "brown")
 
 
-    yield AWAIT(comms.comms({
+    yield AWAIT(comms.comms("", {
         "Hail": button_hail
     }))
     # -> comms_flintstone

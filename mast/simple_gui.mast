@@ -156,8 +156,84 @@ with gui_sub_section("background:red;") as test:
         on gui_message(gui_button("menu")):
             jump menu
 
-    gui_row()    
-    gui_text("middle bottom")
+    gui_row("background:#ddd;padding:1em,1em;")
+    
+
+    ~~gui_text_area("""
+=$t font:gui-6;color:#bbb;
+=$h1 font:gui-5;color:#55b; | I > 0
+=$h2 font:gui-4;color:#5b5; | A > 2
+=$h3 font:gui-3;color:#b55; | a > 4
+=$p2 font:gui-2;color:#11f; | > 2
+=$p3 font:gui-2;color:#11f; | > 4
+=$ul font:gui-2;color:#933; | \x01 > 4
+=$ol font:gui-2;color:#393; | 1 > 6
+=$c font:gui-2;color:#339;justify:center; 
+=$r font:gui-2;color:#339;justify:right;
+=$ font:gui-2;color:black;
+
+$h1 Legendary Missions
+
+This is an introduction.
+
+$h2 Basic Siege
+
+$p2 A Game mode that is basic
+
+$c center me
+
+$r I am right
+
+$h2 Peacetime
+
+
+
+
+$p2 A Game mode that you don't blow things up
+
+$h3 Heading three
+
+$p3 A list:
+
+$ol 
+one
+two
+three
+
+$p3 Second List:
+
+$ol
+one
+two
+three
+
+$p3 Unordered List:
+
+$ul
+one
+two
+three
+
+$t Title Resets H1
+
+$h1 H1 = I
+
+$h2 H2 = A
+
+$h3 H3 = a
+
+$h3 H3 = b
+
+$h2 H2 = B
+
+$h3 H3 = a
+
+$h1 H1 = II
+
+$h2 H2 = A
+
+""")~~
+    gui_text("Another Column")
     gui_row()    
     gui_text("text:middle bottom;font:gui-2;")
 
@@ -586,7 +662,6 @@ skill = ~~{
             "text": "Do another thing 10 times",
             "description": "You did somethings that get you to a rank 3",
             "goal": 10
-        
         },
         {
             "text": "Do another thing 1 time",

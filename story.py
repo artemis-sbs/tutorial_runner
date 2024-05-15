@@ -131,19 +131,6 @@ def start_server():
 
         redirect_gui(SimplePage)
 
-    def run_grid_editor_mast():
-        class SimplePage(StoryPage):
-            story_file = "mast/editor_main.mast"
-
-        redirect_gui(SimplePage)
-
-    def run_scatter_viewer():
-        class SimplePage(StoryPage):
-            story_file = "mast/scatter_viewer.mast"
-
-        redirect_gui(SimplePage)
-
-
 
     gui_section("area:10,30,45,95;row-height: 35px")
     gui_text("Mast")
@@ -167,10 +154,6 @@ def start_server():
     gui_button("All your base", on_message=run_all_your_base)
     gui_row()
     gui_button("Extend Console", on_message=run_extend_console_mast)
-    gui_row()
-    gui_button("Grid Object Editor", on_message=run_grid_editor_mast)
-    gui_row()
-    gui_button("Scatter Viewer", on_message=run_scatter_viewer)
     gui_row()
     gui_button("EA2", on_message=run_early_access_two)
     
