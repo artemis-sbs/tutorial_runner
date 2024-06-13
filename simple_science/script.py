@@ -20,7 +20,7 @@ class Story(CommonStory):
 
         self.start_text = "This is a start project for mast"
         # self.enemy_count = 4
-        # route_science_select(self.handle_science)
+        # route_select_science(self.handle_science)
 
     
 @RouteScienceSelect

@@ -9,9 +9,9 @@
 # where a comms button changes the ui
 # Simulating a modal dialog
 #
-route_comms_select("comms_route")
+route_select_comms("comms_route")
 
-route_weapons_select("weapons_select_route")
+route_select_weapons("weapons_select_route")
 #
 route_change_console("select_console")
 
@@ -138,11 +138,8 @@ await comms():
 ->  comms_station
 
 ===== comms_friendly =======
-station_face = get_face(COMMS_SELECTED_ID)
 
-await comms():
-    + "Give Orders":
-        reroute_client(client_id, friendly_give_orders)
+await comms()
 
 ->  comms_friendly
 

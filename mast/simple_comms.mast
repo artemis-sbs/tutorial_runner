@@ -15,10 +15,10 @@ import simple_common.mast
 # route_comms_nav("/taunt", comms_route_taunt)
 
 route_comms(comms_route)
-route_comms_select("casino_comms_route")
+route_select_comms("casino_comms_route")
 route_spawn("clear_unknown")
 
-route_grid_select("damcon_route")
+route_select_grid("damcon_route")
 
 start_text = "This is a start project for mast^to demonstrate comms console"
 
@@ -27,6 +27,7 @@ if has_roles(COMMS_SELECTED_ID, "Station, casino"):
     jump comms_casino
 
 ->END
+
 
 
 ================ comms_route ==================

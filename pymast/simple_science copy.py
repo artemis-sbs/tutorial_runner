@@ -6,7 +6,7 @@ from sbs_utils.procedural import roles
 from .simple_common import CommonStory
 from sbs_utils.procedural.execution import jump, AWAIT
 #from sbs_utils.procedural.science import scan
-#from sbs_utils.procedural.routes import route_science_select
+#from sbs_utils.procedural.routes import route_select_science
 
 class Story(CommonStory):
     def __init__(self, *args, **kwargs):
@@ -14,7 +14,7 @@ class Story(CommonStory):
 
         self.start_text = "This is a start project for mast"
         # self.enemy_count = 4
-        #route_science_select(self.handle_science)
+        #route_select_science(self.handle_science)
 
     
     @label()

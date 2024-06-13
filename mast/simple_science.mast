@@ -3,7 +3,7 @@ import simple_common.mast
 # Show the proper GUI for server vs Client Consoles
 #
 
-route_science_select("handle_science")
+route_select_science("handle_science")
 enemy_count = 4
 start_text = "This is a start project for mast^to demonstrate science console"
 

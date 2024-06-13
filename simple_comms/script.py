@@ -22,8 +22,8 @@ class Story(CommonStory):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.start_text = "This is a start project for mast"
-        #routes.route_comms_select(handle_comms)
-        routes.route_grid_select(damcon_route)
+        #routes.route_select_comms(handle_comms)
+        routes.route_select_grid(damcon_route)
 
 
 @routes.RouteCommsSelect

@@ -136,6 +136,15 @@ on gui_message(gui_button("layout")):
     jump show_layout
 
 gui_row()
+on gui_message(gui_button("region")):
+    jump show_region
+gui_row()
+on gui_message(gui_button("ship picker")):
+    jump show_ship_picker
+
+
+
+gui_row()
 """"""" Example Gui """""""""""
 
 await gui()
@@ -155,6 +164,12 @@ with gui_sub_section("background:red;") as test:
         gui_text("inner shared")
         on gui_message(gui_button("menu")):
             jump menu
+        on gui_message(gui_button("dump offscreen")):
+            sbs.get_debug_gui_tree(0, "off state", False)
+        on gui_message(gui_button("dump offscreen")):
+            sbs.get_debug_gui_tree(0, "on state", True)
+
+
 
     gui_row("background:#ddd;padding:1em,1em;")
     
@@ -252,10 +267,12 @@ gui_section(style="area:0,0,100,25;margin: 5px, 5px, 5px,5px;border:15px,5px,5px
 gui_row()
 gui_text("section red margin, blue border, green background", style="margin:13px,3px,3px,3px;xbackground: yellow;")
 
+
 gui_section(style="area:0,25,100,50;font:gui-6;background:#F002;")
 gui_section(style="area:0,25,100,50;") #margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F2;background:#0F02;")
 gui_row(style="margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F2;background:#0F02;")
 gui_text("row red margin, blue border, green background", style="margin:13px,3px,3px,3px;xbackground: yellow;")
+
 
 gui_section(style="area:0,50,100,75;font:gui-6;background:#F002;")
 gui_section(style="area:0,50,100,75;") #margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F2;background:#0F02;")
@@ -485,27 +502,31 @@ await gui():
 
 
 
-========= show_clickable =======
+========= show_clickable 
 check = "text"
 
 for x in range(len(recruits)):
-    gui_section( style=f"area:10+x*20,20,25+x*20,65;click_color: blue; click_text:Recruit!; click_font:gui-5; click_tag:pick_{x}")
+    gui_section( style=f"area:{20*x}+10,20,{20*x}+25,65;click_color: blue; click_text:Recruit!; click_font:gui-5; click_tag:pick_{x}")
 
     on gui_click():
         pick = __CLICKED__.split("_")
         the_pick = int(pick[1].strip())
         -> show_recruit
 
-    gui_face(face_list[x])
+    # gui_face(face_list[x])
     gui_row()
     """color:cyan;font:gui-3; text:{recruits[x]}"""
+    #"""{recruits[x]}"""
+    # """ Hello {x} """
 
 
 await gui():
     + "menu":
         -> menu
 
-========= show_recruit =======
+
+
+==== show_recruit 
 
 gui_section( style="area:2,20,80,95;")
 gui_face(face_list[the_pick])
@@ -517,6 +538,87 @@ await gui():
 
 
 
+
+=== show_region
+check = "text"
+
+gui_section("area:20,10,50,18;")
+b_reset = gui_button("reset")
+
+
+with gui_region("area:20,20,50,40;") as hello:
+    b_hello = gui_button("Hello")
+
+with gui_region("area: 20,40,50,60;") as world:
+    b_world = gui_button("World")
+
+#b_reset = gui_button("reset after")
+
+on gui_message(b_hello):
+    with gui_rebuild(hello):
+        b_hello = gui_button("Hello2")
+        on gui_message(b_hello):
+            with gui_rebuild(hello):
+                gui_text("Hello3")
+
+on gui_message(b_world):
+    with gui_rebuild(world):
+        gui_text("world")
+        
+on gui_message(b_reset):
+    jump show_region
+
+
+
+await gui():
+    + "menu":
+        -> menu
+
+
+=== show_ship_picker
+
+gui_section("area:70,10,90,20;")
+b_offscreen = gui_button("dump OFF")
+b_onscreen = gui_button("dump ON")
+
+on gui_message(b_offscreen):
+    sbs.get_debug_gui_tree(0, "off state", False)
+on gui_message(b_onscreen):
+    sbs.get_debug_gui_tree(0, "on state", True)
+
+
+ship_sec = gui_region(style="area: 1,60px,40,105px")
+with ship_sec:
+    gui_row(style="row-height: 45px;")
+
+    _input = "desc:Ship Name;"
+    on gui_message(gui_input(_input, var="ship_name")):
+        print("Text input")
+
+valid_interiors = ship_data_terran_ship_keys()
+for k in valid_interiors:
+    print(f"*{k}*")
+
+ship_sec2 = gui_region(style="area: 1,15,40,90")
+with ship_sec2:
+    gui_row()
+    gui_content(ship_picker_control(f"Your Ship", "tsn_battle_cruiser", ship_keys=valid_interiors), style="tag:sh_ship_picker", var="ship_type")
+    on change ship_type:
+        print("Ship change")
+
+gui_section("area:70,30,90,40;")
+on gui_message(gui_button("SHOW")):
+    gui_show(ship_sec)
+    gui_show(ship_sec2)
+
+on gui_message(gui_button("HIDE")):
+    gui_hide(ship_sec)
+    gui_hide(ship_sec2)
+
+
+await gui():
+    + "menu":
+        -> menu
 
 
 ========= show_skills =======

@@ -1,4 +1,4 @@
-import simple_common.mast
+import mast/simple_common.mast
 
 #
 # A good place to setup AI is in the Spawn task
@@ -10,6 +10,9 @@ route_spawn(route_ai)
 route_spawn(route_station)
 
 start_text = "This is a start project for mast"
+
+//comms/ if has_role(COMMS_SELECTED_ID, "friendly")
++ "Give Orders" //comms_give_orders
 
 
 ========== route_ai =========

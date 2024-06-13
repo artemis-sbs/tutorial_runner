@@ -5,13 +5,18 @@ from sbs_utils.mast.label import label
 from sbs_utils.mast.maststorypage import StoryPage
 from sbs_utils.procedural import space_objects
 from sbs_utils.procedural import roles
+from sbs_utils.procedural import query
 from sbs_utils.procedural import routes
 from sbs_utils.procedural.execution import jump, AWAIT, get_variable, END, set_shared_variable, get_shared_variable, task_schedule
 from sbs_utils.procedural.timers import delay_sim
+from sbs_utils.gui import Gui
 
 # This allows the script to find the common code
 sbslibs.add_folder_to_ptython_path("../pymast")
 from simple_common import CommonStory
+
+from multiprocessing import shared_memory
+shm_a = shared_memory.SharedMemory(name="art_test", create=True, size=10)
 
 
 
@@ -49,10 +54,11 @@ def route_ai_py():
     # Otherwise, task ends
     yield END()
 
-
+count = 0
 
 @label()    
 def npc_targeting_ai_py():
+    global count
     SPAWNED_ID = get_variable("SPAWNED_ID")
     the_target = space_objects.closest(SPAWNED_ID, roles.role("__PLAYER__"), 2000)
     if the_target is None:
@@ -61,8 +67,17 @@ def npc_targeting_ai_py():
         space_objects.target(SPAWNED_ID, the_target, True)
 
     print(f"NPC Start")
-    yield AWAIT(delay_sim(5))
+    yield AWAIT(delay_sim(1))
     print(f"NPC Jump")
+    player = query.to_object(the_target)
+    t = player.data_set.get("playerThrottle", 0)
+    t = int(t*50)
+    shm_a.buf[:4] = bytearray([count%255, t,33,44])
+    count += 1
+    if shm_a.buf[6]==1:
+        pt = shm_a.buf[5]/ 50.0
+        shm_a.buf[6] = 0
+        t = player.data_set.set("playerThrottle", pt, 0)
     yield jump(npc_targeting_ai_py)
 
 

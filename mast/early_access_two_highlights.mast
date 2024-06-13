@@ -11,7 +11,7 @@ shared grid_data = load_json_data(get_mission_dir_filename("mast/grid_data.json"
 gui_reroute_server( server_main)
 gui_reroute_clients(run_console)
 # This is where damcons stuff starts
-route_grid_spawn(handle_grid_spawn)
+route_spawn_grid(handle_grid_spawn)
 
 shared artemis = None
 

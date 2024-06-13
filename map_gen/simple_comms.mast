@@ -23,11 +23,11 @@ shared gen_asteroids = 200*sectors*sectors
 # Then no other routes should override it
 #
 
-route_comms_select("comms_route")
-route_comms_select("casino_comms_route")
+route_select_comms("comms_route")
+route_select_comms("casino_comms_route")
 route_spawn("clear_unknown")
 
-route_grid_select("damcon_route")
+route_select_grid("damcon_route")
 
 start_text = "This is a start project for mast^to demonstrate comms console"
 
