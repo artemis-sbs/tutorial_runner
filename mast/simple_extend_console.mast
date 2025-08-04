@@ -10,14 +10,14 @@ start_text = "This is a start project for mast"
 #
 
 ==== replace: console_bottom_choices ====
-await gui():
-    + "Hide this":
-        gui_hide_choice()
-        ->AWAIT_AGAIN
+    await gui():
+        + "Hide this":
+            gui_hide_choice()
+            ->AWAIT_AGAIN
 
-    + "Head to the bar":
-        gui_history_jump(EnterBar,console_select,console_selected, {"console_select": console_select})
-        
-print("FELL")
-# Need this when return from pushed
-jump console_selected
+        + "Head to the bar":
+            gui_history_jump(EnterBar,console_select,console_selected, {"console_select": console_select})
+            
+    print("FELL")
+    # Need this when return from pushed
+    jump console_selected

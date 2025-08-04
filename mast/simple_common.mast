@@ -13,6 +13,7 @@ enemy_count = 1
 start_text = "This is a start project for mast"
 
 
+
 ======= server_main =====
 #
 # Create the player ship so the clients see it

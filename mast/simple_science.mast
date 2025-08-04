@@ -3,28 +3,14 @@ import simple_common.mast
 # Show the proper GUI for server vs Client Consoles
 #
 
-route_select_science("handle_science")
+
 enemy_count = 4
 start_text = "This is a start project for mast^to demonstrate science console"
 
-====== handle_science =====
-# 
-# Avoid scheduling this multiple times
-#
-->END if has_link_to(SCIENCE_SELECTED_ID, "science", SCIENCE_ORIGIN_ID)
-link(SCIENCE_SELECTED_ID, "science", SCIENCE_ORIGIN_ID)
-
-if has_role(SCIENCE_SELECTED_ID, "Station"):
-    jump station_science
-elif has_role(SCIENCE_SELECTED_ID, "raider"):
-    jump raider_science
-
-->END
-
 ========= station_science =======
 
-
-await scan():
+//enable/science if has_role(SCIENCE_SELECTED_ID, "Station")
+//science if has_role(SCIENCE_SELECTED_ID, "Station")
     + "scan":
         scan_results("This is a friendly station")
     + "bio":
@@ -33,14 +19,8 @@ await scan():
         scan_results("The people seem smart enough")
 
 
-print ("Science scan done")
-
-->END
-
-====== raider_science  ===========
-
-
-await scan():
+//enable/science if has_role(SCIENCE_SELECTED_ID, "raider")
+//science if has_role(SCIENCE_SELECTED_ID, "raider")
     + "scan":
         scan_results("Looks like some bad dudes")
     + "bio":
@@ -48,6 +28,4 @@ await scan():
     + "intl":
         scan_results("The have spaceships, but seem quite dumb")
 
-print ("Raider scan done")
-->END
 

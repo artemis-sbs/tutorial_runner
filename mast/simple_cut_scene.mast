@@ -11,283 +11,283 @@ gui_reroute_clients(client_main)
 
 
 ======= server_main =====
-#
-# Create the player ship so the clients see it
-# This is a simple script that has one playable ship
-#
-sim_create()
+    #
+    # Create the player ship so the clients see it
+    # This is a simple script that has one playable ship
+    #
+    sim_create()
 
-shared artemis =  to_id(player_spawn(0,0,0, "Artemis", "tsn", "tsn_battle_cruiser"))
-assign_client_to_ship(0,artemis)
+    shared artemis =  to_id(player_spawn(0,0,0, "Artemis", "tsn", "tsn_battle_cruiser"))
+    assign_client_to_ship(0,artemis)
 
-gui_section(style="area:2,20,80,35;")
+    gui_section(style="area:2,20,80,35;")
 
-""" {start_text}"""
+    """ {start_text}"""
 
-await gui():
-    + "Start":
-        -> start
+    await gui():
+        + "Start":
+            -> start
 
--> server_main
+    -> server_main
 
 
 
 
 ======== start ======
 
-# Create the world here
-# Create a space station
-ds1 = npc_spawn(1000,0,1000, "DS1", "tsn, station", "starbase_command", "behav_station")
-ds2 = npc_spawn(1000,0,-1000, "DS2", "tsn, station", "starbase_command", "behav_station")
+    # Create the world here
+    # Create a space station
+    ds1 = npc_spawn(1000,0,1000, "DS1", "tsn, station", "starbase_command", "behav_station")
+    ds2 = npc_spawn(1000,0,-1000, "DS2", "tsn, station", "starbase_command", "behav_station")
 
-# Create an enemy
-k001 = npc_spawn(-1000,0,1000, "K001", "raider", "kralien_battleship", "behav_npcship")
-shared camera_id = to_id(k001)
+    # Create an enemy
+    k001 = npc_spawn(-1000,0,1000, "K001", "raider", "kralien_battleship", "behav_npcship")
+    shared camera_id = to_id(k001)
 
-sim_resume()
-gui_reroute_clients(opening_scene)
+    sim_resume()
+    gui_reroute_clients(opening_scene)
 
-await gui()
+    await gui()
 
 
 ====== client_main =======
 
-#
-# Default the console to helm
-#
-console_select = "helm"
-console_accepted = False
-credits_ran = False
+    #
+    # Default the console to helm
+    #
+    console_select = "helm"
+    console_accepted = False
+    credits_ran = False
 
 ====== select_console ======
 
-gui_section(style="area:2,20,80,35;")
+    gui_section(style="area:2,20,80,35;")
 
-"""Select your console"""
+    """Select your console"""
 
-gui_section(style="area: 85,50, 99,90;")
-gui_vradio("helm,weapons, comms,science,engineering,mainscreen", var="console_select")
-gui_blank()
-gui_row()
+    gui_section(style="area: 85,50, 99,90;")
+    gui_vradio("helm,weapons, comms,science,engineering,mainscreen", var="console_select")
+    gui_blank()
+    gui_row()
 
-if credits_ran:
-    on gui_message(gui_button("accept")):
-        jump run_console
-else:
-    gui_checkbox("accept", var="console_accepted")
+    if credits_ran:
+        on gui_message(gui_button("accept")):
+            jump run_console
+    else:
+        gui_checkbox("accept", var="console_accepted")
 
 
-await gui()
-->END
+    await gui()
+    ->END
 
 ====== opening_scene ====
 
-#
-# Race Condition? Removing this print causes crash
-#
-print(f"{client_id} {camera_id}")
+    #
+    # Race Condition? Removing this print causes crash
+    #
+    print(f"{client_id} {camera_id}")
 
-sbs.assign_client_to_ship(client_id, camera_id)
-#to_blob(camera_id).blob.set("reference_ring_3d_brightness", 0.0, 0)
+    sbs.assign_client_to_ship(client_id, camera_id)
+    #to_blob(camera_id).blob.set("reference_ring_3d_brightness", 0.0, 0)
 
-captain_face = random_terran()
-operator_face = random_terran()
-mechanic_face = random_terran()
-cats_face = random_torgoth()
+    captain_face = random_terran()
+    operator_face = random_terran()
+    mechanic_face = random_terran()
+    cats_face = random_torgoth()
 
-#
-# Credits one
-# Show a nebula
-#
-gui_activate_console("credits")
-gui_section(style="area: 0, 30px, 100, 100;")
-gui_layout_widget("3dview")
-gui_section(style="area: 0, 10, 100, 65;")
-"""font:gui-5; justify:center;$text: in a.d. 2101"""
-await gui(timeout=timeout(5))
+    #
+    # Credits one
+    # Show a nebula
+    #
+    gui_activate_console("credits")
+    gui_section(style="area: 0, 30px, 100, 100;")
+    gui_layout_widget("3dview")
+    gui_section(style="area: 0, 10, 100, 65;")
+    """font:gui-5; justify:center;$text: in a.d. 2101"""
+    await gui(timeout=timeout(5))
 
-#
-# Credits two
-# Show explosion
-#
-gui_activate_console("credits")
-gui_section(style="area: 0, 30px, 100, 100;")
-gui_layout_widget("3dview")
-gui_section(style="area: 0, 35, 100, 60;")
-"""font:gui-6; justify:center;$text: war was beginning"""
-await gui(timeout=timeout(5))
+    #
+    # Credits two
+    # Show explosion
+    #
+    gui_activate_console("credits")
+    gui_section(style="area: 0, 30px, 100, 100;")
+    gui_layout_widget("3dview")
+    gui_section(style="area: 0, 35, 100, 60;")
+    """font:gui-6; justify:center;$text: war was beginning"""
+    await gui(timeout=timeout(5))
 
-#
-# Credits two
-# Show bridge (or captains face)
-#
-gui_activate_console("credits")
-gui_section(style="area: 0, 30px, 100, 100;")
-gui_layout_widget("3dview")
+    #
+    # Credits two
+    # Show bridge (or captains face)
+    #
+    gui_activate_console("credits")
+    gui_section(style="area: 0, 30px, 100, 100;")
+    gui_layout_widget("3dview")
 
-gui_section(style="area: 25, 5, 74, 35;")
-gui_face(captain_face)
-gui_section(style="area: 0, 35, 100, 60;")
-"""font:gui-6; justify:center;$text: captain: what happen?"""
-await gui(timeout=timeout(5))
-
-
-#
-# Show bridge (or mechanic face)
-#
-gui_activate_console("credits")
-gui_section(style="area: 0, 30px, 100, 100;")
-gui_layout_widget("3dview")
-
-gui_section(style="area: 25, 5, 74, 35;")
-gui_face(mechanic_face)
-gui_section(style="area: 0, 35, 100, 60;")
-"""font:gui-6; justify:center;$text: mechanic: somebody set up us the bomb"""
-await gui(timeout=timeout(5))
+    gui_section(style="area: 25, 5, 74, 35;")
+    gui_face(captain_face)
+    gui_section(style="area: 0, 35, 100, 60;")
+    """font:gui-6; justify:center;$text: captain: what happen?"""
+    await gui(timeout=timeout(5))
 
 
-#
-# Show captains face
-#
-gui_activate_console("credits")
-gui_section(style="area: 0, 30px, 100, 100;")
-gui_layout_widget("3dview")
-gui_section(style="area: 25, 5, 74, 35;")
-gui_face(operator_face)
-gui_section(style="area: 0, 35, 100, 60;")
-"""font:gui-6; justify:center;$text: Operator: we get signal."""
-await gui(timeout=timeout(5))
+    #
+    # Show bridge (or mechanic face)
+    #
+    gui_activate_console("credits")
+    gui_section(style="area: 0, 30px, 100, 100;")
+    gui_layout_widget("3dview")
 
-#
-# Show captains face
-#
-gui_activate_console("credits")
-gui_section(style="area: 0, 30px, 100, 100;")
-gui_layout_widget("3dview")
-gui_section(style="area: 25, 5, 74, 35;")
-gui_face(captain_face)
-gui_section(style="area: 0, 35, 100, 60;")
-
-"""font:gui-6; justify:center;$text: Operator: we get signal."""
-gui_row()
-"""font:gui-6; justify:center;$text: Captain: What !"""
-await gui(timeout=timeout(5))
+    gui_section(style="area: 25, 5, 74, 35;")
+    gui_face(mechanic_face)
+    gui_section(style="area: 0, 35, 100, 60;")
+    """font:gui-6; justify:center;$text: mechanic: somebody set up us the bomb"""
+    await gui(timeout=timeout(5))
 
 
-#
-# Show captains face
-#
-gui_activate_console("credits")
-gui_section(style="area: 0, 30px, 100, 100;")
-gui_layout_widget("3dview")
-gui_section(style="area: 25, 5, 74, 35;")
-gui_face(operator_face)
-gui_section(style="area: 0, 35, 100, 60;")
+    #
+    # Show captains face
+    #
+    gui_activate_console("credits")
+    gui_section(style="area: 0, 30px, 100, 100;")
+    gui_layout_widget("3dview")
+    gui_section(style="area: 25, 5, 74, 35;")
+    gui_face(operator_face)
+    gui_section(style="area: 0, 35, 100, 60;")
+    """font:gui-6; justify:center;$text: Operator: we get signal."""
+    await gui(timeout=timeout(5))
 
-"""font:gui-6; justify:center;$text: Operator: Main screen turn on."""
-await gui(timeout=timeout(5))
+    #
+    # Show captains face
+    #
+    gui_activate_console("credits")
+    gui_section(style="area: 0, 30px, 100, 100;")
+    gui_layout_widget("3dview")
+    gui_section(style="area: 25, 5, 74, 35;")
+    gui_face(captain_face)
+    gui_section(style="area: 0, 35, 100, 60;")
 
-#
-# Show captains face
-#
-gui_activate_console("credits")
-gui_section(style="area: 0, 30px, 100, 100;")
-gui_layout_widget("3dview")
-gui_section(style="area: 25, 5, 74, 35;")
-gui_face(captain_face)
-
-gui_section(style="area: 0, 35, 100, 60;")
-"""font:gui-6; justify:center;$text: Captain: it's you !!"""
-await gui(timeout=timeout(5))
-
-#
-# Show CATS face
-#
-gui_activate_console("credits")
-gui_section(style="area: 0, 30px, 100, 100;")
-gui_layout_widget("3dview")
-gui_section(style="area: 25, 5, 74, 35;")
-gui_face(cats_face)
-
-gui_section(style="area: 0, 35, 100, 60;")
-"""font:gui-6; justify:center;$text: cats: how are you gentleman !!"""
-await gui(timeout=timeout(5))
-
-#
-# Show CATS face
-#
-gui_activate_console("credits")
-gui_section(style="area: 0, 30px, 100, 100;")
-gui_layout_widget("3dview")
-gui_section(style="area: 25, 5, 74, 35;")
-gui_face(cats_face)
-
-gui_section(style="area: 0, 35, 100, 60;")
-"""font:gui-6; justify:center;$text: cats: all your base are belong to us."""
-await gui(timeout=timeout(5))
-
-#
-# Show CATS face
-#
-gui_activate_console("credits")
-gui_section(style="area: 0, 30px, 100, 100;")
-gui_layout_widget("3dview")
-gui_section(style="area: 25, 5, 74, 35;")
-gui_face(cats_face)
-
-gui_section(style="area: 0, 35, 100, 60;")
-"""font:gui-6; justify:center;$text: cats: you are on the way to destruction."""
-await gui(timeout=timeout(5))
-
-#
-# Show Captain face
-#
-gui_activate_console("credits")
-gui_section(style="area: 0, 30px, 100, 100;")
-gui_layout_widget("3dview")
-gui_section(style="area: 25, 5, 74, 35;")
-gui_face(captain_face)
-
-gui_section(style="area: 0, 35, 100, 60;")
-"""font:gui-6; justify:center;$text: captain: what you say !!"""
-await gui(timeout=timeout(5))
-
-#
-# Show CATS face
-#
-gui_activate_console("credits")
-gui_section(style="area: 0, 30px, 100, 100;")
-gui_layout_widget("3dview")
-gui_section(style="area: 25, 5, 74, 35;")
-gui_face(cats_face)
-
-gui_section(style="area: 0, 35, 100, 60;")
-"""font:gui-6; justify:center;$text: cats: you have no chance to survive make your time."""
-await gui(timeout=timeout(5))
-
-#
-# Show CATS face
-#
-gui_activate_console("credits")
-gui_section(style="area: 0, 30px, 100, 100;")
-gui_layout_widget("3dview")
-gui_section(style="area: 25, 5, 74, 35;")
-gui_face(cats_face)
-
-gui_section(style="area: 0, 35, 100, 60;")
-"""font:gui-6; justify:center;$text: cats: HA HA HA HA....."""
-await gui(timeout=timeout(5))
+    """font:gui-6; justify:center;$text: Operator: we get signal."""
+    gui_row()
+    """font:gui-6; justify:center;$text: Captain: What !"""
+    await gui(timeout=timeout(5))
 
 
-credits_ran = True
-if not console_accepted:
-    jump select_console
+    #
+    # Show captains face
+    #
+    gui_activate_console("credits")
+    gui_section(style="area: 0, 30px, 100, 100;")
+    gui_layout_widget("3dview")
+    gui_section(style="area: 25, 5, 74, 35;")
+    gui_face(operator_face)
+    gui_section(style="area: 0, 35, 100, 60;")
+
+    """font:gui-6; justify:center;$text: Operator: Main screen turn on."""
+    await gui(timeout=timeout(5))
+
+    #
+    # Show captains face
+    #
+    gui_activate_console("credits")
+    gui_section(style="area: 0, 30px, 100, 100;")
+    gui_layout_widget("3dview")
+    gui_section(style="area: 25, 5, 74, 35;")
+    gui_face(captain_face)
+
+    gui_section(style="area: 0, 35, 100, 60;")
+    """font:gui-6; justify:center;$text: Captain: it's you !!"""
+    await gui(timeout=timeout(5))
+
+    #
+    # Show CATS face
+    #
+    gui_activate_console("credits")
+    gui_section(style="area: 0, 30px, 100, 100;")
+    gui_layout_widget("3dview")
+    gui_section(style="area: 25, 5, 74, 35;")
+    gui_face(cats_face)
+
+    gui_section(style="area: 0, 35, 100, 60;")
+    """font:gui-6; justify:center;$text: cats: how are you gentleman !!"""
+    await gui(timeout=timeout(5))
+
+    #
+    # Show CATS face
+    #
+    gui_activate_console("credits")
+    gui_section(style="area: 0, 30px, 100, 100;")
+    gui_layout_widget("3dview")
+    gui_section(style="area: 25, 5, 74, 35;")
+    gui_face(cats_face)
+
+    gui_section(style="area: 0, 35, 100, 60;")
+    """font:gui-6; justify:center;$text: cats: all your base are belong to us."""
+    await gui(timeout=timeout(5))
+
+    #
+    # Show CATS face
+    #
+    gui_activate_console("credits")
+    gui_section(style="area: 0, 30px, 100, 100;")
+    gui_layout_widget("3dview")
+    gui_section(style="area: 25, 5, 74, 35;")
+    gui_face(cats_face)
+
+    gui_section(style="area: 0, 35, 100, 60;")
+    """font:gui-6; justify:center;$text: cats: you are on the way to destruction."""
+    await gui(timeout=timeout(5))
+
+    #
+    # Show Captain face
+    #
+    gui_activate_console("credits")
+    gui_section(style="area: 0, 30px, 100, 100;")
+    gui_layout_widget("3dview")
+    gui_section(style="area: 25, 5, 74, 35;")
+    gui_face(captain_face)
+
+    gui_section(style="area: 0, 35, 100, 60;")
+    """font:gui-6; justify:center;$text: captain: what you say !!"""
+    await gui(timeout=timeout(5))
+
+    #
+    # Show CATS face
+    #
+    gui_activate_console("credits")
+    gui_section(style="area: 0, 30px, 100, 100;")
+    gui_layout_widget("3dview")
+    gui_section(style="area: 25, 5, 74, 35;")
+    gui_face(cats_face)
+
+    gui_section(style="area: 0, 35, 100, 60;")
+    """font:gui-6; justify:center;$text: cats: you have no chance to survive make your time."""
+    await gui(timeout=timeout(5))
+
+    #
+    # Show CATS face
+    #
+    gui_activate_console("credits")
+    gui_section(style="area: 0, 30px, 100, 100;")
+    gui_layout_widget("3dview")
+    gui_section(style="area: 25, 5, 74, 35;")
+    gui_face(cats_face)
+
+    gui_section(style="area: 0, 35, 100, 60;")
+    """font:gui-6; justify:center;$text: cats: HA HA HA HA....."""
+    await gui(timeout=timeout(5))
+
+
+    credits_ran = True
+    if not console_accepted:
+        jump select_console
 
 
 
 ========== run_console ========
-sbs.assign_client_to_ship(client_id, artemis)
+    sbs.assign_client_to_ship(client_id, artemis)
 
-gui_console(console_select)
-await gui()
+    gui_console(console_select)
+    await gui()
 

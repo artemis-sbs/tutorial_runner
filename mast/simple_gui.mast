@@ -54,135 +54,115 @@ shared skills_built = False
 shared s_count = 0  # for update example
 
 =========start=======
-shared colors =["yellow", "red", "green", "blue", "purple", "cyan", "black", "#FF00FE", "gray"]
-shared fonts = ["smallest", "gui-1", "gui-2", "gui-3", "gui-4", "gui-5", "gui-6"]
-shared face_list = [random_terran(), random_terran_female(),random_terran_male(),random_terran_fluid() ]
+    shared colors =["yellow", "red", "green", "blue", "purple", "cyan", "black", "#FF00FE", "gray"]
+    shared fonts = ["smallest", "gui-1", "gui-2", "gui-3", "gui-4", "gui-5", "gui-6"]
+    shared face_list = [random_terran(), random_terran_female(),random_terran_male(),random_terran_fluid() ]
 
-shared recruits = ~~[
-    "Pat:^^Can helm a ship through the toughest of asteroid belts",
-    "Gwen:^^A real sharpshooter",
-    "Randle:^^Top notch no nonsense scientist",
-    "Steve:^^Just out of Detocs. Barely an engineer"
-    ]~~
+    shared recruits = ~~[
+        "Pat:^^Can helm a ship through the toughest of asteroid belts",
+        "Gwen:^^A real sharpshooter",
+        "Randle:^^Top notch no nonsense scientist",
+        "Steve:^^Just out of Detocs. Barely an engineer"
+        ]~~
 
 
 ======= menu  ===============
-gui_section( style="area:0,5,10,95;row-height:35px;")
+    gui_section( style="area:0,5,10,95;row-height:35px;")
 
-#
-# Goal code?
-#
-# button_labels = [("text", "show_text"), ("Buttons", "show_buttons")]
-# for x in button_labels:
-#    b = x[0]
-#    l = x[1]
-#    on gui_message(gui_button(b, data={"label":l})):
-#        jump(label)
-#    end_on
-#    gui_row()
-# next x
-
-
-
-b = gui_button("Text") #, style="margin: 2px,2px,2px,2px;")
-on gui_message(b):
-    jump("show_text")
-
-gui_row()
-
-on gui_message(gui_button("Buttons")):
-    jump show_button
-
-gui_row()
-on gui_message(gui_button("Checkbox")):
-    jump show_checkbox
-
-gui_row()
-on gui_message(gui_button("dropdown")):
-    jump show_dropdown
-
-gui_row()
-on gui_message(gui_button("Slider")):
-    jump show_slider
-
-gui_row()
-on gui_message(gui_button("Text Input")):
-    jump show_text_input
-
-gui_row()
-on gui_message(gui_button("Clickable")):
-    jump show_clickable
-
-gui_row()
-on gui_message(gui_button("Custom")):
-    sim_create()
-    jump show_custom
-
-gui_row()
-on gui_message(gui_button("Table-ish")):
-    sim_create()
-    jump build_skills
-
-gui_row()
-on gui_message(gui_button("update")):
-    jump show_update
-
-gui_row()
-on gui_message(gui_button("margins")):
-    jump show_margin_border_padding
-
-gui_row()
-on gui_message(gui_button("layout")):
-    jump show_layout
-
-gui_row()
-on gui_message(gui_button("region")):
-    jump show_region
-gui_row()
-on gui_message(gui_button("ship picker")):
-    jump show_ship_picker
+    #
+    # Goal code?
+    #
+    # button_labels = [("text", "show_text"), ("Buttons", "show_buttons")]
+    # for x in button_labels:
+    #    b = x[0]
+    #    l = x[1]
+    #    on gui_message(gui_button(b, data={"label":l})):
+    #        jump(label)
+    #    end_on
+    #    gui_row()
+    # next x
 
 
 
-gui_row()
-""""""" Example Gui """""""""""
+    b = gui_button("Text", on_press=show_text) #, style="margin: 2px,2px,2px,2px;")
+    gui_row()
+    gui_button("Buttons", on_press=show_button)
+    gui_row()
+    gui_button("Checkbox", on_press=show_checkbox)
+    gui_row()
+    gui_button("dropdown",on_press=show_dropdown)
+    gui_row()
+    gui_button("Slider", on_press=show_slider)
+    gui_row()
+    gui_button("Text Input", on_press=show_text_input)
 
-await gui()
+    gui_row()
+    gui_button("Clickable",on_press=show_clickable)
+
+    gui_row()
+    on gui_message(gui_button("Custom")):
+        sim_create()
+        jump show_custom
+    gui_row()
+    on gui_message(gui_button("Table-ish")):
+        sim_create()
+        jump build_skills
+
+    gui_row()
+    gui_button("update", on_press=show_update)
+
+    gui_row()
+    gui_button("margins", on_press=show_margin_border_padding)
+
+    gui_row()
+    gui_button("layout", on_press=show_layout)
+
+    gui_row()
+    gui_button("region", on_press=show_region)
+    gui_row()
+    gui_button("ship picker", show_ship_picker)
+
+
+
+    gui_row()
+    """"""" Example Gui """""""""""
+
+    await gui()
 
 ============ show_layout =======
 
-gui_section(style="area:0,0,100,100;color: blue;")
-gui_row("row-height:2em;background:cyan;color:black;")
-gui_text("top")
-gui_row()
-gui_text("l\ne\nf\nt", style="col-width:2em;background:yellow;color:black;")
-with gui_sub_section("background:red;") as test:
-    gui_text("middle top")
-    with gui_sub_section("background:green;") as test2:
-        gui_text("inner top")
-        gui_row()
-        gui_text("inner shared")
-        on gui_message(gui_button("menu")):
-            jump menu
-        on gui_message(gui_button("dump offscreen")):
-            sbs.get_debug_gui_tree(0, "off state", False)
-        on gui_message(gui_button("dump offscreen")):
-            sbs.get_debug_gui_tree(0, "on state", True)
+    gui_section(style="area:0,0,100,100;color: blue;")
+    gui_row("row-height:2em;background:cyan;color:black;")
+    gui_text("top")
+    gui_row()
+    gui_text("l\ne\nf\nt", style="col-width:2em;background:yellow;color:black;")
+    with gui_sub_section("background:red;") as test:
+        gui_text("middle top")
+        with gui_sub_section("background:green;") as test2:
+            gui_text("inner top")
+            gui_row()
+            gui_text("inner shared")
+            on gui_message(gui_button("menu")):
+                jump menu
+            on gui_message(gui_button("dump offscreen")):
+                sbs.get_debug_gui_tree(0, "off state", False)
+            on gui_message(gui_button("dump offscreen")):
+                sbs.get_debug_gui_tree(0, "on state", True)
 
 
 
-    gui_row("background:#ddd;padding:1em,1em;")
-    
+        gui_row("background:#ddd;padding:1em,1em;")
+        
 
-    ~~gui_text_area("""
+        ~~gui_text_area("""
 =$t font:gui-6;color:#bbb;
-=$h1 font:gui-5;color:#55b; | I > 0
-=$h2 font:gui-4;color:#5b5; | A > 2
-=$h3 font:gui-3;color:#b55; | a > 4
-=$p2 font:gui-2;color:#11f; | > 2
-=$p3 font:gui-2;color:#11f; | > 4
-=$ul font:gui-2;color:#933; | \x01 > 4
-=$ol font:gui-2;color:#393; | 1 > 6
+=$h1 font:gui-5;color:#55b; | I > 0;
+=$h2 font:gui-4;color:#5b5; | A > 2;
+=$h3 font:gui-3;color:#b55; | a > 4;
+=$p2 font:gui-2;color:#11f; | > 2;
+=$p3 font:gui-2;color:#11f; | > 4;
+=$ul font:gui-2;color:#933; | \x01 > 4;
+=$ol font:gui-2;color:#393; | 1 > 6;
 =$c font:gui-2;color:#339;justify:center; 
 =$r font:gui-2;color:#339;justify:right;
 =$ font:gui-2;color:black;
@@ -248,435 +228,436 @@ $h1 H1 = II
 $h2 H2 = A
 
 """)~~
-    gui_text("Another Column")
-    gui_row()    
-    gui_text("$text:middle bottom;font:gui-2;")
+        gui_text("Another Column")
+        gui_row()    
+        gui_text("$text:middle bottom;font:gui-2;")
 
-gui_text("r\ni\ng\nh\nt", style="col-width:2em;background:yellow;color:black;")
-gui_row("row-height: 2em;background:cyan;color:black;")
-gui_text("bottom")
+    gui_text("r\ni\ng\nh\nt", style="col-width:2em;background:yellow;color:black;")
+    gui_row("row-height: 2em;background:cyan;color:black;")
+    gui_text("bottom")
 
-await gui()
+    await gui()
 
 
 ============= show_margin_border_padding ==============
 
-# Put a section behind too show red
-gui_section(style="area:0,0,100,25;font:gui-6;background:#F002;")
-gui_section(style="area:0,0,100,25;margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F2;background:#0F02;")
-gui_row()
-gui_text("section red margin, blue border, green background", style="margin:13px,3px,3px,3px;xbackground: yellow;")
+    # Put a section behind too show red
+    gui_section(style="area:0,0,100,25;font:gui-6;background:#F002;")
+    gui_section(style="area:0,0,100,25;margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F2;background:#0F02;")
+    gui_row()
+    gui_text("section red margin, blue border, green background", style="margin:13px,3px,3px,3px;xbackground: yellow;")
 
 
-gui_section(style="area:0,25,100,50;font:gui-6;background:#F002;")
-gui_section(style="area:0,25,100,50;") #margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F2;background:#0F02;")
-gui_row(style="margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F2;background:#0F02;")
-gui_text("row red margin, blue border, green background", style="margin:13px,3px,3px,3px;xbackground: yellow;")
+    gui_section(style="area:0,25,100,50;font:gui-6;background:#F002;")
+    gui_section(style="area:0,25,100,50;") #margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F2;background:#0F02;")
+    gui_row(style="margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F2;background:#0F02;")
+    gui_text("row red margin, blue border, green background", style="margin:13px,3px,3px,3px;xbackground: yellow;")
 
 
-gui_section(style="area:0,50,100,75;font:gui-6;background:#F002;")
-gui_section(style="area:0,50,100,75;") #margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F2;background:#0F02;")
-gui_row() # )
-gui_text("col red margin, blue border, green background", style="margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F2;background:#0F02;")
+    gui_section(style="area:0,50,100,75;font:gui-6;background:#F002;")
+    gui_section(style="area:0,50,100,75;") #margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F2;background:#0F02;")
+    gui_row() # )
+    gui_text("col red margin, blue border, green background", style="margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F2;background:#0F02;")
 
 
-gui_section(style="area:0,75,100,95;font:gui-6;background:#F00f;")
-gui_section(style="area:0,75,100,95;margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00Ff;background:#0F0f;")
-gui_row(style="margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00Ff;background:#0F0f;")
-gui_text("all red margin, blue border, green background", style="margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00Ff;background:#0F0f;")
+    gui_section(style="area:0,75,100,95;font:gui-6;background:#F00f;")
+    gui_section(style="area:0,75,100,95;margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00Ff;background:#0F0f;")
+    gui_row(style="margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00Ff;background:#0F0f;")
+    gui_text("all red margin, blue border, green background", style="margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00Ff;background:#0F0f;")
 
 
-await gui():
-    + "menu":
-        -> menu
+    await gui():
+        + "menu":
+            -> menu
 
 
-#gui_section(style="area:5,10,95,19;border: 5px, 5px, 0,0;font:gui-6;border-color:yellow;")
+    #gui_section(style="area:5,10,95,19;border: 5px, 5px, 0,0;font:gui-6;border-color:yellow;")
 
-#gui_row("border: 1px, 1px, 0,0;border-color:black;")
-#gui_text("one", style="margin: 1.2em; border: 1px,1px,1px,1px; border-color:white;padding:1,1,1,1;background:red;")
-#gui_text("two", style="margin: 1; border: 1px,1px,1px,1px; border-color:white; padding:2,1,1,1;background:blue;")
+    #gui_row("border: 1px, 1px, 0,0;border-color:black;")
+    #gui_text("one", style="margin: 1.2em; border: 1px,1px,1px,1px; border-color:white;padding:1,1,1,1;background:red;")
+    #gui_text("two", style="margin: 1; border: 1px,1px,1px,1px; border-color:white; padding:2,1,1,1;background:blue;")
 
-#gui_text("left", style="margin: 1; border: 5px,0,0,0; border-color:white;padding:1,1,1,1;background:green;")
-#gui_text("right", style="margin: 1; border: 0,0,5px,0; border-color:white;padding:1,1,1,1;background:green;")
-#gui_text("top", style="margin: 1; border: 0,5px,0,0; border-color:white;padding:1,1,1,1;background:green;")
-#gui_text("bottom", style="margin: 1; border: 0,0,0,5px; border-color:#fff3;padding:1,1,1,1;background:#0f02;")
+    #gui_text("left", style="margin: 1; border: 5px,0,0,0; border-color:white;padding:1,1,1,1;background:green;")
+    #gui_text("right", style="margin: 1; border: 0,0,5px,0; border-color:white;padding:1,1,1,1;background:green;")
+    #gui_text("top", style="margin: 1; border: 0,5px,0,0; border-color:white;padding:1,1,1,1;background:green;")
+    #gui_text("bottom", style="margin: 1; border: 0,0,0,5px; border-color:#fff3;padding:1,1,1,1;background:#0f02;")
 
-gui_section(style="area:5,20,95,29;")
-gui_text("one", style="xmargin: 1,1,1,1; padding:1,1,1,1;background:red;")
-gui_text("two", style="xmargin: 1,1,1,1; padding:2,1,1,1;background:blue;")
-gui_text("three", style="xmargin: 1,1,1,1; padding:3,1,1,1;background:green;")
+    gui_section(style="area:5,20,95,29;")
+    gui_text("one", style="xmargin: 1,1,1,1; padding:1,1,1,1;background:red;")
+    gui_text("two", style="xmargin: 1,1,1,1; padding:2,1,1,1;background:blue;")
+    gui_text("three", style="xmargin: 1,1,1,1; padding:3,1,1,1;background:green;")
 
-gui_section(style="area:5,30,95,39;")
-gui_text("one", style="margin: 1,1,1,1; xpadding:1,1,1,1;background:red;")
-gui_text("two", style="margin: 1,1,1,1; xpadding:2,1,1,1;background:blue;")
-gui_text("three", style="margin: 1,1,1,1; xpadding:3,1,1,1;background:green;")
+    gui_section(style="area:5,30,95,39;")
+    gui_text("one", style="margin: 1,1,1,1; xpadding:1,1,1,1;background:red;")
+    gui_text("two", style="margin: 1,1,1,1; xpadding:2,1,1,1;background:blue;")
+    gui_text("three", style="margin: 1,1,1,1; xpadding:3,1,1,1;background:green;")
 
-gui_section(style="area:5,40,95,49;")
-gui_text("one", style="margin: 1,1,1,1; padding:1,1,1,1;background:red;")
-gui_text("two", style="margin: 1,1,1,1; padding:2,1,1,1;background:blue;")
-gui_text("three", style="margin: 1,1,1,1; padding:3,1,1,1;background:green;")
+    gui_section(style="area:5,40,95,49;")
+    gui_text("one", style="margin: 1,1,1,1; padding:1,1,1,1;background:red;")
+    gui_text("two", style="margin: 1,1,1,1; padding:2,1,1,1;background:blue;")
+    gui_text("three", style="margin: 1,1,1,1; padding:3,1,1,1;background:green;")
 
-await gui():
-    + "menu":
-        -> menu
+    await gui():
+        + "menu":
+            -> menu
 
 
 ========= show_text =======
-gui_section( style="area:2,2,80,95;")
+    gui_section( style="area:2,2,80,95;")
 
-for i in range(len(fonts)):
-    gui_row()
-    """color:{colors[i]};font:{fonts[i]};$text: This is test"""
+    for i in range(len(fonts)):
+        gui_row()
+        """color:{colors[i]};font:{fonts[i]};$text: This is test"""
 
 
-await gui():
-    + "menu":
-        -> menu
+    await gui():
+        + "menu":
+            -> menu
 
 
 ========= show_update =======
-count = 0
-gui_section(style="area:2,42,80,47;")
+    count = 0
+    gui_section(style="area:2,42,80,47;")
 
 
-"""$text: {count}""" style="tag:count-text;"
-"""$text: {count}""" style="tag:local-count-text;"
-gui_text("$text: {s_count}", style="tag:sh-count-text;")
+    """$text: {count}""" style="tag:count-text;"
+    """$text: {count}""" style="tag:local-count-text;"
+    gui_text("$text: {s_count}", style="tag:sh-count-text;")
 
-on gui_message(gui_button("Add")):
-    count += 1
-    s_count += 1
-    gui_update("count-text", "$text: {count}")
-    gui_update_shared("local-count-text", f"$text: {count}")
-    gui_update_shared("sh-count-text", f"$text: {s_count}")
+    on gui_message(gui_button("Add")):
+        count += 1
+        s_count += 1
+        gui_update("count-text", "$text: {count}")
+        gui_update_shared("local-count-text", f"$text: {count}")
+        gui_update_shared("sh-count-text", f"$text: {s_count}")
 
-gui_row()
-""" countdown """ style="tag:countdown_tag;"
-task_schedule(count_down)
+    gui_row()
+    """ countdown """ style="tag:countdown_tag;"
+    task_schedule(count_down)
 
-gui_section( style="area:2,2,80,35;")
-"""
-Update can but used to update control(s) without a complete repaint or new layout.
-an update marked shared will update all clients.
-With a shared update be careful to use a tag that is unique
-The tag can be used on multiple clients on presenting different user interfaces, but the control/tag is common.
-run this example on multiple clients. 
-"""
+    gui_section( style="area:2,2,80,35;")
+    """
+    Update can but used to update control(s) without a complete repaint or new layout.
+    an update marked shared will update all clients.
+    With a shared update be careful to use a tag that is unique
+    The tag can be used on multiple clients on presenting different user interfaces, but the control/tag is common.
+    run this example on multiple clients. 
+    """
 
 
-await gui():
-    + "menu":
-        -> menu
+    await gui():
+        + "menu":
+            -> menu
 
 
 
 ===== count_down ===== 
-# set the value 
+    # set the value 
 
-for x in range(300):
-    gui_update("countdown_tag", "$text: {300-x};")
-    await delay_app(1)
+    for x in range(300):
+        gui_update("countdown_tag", "$text: {300-x};")
+        await delay_app(1)
 
-# turn off
-->END
+    # turn off
+    ->END
 
 ========= show_button =======
 
-gui_section(style="area:2,20,80,95;")
-for i in range(len(fonts)):
-    gui_row()
-    text = "color:{colors[i]};font:{fonts[i]};$text: This is test"
-    gui_button(text)
+    gui_section(style="area:2,20,80,95;")
+    for i in range(len(fonts)):
+        gui_row()
+        text = "color:{colors[i]};font:{fonts[i]};$text: This is test"
+        gui_button(text)
 
 
 
 
-await gui():
-    + "menu":
-        -> menu
+    await gui():
+        + "menu":
+            -> menu
 
 
 ========= show_checkbox =======
-check = False
-gui_section( style="area:2,20,80,95;")
-for i in range(len(fonts)):
-    gui_row()
-    gui_checkbox("""color:{colors[i]};font:{fonts[i]};$text: This is test;""", var="check") 
+    check = False
+    gui_section( style="area:2,20,80,95;")
+    for i in range(len(fonts)):
+        gui_row()
+        gui_checkbox("""color:{colors[i]};font:{fonts[i]};$text: This is test;""", var="check") 
 
 
-await gui():
-    + "menu":
-        -> menu
+    await gui():
+        + "menu":
+            -> menu
 
 ========= show_dropdown =======
-check = "test"
-gui_section(style="area:2,20,80,95;")
+    check = "test"
+    gui_section(style="area:2,20,80,95;")
 
 
-for i in range(len(fonts)):
-    gui_row()
-    gui_drop_down("""color:{colors[i]};font:{fonts[i]};$text: This is test;list:Fred,Wilma,Betty,Barney""")
+    for i in range(len(fonts)):
+        gui_row()
+        gui_drop_down("""color:{colors[i]};font:{fonts[i]};$text: This is test;list:Fred,Wilma,Betty,Barney""")
 
 
-await gui():
-    + "menu":
-        -> menu
+    await gui():
+        + "menu":
+            -> menu
 
 
 ========= show_slider =======
-check = 0.5
-gui_section( style="area:2,20,80,95;")
+    check = 0.5
+    gui_section( style="area:2,20,80,95;")
 
 
-for i in range(len(fonts)):
-    gui_row()
-    gui_slider("""color:{colors[i]};font:{fonts[i]};low:0;high:2; show_number:no""", var="check")
-    #gui_slider(0 2 0.5, var="check")
+    for i in range(len(fonts)):
+        gui_row()
+        gui_slider("""color:{colors[i]};font:{fonts[i]};low:0;high:2; show_number:no""", var="check")
+        #gui_slider(0 2 0.5, var="check")
 
 
-await gui():
-    + "menu":
-        -> menu
+    await gui():
+        + "menu":
+            -> menu
 
 
 
 ========= show_text_input =======
-check = "text"
-gui_section( style="area:2,20,80,95;")
+    check = "text"
+    gui_section( style="area:2,20,80,95;")
 
 
-for i in range(len(fonts)):
-    gui_row()
-    gui_input("""color:{colors[i]};font:{fonts[i]}; desc: Description/title""", var="check")
+    for i in range(len(fonts)):
+        gui_row()
+        gui_input("""color:{colors[i]};font:{fonts[i]}; desc: Description/title""", var="check")
 
 
 
-await gui():
-    + "menu":
-        -> menu
+    await gui():
+        + "menu":
+            -> menu
 
 ========= show_custom =======
 
-ship_name = ""
-ship_cur = None
-gui_section( style="area: 0, 0, 100,10;")
-""" 
-This is an example that shows custom gui controls.
-Custom controls can be created in python.
-"""
+    ship_name = ""
+    ship_cur = None
+    gui_section( style="area: 0, 0, 100,10;")
+    """ 
+    This is an example that shows custom gui controls.
+    Custom controls can be created in python.
+    """
 
-gui_section( style="area: 1, 10, 45,100;")
+    gui_section( style="area: 1, 10, 45,100;")
 
-gui_row("row-height: 40px;")
-gui_hole()
-gui_input("desc: Ship Name;$text: ", var="ship_name")
-gui_row("row-height: 50px;")
-on gui_message(gui_button("Add Ship")):
-    if len(ship_name) >0:
-        player_spawn(0,0,0, ship_name, "tsn", ship_type )
+    gui_row("row-height: 40px;")
+    gui_hole()
+    gui_input("desc: Ship Name;$text: ", var="ship_name")
+    gui_row("row-height: 50px;")
+    on gui_message(gui_button("Add Ship")):
+        if len(ship_name) >0:
+            player_spawn(0,0,0, ship_name, "tsn", ship_type )
 
-        ship_name = ""
-        -> show_custom
+            ship_name = ""
+            -> show_custom
 
-gui_row(style="row-height: 300px;")
-#pick ship ship_type
+    gui_row(style="row-height: 300px;")
+    #pick ship ship_type
 
-gui_content(ship_picker_control("Your Ship", ship_cur, show_desc=False), var="ship_type")
+    gui_content(ship_picker_control("Your Ship", ship_cur, show_desc=False), var="ship_type")
 
-gui_section( style="area: 50, 10, 100,100;")
-gui_row(style="row-height: 20px;")
+    gui_section( style="area: 50, 10, 100,100;")
+    gui_row(style="row-height: 20px;")
 
-"""Player Ships:"""
+    """Player Ships:"""
 
-ships = to_object_list(role("__PLAYER__"))
-gui_row(style="row-height: 50;")
-gui_content(list_box_control(ships, text=lambda ship: ship.comms_id, ship=lambda ship: ship.art_id), var="ship_list")
+    ships = to_object_list(role("__PLAYER__"))
+    gui_row(style="row-height: 50;")
+    gui_content(list_box_control(ships, text=lambda ship: ship.comms_id, ship=lambda ship: ship.art_id), var="ship_list")
 
-await gui():
-    + "menu":
-        sim_create()
-        for ship in ships:
-            ship.destroyed()
-        -> menu
+    await gui():
+        + "menu":
+            sim_create()
+            for ship in ships:
+                ship.destroyed()
+            -> menu
 
 
 
 ========= show_clickable 
-check = "text"
+    check = "text"
 
-for x in range(len(recruits)):
-    gui_section( style=f"area:{20*x}+10,20,{20*x}+25,65;click_background: #5555; click_text:; click_font:gui-5; click_tag:pick_{x}")
-    # gui_section( style=f"area:{20*x}+10,20,{20*x}+25,65;click_color: blue; click_text:recruit!; click_font:gui-5; click_tag:pick_{x}")
+    for x in range(len(recruits)):
+        gui_section( style=f"area:{20*x}+10,20,{20*x}+25,65;click_background: #5555; click_text:; click_font:gui-5; click_tag:pick_{x}")
+        # gui_section( style=f"area:{20*x}+10,20,{20*x}+25,65;click_color: blue; click_text:recruit!; click_font:gui-5; click_tag:pick_{x}")
 
-    on gui_click():
-        pick = __CLICKED__.split("_")
-        the_pick = int(pick[1].strip())
-        -> show_recruit
+        on gui_click():
+            pick = __CLICKED__.split("_")
+            the_pick = int(pick[1].strip())
+            -> show_recruit
 
-    gui_face(face_list[x])
-    gui_row()
-    gui_text("color:cyan;font:gui-3;$text:{recruits[x]}")
-    #"""{recruits[x]}"""
-    # """ Hello {x} """
+        gui_face(face_list[x])
+        gui_row()
+        gui_text("color:cyan;font:gui-3;$text:{recruits[x]}")
+        #"""{recruits[x]}"""
+        # """ Hello {x} """
 
 
-await gui():
-    + "menu":
-        -> menu
+    await gui():
+        + "menu":
+            -> menu
 
 
 
 ==== show_recruit 
 
-gui_section( style="area:2,20,80,95;")
-gui_face(face_list[the_pick])
-""" Ready for duty """
+    gui_section( style="area:2,20,80,95;")
+    gui_face(face_list[the_pick])
+    """ Ready for duty """
 
-await gui():
-    + "menu":
-        -> menu
+    await gui():
+        + "menu":
+            -> menu
 
 
 
 
 === show_region
-check = "text"
+    check = "text"
 
-gui_section("area:20,10,50,18;")
-b_reset = gui_button("reset")
-
-
-with gui_region("area:20,20,50,40;") as hello:
-    b_hello = gui_button("Hello")
-
-with gui_region("area: 20,40,50,60;") as world:
-    b_world = gui_button("World")
-
-#b_reset = gui_button("reset after")
-
-on gui_message(b_hello):
-    with gui_rebuild(hello):
-        b_hello = gui_button("Hello2")
-        on gui_message(b_hello):
-            with gui_rebuild(hello):
-                gui_text("Hello3")
-
-on gui_message(b_world):
-    with gui_rebuild(world):
-        gui_text("world")
-        
-on gui_message(b_reset):
-    jump show_region
+    gui_section("area:20,10,50,18;")
+    b_reset = gui_button("reset")
 
 
+    with gui_region("area:20,20,50,40;") as hello:
+        b_hello = gui_button("Hello")
 
-await gui():
-    + "menu":
-        -> menu
+    with gui_region("area: 20,40,50,60;") as world:
+        b_world = gui_button("World")
+
+    #b_reset = gui_button("reset after")
+
+    on gui_message(b_hello):
+        with gui_rebuild(hello):
+            b_hello = gui_button("Hello2")
+            on gui_message(b_hello):
+                with gui_rebuild(hello):
+                    gui_text("Hello3")
+
+    on gui_message(b_world):
+        with gui_rebuild(world):
+            gui_text("world")
+            
+    on gui_message(b_reset):
+        jump show_region
+
+
+
+    await gui():
+        + "menu":
+            -> menu
 
 
 === show_ship_picker
 
-gui_section("area:70,10,90,20;")
-b_offscreen = gui_button("dump OFF")
-b_onscreen = gui_button("dump ON")
+    gui_section("area:70,10,90,20;")
+    b_offscreen = gui_button("dump OFF")
+    b_onscreen = gui_button("dump ON")
 
-on gui_message(b_offscreen):
-    sbs.get_debug_gui_tree(0, "off state", False)
-on gui_message(b_onscreen):
-    sbs.get_debug_gui_tree(0, "on state", True)
-
-
-ship_sec = gui_region(style="area: 1,60px,40,105px")
-with ship_sec:
-    gui_row(style="row-height: 45px;")
-
-    _input = "desc:Ship Name;"
-    on gui_message(gui_input(_input, var="ship_name")):
-        print("Text input")
-
-valid_interiors = ship_data_terran_ship_keys()
-for k in valid_interiors:
-    print(f"*{k}*")
-
-ship_sec2 = gui_region(style="area: 1,15,40,90")
-with ship_sec2:
-    gui_row()
-    gui_content(ship_picker_control(f"Your Ship", "tsn_battle_cruiser", ship_keys=valid_interiors), style="tag:sh_ship_picker", var="ship_type")
-    on change ship_type:
-        print("Ship change")
-
-gui_section("area:70,30,90,40;")
-on gui_message(gui_button("SHOW")):
-    gui_show(ship_sec)
-    gui_show(ship_sec2)
-
-on gui_message(gui_button("HIDE")):
-    gui_hide(ship_sec)
-    gui_hide(ship_sec2)
+    on gui_message(b_offscreen):
+        sbs.get_debug_gui_tree(0, "off state", False)
+    on gui_message(b_onscreen):
+        sbs.get_debug_gui_tree(0, "on state", True)
 
 
-await gui():
-    + "menu":
-        -> menu
+    ship_sec = gui_region(style="area: 1,60px,40,105px")
+    with ship_sec:
+        gui_row(style="row-height: 45px;")
+
+        _input = "desc:Ship Name;"
+        on gui_message(gui_input(_input, var="ship_name")):
+            print("Text input")
+
+    valid_interiors = ship_data_terran_ship_keys()
+    for k in valid_interiors:
+        print(f"*{k}*")
+
+    ship_sec2 = gui_region(style="area: 1,15,40,90")
+    with ship_sec2:
+        gui_row()
+        gui_content(ship_picker_control(f"Your Ship", "tsn_battle_cruiser", ship_keys=valid_interiors), style="tag:sh_ship_picker", var="ship_type")
+        on change ship_type:
+            print("Ship change")
+
+    gui_section("area:70,30,90,40;")
+    on gui_message(gui_button("SHOW")):
+        gui_show(ship_sec)
+        gui_show(ship_sec2)
+
+    on gui_message(gui_button("HIDE")):
+        gui_hide(ship_sec)
+        gui_hide(ship_sec2)
+
+
+    await gui():
+        + "menu":
+            -> menu
 
 
 ========= show_skills =======
-gui_section( style="area:0,0,100,30px;")
-########### TABS
-for t in skills:
-    if t == tab:
-        """justify:center; color:black;$text:{t} """ style="background: #ffF;padding: 3px,3px,3px,3px;click_text: {t};click_tag: tab_{t};"
-    else:
-        """justify:center; color:white;$text:{t} """ style="background: #0008;padding: 3px,3px,3px,3px;click_text: {t};click_tag: tab_{t};"
+    gui_section( style="area:0,0,100,30px;")
+    ########### TABS
+    for t in skills:
+        if t == tab:
+            """justify:center; color:black;$text:{t} """ style="background: #ffF;padding: 3px,3px,3px,3px;click_text: {t};click_tag: tab_{t};"
+        else:
+            """justify:center; color:white;$text:{t} """ style="background: #0008;padding: 3px,3px,3px,3px;click_text: {t};click_tag: tab_{t};"
 
-on gui_click():
-    clicked = __CLICKED__.split("_")
-    click_type = clicked[0].strip().lower()
-    click_value = clicked[1].strip().lower()
-    if click_type == "tab":
-        if tab != click_value:
-            tab = click_value
-            jump show_skills
+    on gui_click():
+        clicked = __CLICKED__.split("_")
+        click_type = clicked[0].strip().lower()
+        click_value = clicked[1].strip().lower()
+        if click_type == "tab":
+            if tab != click_value:
+                tab = click_value
+                jump show_skills
 
-    elif click_type == "skill":
-        view_category = tab
-        view_tier = int(click_value)
-        view_skill = int(clicked[2].strip())
-        jump show_skill_details
+        elif click_type == "skill":
+            view_category = tab
+            view_tier = int(click_value)
+            view_skill = int(clicked[2].strip())
+            jump show_skill_details
 
 
 
-deez_category = skills.get(tab)
-deez_tier = deez_category.get("tier")
-# deez_skills = deez_tier[0].get("skills")
+    deez_category = skills.get(tab)
+    deez_tier = deez_category.get("tier")
+    # deez_skills = deez_tier[0].get("skills")
 
-gui_section( style="area:10,10,90,90;")
-tier_colors = ["#9993", "#0FF3", "#FF03", "#f0f3", ]
+    gui_section( style="area:10,10,90,90;")
+    tier_colors = ["#9993", "#0FF3", "#FF03", "#f0f3", ]
 
-gui_row(style="background: #0f03;row-height:45px;padding: 0,0,0,3px;")
-"""" justify: center;$text:{tab} """"
-tier = 0
-for t in deez_tier:
-    c = {tier_colors[tier]}
-    gui_row(style=f"background: {tier_colors[tier]};row-height:15;padding: 0,0,0,3px;")
-    deez_skills = t.get("skills")
-    skill = 0
-    for sk in deez_skills:
+    gui_row(style="background: #0f03;row-height:45px;padding: 0,0,0,3px;")
+    """ justify: center;$text:{tab}     
+    """
+    tier = 0
+    for t in deez_tier:
+        c = {tier_colors[tier]}
+        gui_row(style=f"background: {tier_colors[tier]};row-height:15;padding: 0,0,0,3px;")
+        deez_skills = t.get("skills")
+        skill = 0
+        for sk in deez_skills:
+            gui_blank()
+            i_i = sk.get("icon",0)
+            gui_icon(f"icon_index: {i_i}; color: white;", style=f"click_font: gui-5;click_color: blue;click_text: SKILL;click_tag: skill_{tier}_{skill};")
+            skill += 1
+
         gui_blank()
-        i_i = sk.get("icon",0)
-        gui_icon(f"icon_index: {i_i}; color: white;", style=f"click_font: gui-5;click_color: blue;click_text: SKILL;click_tag: skill_{tier}_{skill};")
-        skill += 1
-
-    gui_blank()
-    tier += 1
+        tier += 1
 
 
 
-await gui():
-    + "menu":
-        -> menu
+    await gui():
+        + "menu":
+            -> menu
 
 
 
@@ -684,147 +665,147 @@ await gui():
 ========= show_skill_details =======
 
 
-deez_category = skills.get(view_category)
-deez_tier = deez_category.get("tier")
-deez_skills = deez_tier[view_tier].get("skills")
-deez_skill = deez_skills[view_skill]
+    deez_category = skills.get(view_category)
+    deez_tier = deez_category.get("tier")
+    deez_skills = deez_tier[view_tier].get("skills")
+    deez_skill = deez_skills[view_skill]
 
 
-gui_section( style="area:10,10,90,10+45px;")
-gui_row(style="background: #0f03;row-height:45px;padding: 0,0,0,3px;")
-"""" justify: center;$text:{deez_skill["name"]} """"
-gui_row(style="background: #fff3;row-height:45px;padding: 0,0,0,3px;")
-"""" justify: left;$text:{deez_skill["description"]} """"
+    gui_section( style="area:10,10,90,10+45px;")
+    gui_row(style="background: #0f03;row-height:45px;padding: 0,0,0,3px;")
+    """" justify: center;$text:{deez_skill["name"]} """"
+    gui_row(style="background: #fff3;row-height:45px;padding: 0,0,0,3px;")
+    """" justify: left;$text:{deez_skill["description"]} """"
 
-gui_section( style="area:10,10+100px,50-3px,90;")
-gui_row(style="background: #0003; padding: 0,0,0,3px; ")
-gui_icon(f"""icon_index: {deez_skill["icon"]}; color: white;""" )
-gui_row(style="background: #0003; padding: 0,0,0,3px; ")
-""" justify: left;$text: challenge progress;"""
-#
-# This should be the goal of the 'next' rank
-# 
-""" justify: right;$text: [0/5];"""
+    gui_section( style="area:10,10+100px,50-3px,90;")
+    gui_row(style="background: #0003; padding: 0,0,0,3px; ")
+    gui_icon(f"""icon_index: {deez_skill["icon"]}; color: white;""" )
+    gui_row(style="background: #0003; padding: 0,0,0,3px; ")
+    """ justify: left;$text: challenge progress;"""
+    #
+    # This should be the goal of the 'next' rank
+    # 
+    """ justify: right;$text: [0/5];"""
 
-gui_section( style="area:50+3px,10+100px,90,90;")
-rank = 0
-for t in deez_skill.get("rank", []):
-    if rank == 0:
-        gui_row(style="background: #0ff3; row-height:15;padding: 0,0,0,3px;")
-    else:
-        gui_row(style="background: #0003; row-height:15;padding: 0,0,0,3px;")
+    gui_section( style="area:50+3px,10+100px,90,90;")
+    rank = 0
+    for t in deez_skill.get("rank", []):
+        if rank == 0:
+            gui_row(style="background: #0ff3; row-height:15;padding: 0,0,0,3px;")
+        else:
+            gui_row(style="background: #0003; row-height:15;padding: 0,0,0,3px;")
 
-    """ RANK {rank+1}
+        """ RANK {rank+1}
 
-    {t.get("text", "")}
-    {t.get("description", "")}
-"""
-    rank += 1
+        {t.get("text", "")}
+        {t.get("description", "")}
+    """
+        rank += 1
 
-#
-# styleized Back button
-#
-gui_row( style="row-height:45px;padding: 0,0,0,3px;")
-"""justify:center; color:black;$text:back;""" style="background: #fff8;padding: 3px,3px,3px,3px;click_text:back;click_tag:back;"
+    #
+    # styleized Back button
+    #
+    gui_row( style="row-height:45px;padding: 0,0,0,3px;")
+    """justify:center; color:black;$text:back;""" style="background: #fff8;padding: 3px,3px,3px,3px;click_text:back;click_tag:back;"
 
-on gui_click():
-    if __CLICKED__ == "back":
-        jump show_skills
+    on gui_click():
+        if __CLICKED__ == "back":
+            jump show_skills
 
 
-await gui():
-    + "menu":
-        -> menu
+    await gui():
+        + "menu":
+            -> menu
 
 
 
 ====== build_skills ====== 
 
-# Do this just once
-jump  show_skills if skills_built
-skills_built = True
+    # Do this just once
+    jump  show_skills if skills_built
+    skills_built = True
 
-rnd_icons = random.sample(range(140), k=4*(16))
+    rnd_icons = random.sample(range(140), k=4*(16))
 
-skill = ~~{
-    "icon": 10,
-    "name": "Something",
-    "description": "This is some sensor skill",
-    "rank": [
-        {
-            "text": "Do this 5 times",
-            "description": "You did somethings that get you to a rank 1",
-            "goal": 5
-        },
-        {
-            "text": "Do another thing 50 times",
-            "description": "You did somethings that get you to a rank 2",
-            "goal": 50
-        }, 
-        {
-            "text": "Do another thing 10 times",
-            "description": "You did somethings that get you to a rank 3",
-            "goal": 10
-        },
-        {
-            "text": "Do another thing 1 time",
-            "description": "You did somethings that get you to a rank 4",
-            "goal": 1
-        }
-    ]
-}
-~~
-icon_index = 0
-for k in skills:
-    deez_category=skills.get(k)
-    ~~ deez_category["tier"] = [] ~~
-    deez_tier = deez_category["tier"]
-    
-    for t in range(4):
-        deez_skills = []
-        #
-        # 5,3,5,3
-        #
-        skill_count = 5 - (t%2)*2
-        for sk in range(skill_count):
-            ~~skill["icon"] = rnd_icons[icon_index]~~
-            deez_skills.append(skill)
-            icon_index += 1
+    skill = ~~{
+        "icon": 10,
+        "name": "Something",
+        "description": "This is some sensor skill",
+        "rank": [
+            {
+                "text": "Do this 5 times",
+                "description": "You did somethings that get you to a rank 1",
+                "goal": 5
+            },
+            {
+                "text": "Do another thing 50 times",
+                "description": "You did somethings that get you to a rank 2",
+                "goal": 50
+            }, 
+            {
+                "text": "Do another thing 10 times",
+                "description": "You did somethings that get you to a rank 3",
+                "goal": 10
+            },
+            {
+                "text": "Do another thing 1 time",
+                "description": "You did somethings that get you to a rank 4",
+                "goal": 1
+            }
+        ]
+    }
+    ~~
+    icon_index = 0
+    for k in skills:
+        deez_category=skills.get(k)
+        ~~ deez_category["tier"] = [] ~~
+        deez_tier = deez_category["tier"]
+        
+        for t in range(4):
+            deez_skills = []
+            #
+            # 5,3,5,3
+            #
+            skill_count = 5 - (t%2)*2
+            for sk in range(skill_count):
+                ~~skill["icon"] = rnd_icons[icon_index]~~
+                deez_skills.append(skill)
+                icon_index += 1
 
-            skill = ~~{
-                            "icon": 10,
-                            "name": "Something",
-                            "description": "This is some sensor skill",
-                            "rank": [
-                                {
-                                    "text": "Do this 5 times",
-                                    "description": "You did somethings that get you to a rank 1",
-                                    "goal": 5
-                                },
-                                {
-                                    "text": "Do another thing 50 times",
-                                    "description": "You did somethings that get you to a rank 2",
-                                    "goal": 50
-                                }, 
-                                {
-                                    "text": "Do another thing 10 times",
-                                    "description": "You did somethings that get you to a rank 3",
-                                    "goal": 10
-                                
-                                },
-                                {
-                                    "text": "Do another thing 1 time",
-                                    "description": "You did somethings that get you to a rank 4",
-                                    "goal": 1
-                                }
-                            ]
-                        }
-                        ~~
+                skill = ~~{
+                                "icon": 10,
+                                "name": "Something",
+                                "description": "This is some sensor skill",
+                                "rank": [
+                                    {
+                                        "text": "Do this 5 times",
+                                        "description": "You did somethings that get you to a rank 1",
+                                        "goal": 5
+                                    },
+                                    {
+                                        "text": "Do another thing 50 times",
+                                        "description": "You did somethings that get you to a rank 2",
+                                        "goal": 50
+                                    }, 
+                                    {
+                                        "text": "Do another thing 10 times",
+                                        "description": "You did somethings that get you to a rank 3",
+                                        "goal": 10
+                                    
+                                    },
+                                    {
+                                        "text": "Do another thing 1 time",
+                                        "description": "You did somethings that get you to a rank 4",
+                                        "goal": 1
+                                    }
+                                ]
+                            }
+                            ~~
 
 
-        tier = {"skills": deez_skills}
-        deez_tier.append(tier)    
-jump show_skills
+            tier = {"skills": deez_skills}
+            deez_tier.append(tier)    
+    jump show_skills
 
 
 
