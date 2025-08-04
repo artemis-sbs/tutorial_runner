@@ -103,7 +103,7 @@ gui_activate_console("credits")
 gui_section(style="area: 0, 30px, 100, 100;")
 gui_layout_widget("3dview")
 gui_section(style="area: 0, 10, 100, 65;")
-"""font:gui-5; justify:center; text: in a.d. 2101"""
+"""font:gui-5; justify:center;$text: in a.d. 2101"""
 await gui(timeout=timeout(5))
 
 #
@@ -114,7 +114,7 @@ gui_activate_console("credits")
 gui_section(style="area: 0, 30px, 100, 100;")
 gui_layout_widget("3dview")
 gui_section(style="area: 0, 35, 100, 60;")
-"""font:gui-6; justify:center; text: war was beginning"""
+"""font:gui-6; justify:center;$text: war was beginning"""
 await gui(timeout=timeout(5))
 
 #
@@ -128,7 +128,7 @@ gui_layout_widget("3dview")
 gui_section(style="area: 25, 5, 74, 35;")
 gui_face(captain_face)
 gui_section(style="area: 0, 35, 100, 60;")
-"""font:gui-6; justify:center; text: captain: what happen?"""
+"""font:gui-6; justify:center;$text: captain: what happen?"""
 await gui(timeout=timeout(5))
 
 
@@ -142,7 +142,7 @@ gui_layout_widget("3dview")
 gui_section(style="area: 25, 5, 74, 35;")
 gui_face(mechanic_face)
 gui_section(style="area: 0, 35, 100, 60;")
-"""font:gui-6; justify:center; text: mechanic: somebody set up us the bomb"""
+"""font:gui-6; justify:center;$text: mechanic: somebody set up us the bomb"""
 await gui(timeout=timeout(5))
 
 
@@ -155,7 +155,7 @@ gui_layout_widget("3dview")
 gui_section(style="area: 25, 5, 74, 35;")
 gui_face(operator_face)
 gui_section(style="area: 0, 35, 100, 60;")
-"""font:gui-6; justify:center; text: Operator: we get signal."""
+"""font:gui-6; justify:center;$text: Operator: we get signal."""
 await gui(timeout=timeout(5))
 
 #
@@ -168,9 +168,9 @@ gui_section(style="area: 25, 5, 74, 35;")
 gui_face(captain_face)
 gui_section(style="area: 0, 35, 100, 60;")
 
-"""font:gui-6; justify:center; text: Operator: we get signal."""
+"""font:gui-6; justify:center;$text: Operator: we get signal."""
 gui_row()
-"""font:gui-6; justify:center; text: Captain: What !"""
+"""font:gui-6; justify:center;$text: Captain: What !"""
 await gui(timeout=timeout(5))
 
 
@@ -184,7 +184,7 @@ gui_section(style="area: 25, 5, 74, 35;")
 gui_face(operator_face)
 gui_section(style="area: 0, 35, 100, 60;")
 
-"""font:gui-6; justify:center; text: Operator: Main screen turn on."""
+"""font:gui-6; justify:center;$text: Operator: Main screen turn on."""
 await gui(timeout=timeout(5))
 
 #
@@ -197,7 +197,7 @@ gui_section(style="area: 25, 5, 74, 35;")
 gui_face(captain_face)
 
 gui_section(style="area: 0, 35, 100, 60;")
-"""font:gui-6; justify:center; text: Captain: it's you !!"""
+"""font:gui-6; justify:center;$text: Captain: it's you !!"""
 await gui(timeout=timeout(5))
 
 #
@@ -210,7 +210,7 @@ gui_section(style="area: 25, 5, 74, 35;")
 gui_face(cats_face)
 
 gui_section(style="area: 0, 35, 100, 60;")
-"""font:gui-6; justify:center; text: cats: how are you gentleman !!"""
+"""font:gui-6; justify:center;$text: cats: how are you gentleman !!"""
 await gui(timeout=timeout(5))
 
 #
@@ -223,7 +223,7 @@ gui_section(style="area: 25, 5, 74, 35;")
 gui_face(cats_face)
 
 gui_section(style="area: 0, 35, 100, 60;")
-"""font:gui-6; justify:center; text: cats: all your base are belong to us."""
+"""font:gui-6; justify:center;$text: cats: all your base are belong to us."""
 await gui(timeout=timeout(5))
 
 #
@@ -236,7 +236,7 @@ gui_section(style="area: 25, 5, 74, 35;")
 gui_face(cats_face)
 
 gui_section(style="area: 0, 35, 100, 60;")
-"""font:gui-6; justify:center; text: cats: you are on the way to destruction."""
+"""font:gui-6; justify:center;$text: cats: you are on the way to destruction."""
 await gui(timeout=timeout(5))
 
 #
@@ -249,7 +249,7 @@ gui_section(style="area: 25, 5, 74, 35;")
 gui_face(captain_face)
 
 gui_section(style="area: 0, 35, 100, 60;")
-"""font:gui-6; justify:center; text: captain: what you say !!"""
+"""font:gui-6; justify:center;$text: captain: what you say !!"""
 await gui(timeout=timeout(5))
 
 #
@@ -262,7 +262,7 @@ gui_section(style="area: 25, 5, 74, 35;")
 gui_face(cats_face)
 
 gui_section(style="area: 0, 35, 100, 60;")
-"""font:gui-6; justify:center; text: cats: you have no chance to survive make your time."""
+"""font:gui-6; justify:center;$text: cats: you have no chance to survive make your time."""
 await gui(timeout=timeout(5))
 
 #
@@ -275,7 +275,7 @@ gui_section(style="area: 25, 5, 74, 35;")
 gui_face(cats_face)
 
 gui_section(style="area: 0, 35, 100, 60;")
-"""font:gui-6; justify:center; text: cats: HA HA HA HA....."""
+"""font:gui-6; justify:center;$text: cats: HA HA HA HA....."""
 await gui(timeout=timeout(5))
 
 

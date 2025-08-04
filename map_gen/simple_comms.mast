@@ -108,7 +108,6 @@ asteroid_types = ship_data_plain_asteroid_keys()
 
 i = 10000
 for n in gen:
-    #print(f"{n.x} {n.y} {n.terrain}")
     if i <=0: 
         break
      end_if

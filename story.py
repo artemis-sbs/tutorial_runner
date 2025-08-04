@@ -17,7 +17,7 @@ from sbs_utils.procedural.gui import gui_reroute_server, gui_row, gui_button, gu
 from sbs_utils.procedural.execution import AWAIT
 from sbs_utils import fs
 
-start_text = "text:This is an A >> \u0041 << This is an ellipsis >> \u007c  << AA ;font:gui-3;"
+start_text = "$text:This is an A >> \u0041 << This is an ellipsis >> \u007c  << AA ;font:gui-3;"
 Mast.include_code = True
 mission_name = fs.get_mission_name()
 
@@ -135,40 +135,40 @@ def start_server():
     gui_section("area:10,30,45,95;row-height: 35px")
     gui_text("Mast")
     gui_row()
-    gui_button("simple ai", on_message=run_simple_ai_mast)
+    gui_button("simple ai", on_press=run_simple_ai_mast)
     gui_row()
-    gui_button("simple science", on_message=run_simple_science_mast)
+    gui_button("simple science", on_press=run_simple_science_mast)
     gui_row()
-    gui_button("simple collision", on_message=run_simple_collision_mast)
+    gui_button("simple collision", on_press=run_simple_collision_mast)
     gui_row()
-    gui_button("simple agent", on_message=run_simple_agent_mast)
+    gui_button("simple agent", on_press=run_simple_agent_mast)
     gui_row()
-    gui_button("simple comms", on_message=run_simple_comms_mast)
+    gui_button("simple comms", on_press=run_simple_comms_mast)
     gui_row()
-    gui_button("Modal comms", on_message=run_simple_comms_modal_mast)
+    gui_button("Modal comms", on_press=run_simple_comms_modal_mast)
     gui_row()
-    gui_button("simple gui", on_message=run_simple_gui_mast)
+    gui_button("simple gui", on_press=run_simple_gui_mast)
     gui_row()
-    gui_button("simple cut scene", on_message=run_cut_scene_mast)
+    gui_button("simple cut scene", on_press=run_cut_scene_mast)
     gui_row()
-    gui_button("All your base", on_message=run_all_your_base)
+    gui_button("All your base", on_press=run_all_your_base)
     gui_row()
-    gui_button("Extend Console", on_message=run_extend_console_mast)
+    gui_button("Extend Console", on_press=run_extend_console_mast)
     gui_row()
-    gui_button("EA2", on_message=run_early_access_two)
+    gui_button("EA2", on_press=run_early_access_two)
     
 
 
     gui_section("area:50,30,85,95;row-height: 35px")
     gui_text("Python Mast")
     gui_row()
-    gui_button("simple ai", on_message=run_simple_ai)
+    gui_button("simple ai", on_press=run_simple_ai)
     gui_row()
-    gui_button("simple Science", on_message=run_simple_science)
+    gui_button("simple Science", on_press=run_simple_science)
     gui_row()
-    gui_button("simple Comms", on_message=run_simple_comms)
+    gui_button("simple Comms", on_press=run_simple_comms)
     gui_row()
-    gui_button("simple gui", on_message=run_simple_gui)
+    gui_button("simple gui", on_press=run_simple_gui)
 
 
     yield AWAIT(gui())

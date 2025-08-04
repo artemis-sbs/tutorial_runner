@@ -5,8 +5,9 @@ from sbs_utils.pymast.pymaststorypage import PyMastStoryPage
 from story import Story
 from sbs_native import MapGenerator
 from sbs_utils.mast.mast import Mast
+from sbs_utils.mast.mast_globals import MastGlobals
 
-Mast.globals["MapGenerator"] = MapGenerator
+MastGlobals.globals["MapGenerator"] = MapGenerator
 
 class SimpleAiPage(PyMastStoryPage):
     story = Story()

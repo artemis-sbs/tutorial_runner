@@ -63,7 +63,7 @@ await gui():
 
 
 
-===== end_game =======
+===== send_game =======
 # 
 # Check for end game
 #
@@ -88,7 +88,7 @@ if len(raiders) == 0:
     ->END
 
 await delay_sim(5)
--> end_game
+-> send_game
 
 ======== start ======
 
@@ -108,7 +108,7 @@ for x in range(enemy_count):
 
 
 sim_resume()
-task_schedule(end_game)
+task_schedule(send_game)
 
 
 ==== additional_start ===

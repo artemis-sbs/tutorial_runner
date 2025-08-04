@@ -250,7 +250,7 @@ $h2 H2 = A
 """)~~
     gui_text("Another Column")
     gui_row()    
-    gui_text("text:middle bottom;font:gui-2;")
+    gui_text("$text:middle bottom;font:gui-2;")
 
 gui_text("r\ni\ng\nh\nt", style="col-width:2em;background:yellow;color:black;")
 gui_row("row-height: 2em;background:cyan;color:black;")
@@ -327,7 +327,7 @@ gui_section( style="area:2,2,80,95;")
 
 for i in range(len(fonts)):
     gui_row()
-    """color:{colors[i]};font:{fonts[i]};text: This is test"""
+    """color:{colors[i]};font:{fonts[i]};$text: This is test"""
 
 
 await gui():
@@ -340,16 +340,16 @@ count = 0
 gui_section(style="area:2,42,80,47;")
 
 
-"""text: {count}""" style="tag:count-text;"
-"""text: {count}""" style="tag:local-count-text;"
-"""text: {s_count}""" style="tag:sh-count-text;"
+"""$text: {count}""" style="tag:count-text;"
+"""$text: {count}""" style="tag:local-count-text;"
+gui_text("$text: {s_count}", style="tag:sh-count-text;")
 
 on gui_message(gui_button("Add")):
     count += 1
     s_count += 1
-    gui_update("count-text", "text: {count}")
-    gui_update_shared("local-count-text", "text: {count}")
-    gui_update_shared("sh-count-text", "text: {s_count}")
+    gui_update("count-text", "$text: {count}")
+    gui_update_shared("local-count-text", f"$text: {count}")
+    gui_update_shared("sh-count-text", f"$text: {s_count}")
 
 gui_row()
 """ countdown """ style="tag:countdown_tag;"
@@ -375,7 +375,7 @@ await gui():
 # set the value 
 
 for x in range(300):
-    gui_update("countdown_tag", "text: {300-x};")
+    gui_update("countdown_tag", "$text: {300-x};")
     await delay_app(1)
 
 # turn off
@@ -386,7 +386,7 @@ for x in range(300):
 gui_section(style="area:2,20,80,95;")
 for i in range(len(fonts)):
     gui_row()
-    text = "color:{colors[i]};font:{fonts[i]};text: This is test"
+    text = "color:{colors[i]};font:{fonts[i]};$text: This is test"
     gui_button(text)
 
 
@@ -402,7 +402,7 @@ check = False
 gui_section( style="area:2,20,80,95;")
 for i in range(len(fonts)):
     gui_row()
-    gui_checkbox("""color:{colors[i]};font:{fonts[i]};text: This is test;""", var="check") 
+    gui_checkbox("""color:{colors[i]};font:{fonts[i]};$text: This is test;""", var="check") 
 
 
 await gui():
@@ -416,7 +416,7 @@ gui_section(style="area:2,20,80,95;")
 
 for i in range(len(fonts)):
     gui_row()
-    gui_drop_down("""color:{colors[i]};font:{fonts[i]};text: This is test;list:Fred,Wilma,Betty,Barney""")
+    gui_drop_down("""color:{colors[i]};font:{fonts[i]};$text: This is test;list:Fred,Wilma,Betty,Barney""")
 
 
 await gui():
@@ -470,7 +470,7 @@ gui_section( style="area: 1, 10, 45,100;")
 
 gui_row("row-height: 40px;")
 gui_hole()
-gui_input("desc: Ship Name;text: ", var="ship_name")
+gui_input("desc: Ship Name;$text: ", var="ship_name")
 gui_row("row-height: 50px;")
 on gui_message(gui_button("Add Ship")):
     if len(ship_name) >0:
@@ -506,16 +506,17 @@ await gui():
 check = "text"
 
 for x in range(len(recruits)):
-    gui_section( style=f"area:{20*x}+10,20,{20*x}+25,65;click_color: blue; click_text:Recruit!; click_font:gui-5; click_tag:pick_{x}")
+    gui_section( style=f"area:{20*x}+10,20,{20*x}+25,65;click_background: #5555; click_text:; click_font:gui-5; click_tag:pick_{x}")
+    # gui_section( style=f"area:{20*x}+10,20,{20*x}+25,65;click_color: blue; click_text:recruit!; click_font:gui-5; click_tag:pick_{x}")
 
     on gui_click():
         pick = __CLICKED__.split("_")
         the_pick = int(pick[1].strip())
         -> show_recruit
 
-    # gui_face(face_list[x])
+    gui_face(face_list[x])
     gui_row()
-    """color:cyan;font:gui-3; text:{recruits[x]}"""
+    gui_text("color:cyan;font:gui-3;$text:{recruits[x]}")
     #"""{recruits[x]}"""
     # """ Hello {x} """
 
@@ -626,9 +627,9 @@ gui_section( style="area:0,0,100,30px;")
 ########### TABS
 for t in skills:
     if t == tab:
-        """justify:center; color:black;text:{t} """ style="background: #ffF;padding: 3px,3px,3px,3px;click_text: {t};click_tag: tab_{t};"
+        """justify:center; color:black;$text:{t} """ style="background: #ffF;padding: 3px,3px,3px,3px;click_text: {t};click_tag: tab_{t};"
     else:
-        """justify:center; color:white;text:{t} """ style="background: #0008;padding: 3px,3px,3px,3px;click_text: {t};click_tag: tab_{t};"
+        """justify:center; color:white;$text:{t} """ style="background: #0008;padding: 3px,3px,3px,3px;click_text: {t};click_tag: tab_{t};"
 
 on gui_click():
     clicked = __CLICKED__.split("_")
@@ -655,7 +656,7 @@ gui_section( style="area:10,10,90,90;")
 tier_colors = ["#9993", "#0FF3", "#FF03", "#f0f3", ]
 
 gui_row(style="background: #0f03;row-height:45px;padding: 0,0,0,3px;")
-"""" justify: center; text:{tab} """"
+"""" justify: center;$text:{tab} """"
 tier = 0
 for t in deez_tier:
     c = {tier_colors[tier]}
@@ -691,19 +692,19 @@ deez_skill = deez_skills[view_skill]
 
 gui_section( style="area:10,10,90,10+45px;")
 gui_row(style="background: #0f03;row-height:45px;padding: 0,0,0,3px;")
-"""" justify: center; text:{deez_skill["name"]} """"
+"""" justify: center;$text:{deez_skill["name"]} """"
 gui_row(style="background: #fff3;row-height:45px;padding: 0,0,0,3px;")
-"""" justify: left; text:{deez_skill["description"]} """"
+"""" justify: left;$text:{deez_skill["description"]} """"
 
 gui_section( style="area:10,10+100px,50-3px,90;")
 gui_row(style="background: #0003; padding: 0,0,0,3px; ")
 gui_icon(f"""icon_index: {deez_skill["icon"]}; color: white;""" )
 gui_row(style="background: #0003; padding: 0,0,0,3px; ")
-""" justify: left;text: challenge progress;"""
+""" justify: left;$text: challenge progress;"""
 #
 # This should be the goal of the 'next' rank
 # 
-""" justify: right;text: [0/5];"""
+""" justify: right;$text: [0/5];"""
 
 gui_section( style="area:50+3px,10+100px,90,90;")
 rank = 0
@@ -724,7 +725,7 @@ for t in deez_skill.get("rank", []):
 # styleized Back button
 #
 gui_row( style="row-height:45px;padding: 0,0,0,3px;")
-"""justify:center; color:black;text:back;""" style="background: #fff8;padding: 3px,3px,3px,3px;click_text:back;click_tag:back;"
+"""justify:center; color:black;$text:back;""" style="background: #fff8;padding: 3px,3px,3px,3px;click_text:back;click_tag:back;"
 
 on gui_click():
     if __CLICKED__ == "back":

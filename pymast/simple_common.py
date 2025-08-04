@@ -38,7 +38,7 @@ class CommonStory(MastStory):
         gui_section("area:2,90,80,95;")
         def go():
             yield jump(self.start)
-        gui_button("start", on_message=go)
+        gui_button("start", on_press=go)
 
         yield AWAIT(gui({"start": go}))
 

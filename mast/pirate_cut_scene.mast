@@ -174,9 +174,9 @@ gui_layout_widget("3dview")
 sbs.assign_client_to_ship(client_id, camera_id)
 
 gui_section(style="area: 0, 65, 100, 100;")
-"""font:gui-3; justify:center; text: The following was created using the Artemis Cosmos Engine^using the user extensible scripting capabilities.^Including this text"""
+"""font:gui-3; justify:center;$text: The following was created using the Artemis Cosmos Engine^using the user extensible scripting capabilities.^Including this text"""
 gui_row()
-"""font:gui-2; justify:center; text: Artemis Cosmos is Early Game Development. All is subject to change. """
+"""font:gui-2; justify:center;$text: Artemis Cosmos is Early Game Development. All is subject to change. """
 await gui(timeout=timeout(12))
 
 
