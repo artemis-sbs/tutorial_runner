@@ -8,7 +8,7 @@ try:
 
     from sbs_utils import faces
     import functools
-    from sbs_utils.procedural.gui import gui_reroute_server, gui_row, gui_button, gui, gui_section, gui_text, gui_content, gui_icon, gui_hole
+    from sbs_utils.procedural.gui import gui_reroute_server, gui_row, gui_button, gui, gui_section, gui_text, gui_content, gui_icon, gui_hole, gui_message
     from sbs_utils.procedural.gui import gui_checkbox, gui_face, gui_drop_down, gui_slider, gui_input, gui_list_box
     from sbs_utils.procedural.execution import jump, AWAIT
 
@@ -49,21 +49,22 @@ try:
             # This is a simple script that has one playable ship
             #
             gui_section("area:0,5,10,95;row-height:35px;")
-            gui_button(f"""$text: Text""", jump=self.page_gui_text)
+            gui_message(gui_button(f"""$text: Text"""), self.page_gui_text)
+            
             gui_row()
-            gui_button(f"""$text:Buttons""", jump=self.page_gui_button)
+            gui_button(f"""$text:Buttons""", on_press=self.page_gui_button)
             gui_row()
-            gui_button(f"""$text: Checkbox""", jump=self.page_gui_checkbox)
+            gui_button(f"""$text: Checkbox""", on_press=self.page_gui_checkbox)
             gui_row()
-            gui_button(f"""$text: Dropdown""", jump=self.page_gui_drop_down)
+            gui_button(f"""$text: Dropdown""", on_press=self.page_gui_drop_down)
             gui_row()
-            gui_button(f"""$text:Slider""", jump=self.page_gui_slider)
+            gui_button(f"""$text:Slider""", on_press=self.page_gui_slider)
             gui_row()
-            gui_button(f"""$text: Text input""", jump=self.page_gui_text_input)
+            gui_button(f"""$text: Text input""", on_press=self.page_gui_text_input)
             gui_row()
-            gui_button(f"""$text:Clickable""", jump=self.page_gui_clickable)
+            gui_button(f"""$text:Clickable""", on_press=self.page_gui_clickable)
             gui_row()
-            gui_button(f"""$text:Reroute""", jump=self.page_reroute)
+            gui_button(f"""$text:Reroute""", on_press=self.page_reroute)
             
 
             gui_section("area:20,20,45,85;")
@@ -137,6 +138,7 @@ try:
 
         @label()
         def page_gui_button(self):
+            print("DID ")
             gui_section("area:2,20,80,95;")
             for i in range(len(self.fonts)):
                 gui_row()

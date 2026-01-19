@@ -1,3 +1,4 @@
+import simple_gui.py
 #
 # Show the proper GUI for server vs Client Consoles
 #
@@ -120,8 +121,10 @@ shared s_count = 0  # for update example
     gui_row()
     gui_button("region", on_press=show_region)
     gui_row()
-    gui_button("ship picker", show_ship_picker)
+    gui_button("ship picker", on_press=show_ship_picker)
 
+    gui_row()
+    gui_button("list box", on_press=show_listbox_example)
 
 
     gui_row()
@@ -190,7 +193,7 @@ $h3 Heading three
 
 $p3 A list:
 
-$ol 
+$ol
 one
 two
 three
@@ -240,29 +243,29 @@ $h2 H2 = A
 
 
 ============= show_margin_border_padding ==============
+    
+    # THis make the margin red
+    gui_section(style="area:0,0,100,25;font:gui-6;background:#F00a;")
 
-    # Put a section behind too show red
-    gui_section(style="area:0,0,100,25;font:gui-6;background:#F002;")
-    gui_section(style="area:0,0,100,25;margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F2;background:#0F02;")
+    gui_section(style="area:0,0,100,25;margin:5px, 5px, 5px,5px;border:35px,5px,5px,5px;padding:10px,10px,10px,10px;font:gui-6;border-color:#00Fa;background:#0F0a;")
     gui_row()
-    gui_text("section red margin, blue border, green background", style="margin:13px,3px,3px,3px;xbackground: yellow;")
+    gui_text("section red margin, blue border, green background", style="margin:13px,3px,3px,3px;")
 
 
-    gui_section(style="area:0,25,100,50;font:gui-6;background:#F002;")
-    gui_section(style="area:0,25,100,50;") #margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F2;background:#0F02;")
-    gui_row(style="margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F2;background:#0F02;")
-    gui_text("row red margin, blue border, green background", style="margin:13px,3px,3px,3px;xbackground: yellow;")
+    gui_section(style="area:0,25,100,50;font:gui-6;background:#F00;")
+    gui_row(style="margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F;background:#0F0;")
+    gui_text("row red margin, blue border, green background", style="margin:13px,3px,3px,3px;background: yellow;")
 
 
-    gui_section(style="area:0,50,100,75;font:gui-6;background:#F002;")
-    gui_section(style="area:0,50,100,75;") #margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F2;background:#0F02;")
-    gui_row() # )
-    gui_text("col red margin, blue border, green background", style="margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F2;background:#0F02;")
+    gui_section(style="area:0,50,100,75;font:gui-6;")
+    #gui_section(style="area:0,50,100,75;") #margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F2;background:#0F02;")
+    gui_row("background:#F00;")
+    gui_text("col red margin, blue border, green background", style="margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F;background:#0F0;")
 
 
     gui_section(style="area:0,75,100,95;font:gui-6;background:#F00f;")
-    gui_section(style="area:0,75,100,95;margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00Ff;background:#0F0f;")
-    gui_row(style="margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00Ff;background:#0F0f;")
+    gui_section(style="area:0,75,100,95;margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F;background:#0F0;")
+    gui_row(style="margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00F;background:#0F0;")
     gui_text("all red margin, blue border, green background", style="margin: 5px, 5px, 5px,5px;border:15px,5px,5px,5px;font:gui-6;border-color:#00Ff;background:#0F0f;")
 
 
@@ -486,7 +489,7 @@ $h2 H2 = A
     check = "text"
 
     for x in range(len(recruits)):
-        gui_section( style=f"area:{20*x}+10,20,{20*x}+25,65;click_background: #5555; click_text:; click_font:gui-5; click_tag:pick_{x}")
+        gui_section( style=f"area:{20*x}+10,20,{20*x}+25,65;click_background: #5555; click_text:; click_tag:pick_{x}")
         # gui_section( style=f"area:{20*x}+10,20,{20*x}+25,65;click_color: blue; click_text:recruit!; click_font:gui-5; click_tag:pick_{x}")
 
         on gui_click():
@@ -601,6 +604,25 @@ $h2 H2 = A
         + "menu":
             -> menu
 
+=== show_listbox_example
+    words = ["hello", "gasp","spine","other","die","graze","avenue","cinema","groan","wriggle","excess","teacher","fuel"]
+    items = []
+    for x in words:
+        items.append({"test": x, "icons": [random.randint(0,100), random.randint(0,100)]})
+
+    gui_section("area:50,2,95,45;")
+    
+    lb_vert = gui_list_box(items, "background: #fff1;", item_template=test_template, title_template="$text:Vertical listbox; justify:center;color:white;", title_section_style="background:#1578;", multi=True)
+    
+    gui_section("area:5,60,95,78;background: #fff1;")
+    lb_horz = gui_list_box(items, "background: #fff1;", item_template=test_horz_template, title_template="$text:horizontal listbox; justify:center;color:white;",  title_section_style="background:#1578;", multi=True)
+    lb_horz.horizontal = True
+
+    await gui():
+    + "menu":
+        -> menu
+
+
 
 ========= show_skills =======
     gui_section( style="area:0,0,100,30px;")
@@ -658,7 +680,6 @@ $h2 H2 = A
     await gui():
         + "menu":
             -> menu
-
 
 
 
