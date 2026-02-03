@@ -126,6 +126,9 @@ shared s_count = 0  # for update example
     gui_row()
     gui_button("list box", on_press=show_listbox_example)
 
+    gui_row()
+    gui_button("Radio", on_press=show_radio_example)
+
 
     gui_row()
     """"""" Example Gui """""""""""
@@ -366,26 +369,74 @@ $h2 H2 = A
 
 ========= show_button =======
 
-    gui_section(style="area:2,20,80,95;")
+    gui_section(style="area:2,20,20,95;")
     for i in range(len(fonts)):
         gui_row()
         text = "color:{colors[i]};font:{fonts[i]};$text: This is test"
         gui_button(text)
 
+    gui_section(style="area:25,20,40,95;")
+    c = "black"
+    for i in range(len(fonts)):
+        gui_row()
+        text = "color:{c};font:{fonts[i]};$text: This is test"
+        gui_button(text, "background:{colors[i]}")
+        c = "white"
 
 
+    r = ~~[
+        {"relation": "1", "side1": "A", "side2": "B", "rel": "friend"},
+        {"relation": "2", "side1": "C", "side2": "D", "rel": "foe"},
+        {"relation": "3", "side1": "E", "side2": "F", "rel": "neutral"},
+        {"relation": "4", "side1": "G", "side2": "H", "rel": "friend"}]
+        ~~
+    gui_section(style="area:45,20,60,95;")
+    for item in r:
+        relation = item.get("relation")
+        side1 = item.get("side1")
+        side2 = item.get("side2")
+        rel = item.get("rel")
+        gui_row()
+        gui_button(f"{relation}", "", data={"side1": side1, "side2": side2, "rel": rel}, on_press="update_side", is_sub_task=True)
+    
+
+    gui_section(style="area:65,20,80,95;")
+    i = 100
+    for item in range(4):
+        gui_row()
+        gui_button(f"icon_index:{i};color:green;", "")
+        i += 3
+    for item in range(4):
+        gui_row()
+        gui_button(f"icon_index:{i};color:yellow;raw:true", "")
+        i += 3
+    gui_row()
+    gui_button(f"icon_index:{i};color:yellow;raw:true", "background:#fff4;")
+    i += 3
 
     await gui():
         + "menu":
             -> menu
 
+---  update_side
+    print("{side1}")
+    print("{side2}")
+    print("{rel}")
+    yield success
+
+
 
 ========= show_checkbox =======
     check = False
-    gui_section( style="area:2,20,80,95;")
+    gui_section( style="area:2,20,40,95;")
     for i in range(len(fonts)):
         gui_row()
         gui_checkbox("""color:{colors[i]};font:{fonts[i]};$text: This is test;""", var="check") 
+
+    gui_section( style="area:50,20,80,95;")
+    for i in range(len(fonts)):
+        gui_row()
+        gui_checkbox("""color:{colors[i]};icon_index:{100+i*3};""", var="check") 
 
 
     await gui():
@@ -438,6 +489,31 @@ $h2 H2 = A
     await gui():
         + "menu":
             -> menu
+
+
+========= show_radio_example
+    
+    gui_section(style="area:2,20,80,95;")
+
+
+    
+    rb = gui_radio("first,second,fred,for", var="test_rb")
+    rb.value = "fred"  # by string
+    on gui_message(rb):
+        print(f"rb.value {rb.value}")
+        print(f"var {test_rb}")
+        print(f"Selected index {rb.selected_index}")
+        if rb.selected_index == 3:
+            rb.selected_index = 1
+            gui_represent(rb)
+
+    
+
+
+    await gui():
+        + "menu":
+            -> menu
+
 
 ========= show_custom =======
 
@@ -605,6 +681,12 @@ $h2 H2 = A
             -> menu
 
 === show_listbox_example
+    gui_section("area: 0,20,40,60;")
+    one = gui_list_box_header("Options List")
+    two = gui_list_box_header("Second Header")
+    gui_list_box([one, "One","Two","Three","Four","Five","Six","Seven",two,"Eight","Nine","Ten","Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen","Seventeen","Eighteen","Nineteen","Twenty"], "row-height: 1.5em; background:#0001;")
+
+    
     words = ["hello", "gasp","spine","other","die","graze","avenue","cinema","groan","wriggle","excess","teacher","fuel"]
     items = []
     for x in words:
@@ -614,7 +696,7 @@ $h2 H2 = A
     
     lb_vert = gui_list_box(items, "background: #fff1;", item_template=test_template, title_template="$text:Vertical listbox; justify:center;color:white;", title_section_style="background:#1578;", multi=True)
     
-    gui_section("area:5,60,95,78;background: #fff1;")
+    gui_section("area:5,70,95,88;background: #fff1;")
     lb_horz = gui_list_box(items, "background: #fff1;", item_template=test_horz_template, title_template="$text:horizontal listbox; justify:center;color:white;",  title_section_style="background:#1578;", multi=True)
     lb_horz.horizontal = True
 
